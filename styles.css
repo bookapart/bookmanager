@@ -1,0 +1,383 @@
+::root,html{
+    background-color: #bfc55f;
+}
+::placeholder{ color:#aaa}
+body {
+    font-family: Arial, sans-serif;
+    background: #bfc55f url(./bg.jpg) center center no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    -khtml-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select: none;
+    user-select: none;
+    transition:background-size .5s linear;
+}
+p{
+    margin-top:.5em;
+}
+
+hr{ background:none; border:none; padding:0; margin:1rem 0; border-top: #000 1px dotted;}
+
+.imggg,.imgpp{ width:3rem; border-radius:50%; display:inline-block;vertical-align:middle;}
+.imgpp{ margin-left:-1rem }
+.imgjs{ width:15rem; display:block; margin:0 auto 1rem}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    padding-bottom:7rem;
+    position:relative;z-index: 1;
+}
+
+h1 {
+    text-align: center;
+    cursor: pointer;
+    color: #333;
+    border-radius:1rem;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:1rem;
+    margin-bottom:1rem;
+    color:#fff;
+    display:block;
+    font-size:1.3rem;
+}
+
+.search-form {
+    position:relative;
+    display: flex;
+    flex-direction: row;
+    margin-bottom:3rem;
+    width:60%;
+    margin-left:auto;
+    margin-right:auto;
+}
+.search-form input,
+.search-form input + span{
+    margin-left:-125px;
+}
+.search-form input {
+    width: 90%;
+    padding: .5rem 1rem;
+    border: .2rem dotted #6d8cc0;
+    border-radius: 1.6rem;
+    box-sizing: border-box;
+    font-size:1.3rem;
+    height:4rem;
+    vertical-align:middle;
+    outline:none;
+    -webkit-touch-callout:auto;
+    -webkit-user-select:auto;
+    -khtml-user-select:auto;
+    -moz-user-select:auto;
+    -ms-user-select: auto;
+    user-select: auto;
+    background-color:rgba(255,255,255,.9);
+}
+.search-form input:focus{
+    border-style:solid;
+}
+.search-form input:focus + span,
+.search-form input:active + span,
+.search-form input:valid + span{opacity:0}
+.search-form input + span{
+    padding: .5rem 1rem;
+    margin-bottom: 20px;
+    border: 1px solid #fff;
+    border-radius: 1.6rem;
+    box-sizing: border-box;
+    font-size:1rem;
+    height:4rem;
+    position:absolute;
+    left:0;
+    right: 0;
+    pointer-events: none;
+    user-select:none;
+    width:90%;
+}
+
+.search-form .searchbutton{
+    padding: 10px 20px;
+    border: none;
+    background-color: #6d8cc0;
+    color: #fff;
+    border-radius: 1.6rem;
+    cursor: pointer;
+    box-sizing: border-box;
+    font-size:1.2rem;
+    border:#fff .2rem solid;
+    opacity:.9;
+    white-space: nowrap;
+    vertical-align:middle;
+    height:4rem;
+    font-weight: bold;
+    width:20%;
+    margin-left:10px;
+}
+
+.search-form .searchbutton:hover {
+    background-color: rgba(110, 141, 193, 0.9);
+}
+
+.search-form .refresh,
+.search-form .classify{
+    height:4rem;
+    position:absolute;
+    right: -35px;
+    bottom: 0;
+    width: 80px;
+    padding: .5rem 1rem;
+    border:#fff .2rem solid;
+    background-color: #bfc55f;
+    color: #fff;
+    border-radius: 1.6rem;
+    box-sizing: border-box;
+    vertical-align:middle;
+    outline:none;
+    background-size: 46%;
+    opacity:.85;
+    font-size:1.2rem;
+    text-align:center;
+    cursor: pointer;
+    font-weight: bold;
+}
+.search-form .refresh{
+    background-image:url(./random.svg);
+    background-position:center center;
+    background-repeat: no-repeat;
+    background-size:2.2rem;
+}
+.search-form .classify{
+    right:-125px;
+}
+.search-form .refresh:active,
+.search-form .classify:active{
+    opacity:.7;
+}
+
+.divide{margin:10vh 0 1rem; text-align: center; color:#fff; font-size: .75rem}
+
+.book-total, .search-result-total {
+    color: #fff; vertical-align: middle; text-align:center;
+}
+
+.book-list-container{
+/*    min-height:38vh;*/
+}
+
+.book-cards {
+    position:relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50vw, 1fr));
+    gap: 20px;
+}
+
+.book-card {
+    background-color: rgba(255,255,255,.9);
+    padding: 20px;
+    border-radius: .8rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+    transition: opacity 0.3s;
+    cursor: pointer;
+    position: relative;
+    overflow:hidden;
+}
+
+.book-card:hover {
+    opacity: 0.92;
+}
+
+.book-card .card_mark{
+    margin-left:-2.5rem;
+    margin-right:.5rem;
+    background-color:#bfc55f;
+    width: 2rem;
+    height: 2rem;
+    line-height:2rem;
+    text-align:center;
+    color: #fff;
+    display: inline-block;
+    font-size:1.2rem;
+    border-radius:.3rem;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .3) inset;
+}
+
+.book-card h2 {
+    position:relative;
+    padding-left:2.5rem;
+    font-size: 1.4em;
+    margin: 5px;
+    margin-left:0;
+    color: #333;
+}
+
+.book-card h2 label{
+    color:#000;
+    position: absolute;
+    right: -25px;
+    top: -25px;
+    font-size:.75rem;
+    color:#fff;
+    font-weight:100;
+    background-color:#6d8cc0;
+    border-radius:0 .8rem 0 .8rem / .8rem .8rem 0 .8rem;
+    padding:.1em .6em;
+}
+
+.book-card .thumbnail{
+    float: right;
+    width:35%;
+    max-width:200px;
+    margin-left:1rem;
+    margin-top:.5em;
+}
+.book-card .thumbnail img{
+    width:100%;
+}
+
+.book-card .thumbnail ~ p{
+    text-align:justify;
+}
+
+.book-card .book-details {
+    display: none;
+    margin-top: 10px;
+}
+
+.book-card .book-details big{
+    font-size:1rem; font-weight:800;
+    border-bottom:#000 1px dashed;
+    color:#788eb5;
+}
+
+.book-card .book-star {
+    display: inline-block;
+    vertical-align:middle;
+}
+
+.book-star svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.book-card.expanded .book-details {
+    display: block;
+}
+
+.book-card.expanded ~ .book-card {
+    .book-details {
+        display: none;
+    }
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background:rgba(192, 197, 109, .8);
+    padding: 10px 0;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    padding:1.6rem 0 2.4rem;
+    user-select:none;
+    backdrop-filter:blur(6px);
+    border-radius:1.6rem 1.6rem 0 0;
+}
+
+.pagination button {
+    padding: .8rem 1.6rem;
+    margin: 0 10px;
+    border: none;
+    background-color: #c0c56d;
+    color: #fff;
+    border-radius: 1.6rem;
+    cursor: pointer;
+    font-size:1rem;
+    border:#fff .2rem solid;
+}
+
+.pagination button:disabled {
+    opacity:.5;
+    cursor: not-allowed;
+}
+
+.pagination span {
+    font-weight: bold;
+    font-size:1.6rem;
+    color: #fff;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    h1{ text-align:left; }
+    .divide{ margin-top:5vh }
+    .search-form {
+        width:100%;
+        flex-direction: column;
+        align-items:center;
+    }
+
+    .search-form input,
+    .search-form input + span{
+        margin-left:0;
+    }
+    .search-form input + span{
+        width:100%;
+    }
+
+    .search-form input, .search-form .searchbutton {
+        width: 100%;
+    }
+
+    .search-form input{
+        margin-bottom: 20px;
+    }
+
+    .search-form .searchbutton {
+        width:50%;
+        margin-left:50%;
+        height:3.4rem;
+    }
+
+    .search-form .refresh{
+        height:3.4rem;
+        right:auto;
+        left: 0;
+        width:23%;
+    }
+
+    .search-form .classify{
+        height:3.4rem;
+        right:auto;
+        left: 25%;
+        width:23%;
+    }
+
+    .book-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .book-card {
+        padding: 10px;
+        margin: 0;
+    }
+
+    .book-card h2 {
+        font-size: 1.3em;
+    }
+
+    .book-card h2 label{
+        top:-15px;
+        right:-15px;
+    }
+}
