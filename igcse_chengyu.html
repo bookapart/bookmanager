@@ -2,93 +2,161 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8">
+  <!-- 禁止手机缩放 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>成语快问快答</title>
   <style>
+    /* 防止移动端自动放大文本 */
+    html { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+    /* 基础响应式排版：根字体用 clamp 控制（最小14px，首选基于视窗，最大18px） */
+    :root {
+      font-family: "Microsoft Yahei", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", sans-serif;
+      font-size: clamp(14px, 2.2vw, 18px); /* 所有 rem 基于此 */
+      --container-padding: clamp(16px, 3.5vw, 30px);
+      --radius: 12px;
+      --primary: #007BFF;
+      --success: #28a745;
+    }
+
+    /* 页面布局 */
     body {
-      font-family: "Microsoft Yahei", sans-serif;
       background: #f9f9f9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
+
     .container {
-      text-align: center;
+      width: 100%;
+      max-width: 720px;
       background: #fff;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      width: 90%;
-      max-width: 650px;
+      padding: var(--container-padding);
+      border-radius: var(--radius);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      box-sizing: border-box;
+      text-align: center;
     }
+
+    /* 标题与文字大小使用 rem，随根字体放缩 */
     h1 {
-      font-size: 1.6em;
-      margin-bottom: 20px;
+      font-size: 1.6rem; /* 约 1.6 * root */
+      margin: 0 0 0.6rem 0;
+      line-height: 1.2;
     }
+
     .status {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 20px;
-      font-size: 1.1em;
+      gap: 1rem;
+      margin: 0.6rem 0 1rem;
+      font-size: 1rem;
+      flex-wrap: wrap;
     }
+
     .question {
-      font-size: 1.2em;
-      margin-bottom: 20px;
-      min-height: 60px;
+      font-size: 1.05rem;
+      margin: 0.6rem 0 1rem;
+      min-height: 3.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 0.5rem;
     }
+
     .source {
-      font-size: 0.9em;
+      font-size: 0.85rem;
       color: #666;
-      margin-bottom: 20px;
+      margin-bottom: 0.9rem;
     }
-    .options button {
-      display: block;
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+      margin-bottom: 0.8rem;
+    }
+
+    /* 按钮为大触控目标，字体与高度适当 */
+    .options button,
+    #startBtn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       width: 100%;
-      margin: 10px 0;
-      padding: 15px;
-      font-size: 1.1em;
+      min-height: 3.8rem; /* 足够的触控高度 */
+      padding: 0.6rem 1rem;
+      font-size: 1rem;
       border-radius: 10px;
-      border: 2px solid #007BFF;
+      border: 2px solid var(--primary);
       background: #fff;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: background 0.18s, color 0.18s, transform 0.08s;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: rgba(0,0,0,0.05);
     }
+
+    .options button:active,
+    #startBtn:active {
+      transform: translateY(1px);
+    }
+
     .options button:hover {
-      background: #007BFF;
+      background: var(--primary);
       color: #fff;
     }
+
     #startBtn {
-      margin-top: 20px;
-      padding: 15px 30px;
-      font-size: 1.2em;
-      border-radius: 12px;
+      margin-top: 0.5rem;
+      padding: 0.75rem 1.2rem;
+      font-size: 1.05rem;
       border: none;
-      background: #28a745;
+      background: var(--success);
       color: #fff;
-      cursor: pointer;
+      border-radius: 12px;
     }
+
     #startBtn:hover {
       background: #218838;
     }
-    .hidden { display: none; }
+
+    .hidden { display: none !important; }
+
+    /* 更小屏幕（例如窄手机）微调 */
+    @media (max-width: 360px) {
+      :root { font-size: clamp(13px, 3.2vw, 16px); }
+      .container { padding: 14px; }
+      .status { font-size: 0.95rem; }
+      .options button { min-height: 3.6rem; font-size: 0.98rem; }
+    }
+
+    /* 更大屏幕微调 */
+    @media (min-width: 900px) {
+      .options { grid-template-columns: 1fr 1fr; } /* 桌面上选项两列 */
+      .question { min-height: 4.2rem; }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>成语快问快答</h1>
+  <div class="container" role="main" aria-labelledby="title">
+    <h1 id="title">成语快问快答</h1>
     <div id="intro">
       <p>点击下方按钮开始游戏</p>
-      <button id="startBtn">开始游戏</button>
+      <button id="startBtn" aria-controls="game">开始游戏</button>
     </div>
-    <div id="game" class="hidden">
+    <div id="game" class="hidden" aria-live="polite">
       <div class="status">
         <div>分数：<span id="score">0</span></div>
         <div>倒计时：<span id="timer">60</span>s</div>
       </div>
-      <div class="question" id="question"></div>
+      <div class="question" id="question" aria-atomic="true"></div>
       <div class="source" id="source"></div>
-      <div class="options" id="options"></div>
+      <div class="options" id="options" role="list"></div>
     </div>
   </div>
 
@@ -133,6 +201,7 @@
     }
 
     function startTimer() {
+      if (countdown) clearInterval(countdown);
       countdown = setInterval(() => {
         timer--;
         timerSpan.textContent = timer;
@@ -167,6 +236,7 @@
       options.forEach(opt => {
         const btn = document.createElement("button");
         btn.textContent = opt;
+        btn.setAttribute("role", "listitem");
         btn.onclick = () => checkAnswer(opt);
         optionsDiv.appendChild(btn);
       });
