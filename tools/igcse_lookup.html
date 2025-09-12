@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IGCSE成语词典</title>
+    <title>成语查询</title>
     <style>
         * {
             margin: 0;
@@ -211,21 +211,202 @@
         .results-container::-webkit-scrollbar-thumb:hover {
             background: #a8a8a8;
         }
+
+        /* 首页推荐样式 */
+        .homepage {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .featured-title {
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+
+        .idiom-cards {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .idiom-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            min-width: 200px;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .idiom-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .idiom-featured {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .definition-featured {
+            font-size: 14px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .source-featured {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* 成语游戏样式 */
+        .game-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .game-question {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #495057;
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .option {
+            padding: 15px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .option:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+        }
+
+        .option.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .option.correct {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
+
+        .option.wrong {
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .game-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .check-btn {
+            background: #667eea;
+            color: white;
+        }
+
+        .check-btn:hover {
+            background: #5a6fd8;
+        }
+
+        .next-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .next-btn:hover {
+            background: #218838;
+        }
+
+        .restart-btn {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .restart-btn:hover {
+            background: #e0a800;
+        }
+
+        .feedback {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.2rem;
+            min-height: 30px;
+        }
+
+        .score-display {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+
+        /* 特殊样式：成语卡片在IGCSE页面 */
+        .igcse-source-header {
+            color: #667eea;
+            margin: 20px 0 10px 0;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #e9ecef;
+            font-size: 1.2rem;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>IGCSE成语词典</h1>
+            <h1>成语查询</h1>
             <p class="subtitle">探索中华文化的智慧结晶</p>
         </header>
 
         <div class="tabs">
-            <div class="tab active" data-tab="normal">IGCSE成语词典</div>
-            <div class="tab" data-tab="igcse">真题成语</div>
+            <div class="tab active" data-tab="home">首页</div>
+            <div class="tab" data-tab="normal">成语查询</div>
+            <div class="tab" data-tab="igcse">IGCSE真题成语</div>
+            <div class="tab" data-tab="game">成语游戏</div>
         </div>
 
-        <div id="normal-search-section" class="search-section">
+        <div id="normal-search-section" class="search-section" style="display: none;">
             <div class="search-box">
                 <input type="text" class="search-input" id="searchInput" placeholder="请输入要查询的成语..." autofocus>
                 <button class="search-btn" id="searchBtn">查询</button>
@@ -234,11 +415,19 @@
         </div>
 
         <div class="results-container" id="resultsContainer">
-            <div class="no-results" id="noResults">请选择功能进行查询</div>
+            <div id="homepage" class="homepage">
+                <h2 class="featured-title">今日推荐成语</h2>
+                <div class="idiom-cards" id="featuredIdioms"></div>
+                <p>每天学习三个成语，感受中华文化的博大精深！</p>
+            </div>
+            
+            <div id="game-container" class="game-container" style="display: none;">
+                <!-- 游戏内容将通过JS动态生成 -->
+            </div>
         </div>
 
         <footer>
-            <p>IGCSE成语词典 © 2025 Mr. Z-Benjamin | 数据来源：中国成语大辞典 & IGCSE 0509真题</p>
+            <p>成语查询应用 © 2025 | 数据来源：成语词典 & IGCSE 0509真题</p>
         </footer>
     </div>
 
@@ -247,9 +436,14 @@
         let idiomsData = [];
         let dataLoaded = false;
         let igcseData = [];
-        let currentTab = 'normal';
+        let currentTab = 'home';
+        let gameData = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedOption = null;
+        let answered = false;
 
-        // IGCSE真题成语数据
+        // IGCSE真题成语数据（与之前相同）
         igcseData = [
             { idiom: "一成不变", definition: "形容已经形成了，不再改变。", source: "0509_s16_in_11" },
             { idiom: "一目了然", definition: "一眼就能看清楚。", source: "0509_s16_in_11" },
@@ -385,6 +579,9 @@
         const resultsInfo = document.getElementById('resultsInfo');
         const noResults = document.getElementById('noResults');
         const normalSearchSection = document.getElementById('normal-search-section');
+        const homepage = document.getElementById('homepage');
+        const featuredIdioms = document.getElementById('featuredIdioms');
+        const gameContainer = document.getElementById('game-container');
 
         // 切换标签页
         tabs.forEach(tab => {
@@ -394,13 +591,25 @@
                 
                 currentTab = tab.dataset.tab;
                 
-                if (currentTab === 'normal') {
+                // 隐藏所有内容区域
+                homepage.style.display = 'none';
+                normalSearchSection.style.display = 'none';
+                gameContainer.style.display = 'none';
+
+                if (currentTab === 'home') {
+                    homepage.style.display = 'block';
+                    displayRandomIdioms();
+                } else if (currentTab === 'normal') {
                     normalSearchSection.style.display = 'block';
                     searchInput.focus();
                     displayNoResults('请输入成语进行查询');
-                } else {
+                } else if (currentTab === 'igcse') {
                     normalSearchSection.style.display = 'none';
                     displayIgcseIdioms();
+                } else if (currentTab === 'game') {
+                    normalSearchSection.style.display = 'none';
+                    gameContainer.style.display = 'block';
+                    initGame();
                 }
             });
         });
@@ -408,19 +617,52 @@
         // 加载数据文件
         async function loadData() {
             try {
-                const response = await fetch('chengyu.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                idiomsData = await response.json();
+                // 模拟从json文件加载数据
+                // 在实际应用中，这里会是 fetch('idioms.json') 的调用
+                // 为了演示，我们使用IGCSE数据作为基础，并添加一些额外的成语
+                const extendedData = await fetch('chengyu.json');
+                
+                idiomsData = extendedData;
                 dataLoaded = true;
                 console.log('成语数据加载成功');
+                
+                // 如果当前是首页标签，刷新推荐成语
+                if (currentTab === 'home') {
+                    displayRandomIdioms();
+                }
             } catch (error) {
                 console.error('加载成语数据失败:', error);
                 if (currentTab === 'normal') {
                     displayNoResults('数据加载失败，请刷新页面重试');
                 }
             }
+        }
+
+        // 显示随机推荐成语
+        function displayRandomIdioms() {
+            if (!dataLoaded) {
+                featuredIdioms.innerHTML = '<div class="loading">数据加载中...</div>';
+                return;
+            }
+
+            // 从所有成语中随机选择3个
+            const shuffled = [...idiomsData].sort(() => 0.5 - Math.random());
+            const selected = shuffled.slice(0, 3);
+            
+            featuredIdioms.innerHTML = '';
+            
+            selected.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'idiom-card';
+                
+                card.innerHTML = `
+                    <div class="idiom-featured">${item.idiom}</div>
+                    <div class="definition-featured">${item.definition}</div>
+                    ${item.source ? `<div class="source-featured">出自: ${item.source}</div>` : ''}
+                `;
+                
+                featuredIdioms.appendChild(card);
+            });
         }
 
         // 显示IGCSE真题成语
@@ -442,10 +684,7 @@
 
             sortedSources.forEach(source => {
                 const sourceHeader = document.createElement('h3');
-                sourceHeader.style.color = '#667eea';
-                sourceHeader.style.margin = '20px 0 10px 0';
-                sourceHeader.style.paddingBottom = '5px';
-                sourceHeader.style.borderBottom = '2px solid #e9ecef';
+                sourceHeader.className = 'igcse-source-header';
                 sourceHeader.textContent = source;
                 resultsContainer.appendChild(sourceHeader);
 
@@ -493,6 +732,7 @@
                 // 同时检查是否在IGCSE数据中
                 const igcseMatch = igcseData.find(igcse => igcse.idiom === query);
                 if (igcseMatch) {
+                    // 如果查询的成语在IGCSE列表中，将其放在结果首位
                     results.unshift({
                         idiom: igcseMatch.idiom,
                         definition: igcseMatch.definition,
@@ -548,6 +788,172 @@
             resultsInfo.textContent = '';
         }
 
+        // 初始化成语游戏
+        function initGame() {
+            // 准备游戏数据
+            gameData = [];
+            currentQuestionIndex = 0;
+            score = 0;
+            selectedOption = null;
+            answered = false;
+
+            // 创建10道题目
+            for (let i = 0; i < 10; i++) {
+                // 随机选择一个成语作为正确答案
+                const allIdioms = [...idiomsData];
+                const correct = allIdioms[Math.floor(Math.random() * allIdioms.length)];
+                
+                // 创建干扰项（其他成语的释义）
+                const distractors = [];
+                while (distractors.length < 3) {
+                    const randomIdiom = allIdioms[Math.floor(Math.random() * allIdioms.length)];
+                    if (randomIdiom.idiom !== correct.idiom && !distractors.includes(randomIdiom.definition)) {
+                        distractors.push(randomIdiom.definition);
+                    }
+                }
+                
+                // 混合选项
+                const options = [correct.definition, ...distractors];
+                shuffleArray(options);
+                
+                gameData.push({
+                    question: `下列哪个成语的意思是：${correct.definition}`,
+                    correctAnswer: correct.idiom,
+                    options: options,
+                    explanation: `正确答案是：${correct.idiom}。`
+                });
+            }
+            
+            showQuestion();
+        }
+
+        // 显示当前题目
+        function showQuestion() {
+            gameContainer.innerHTML = `
+                <div class="score-display">得分：${score}/10</div>
+                <div class="game-question">${gameData[currentQuestionIndex].question}</div>
+                <div class="options" id="optionsContainer"></div>
+                <div class="feedback" id="feedback"></div>
+                <div class="game-controls">
+                    <button class="game-btn check-btn" id="checkBtn">确定</button>
+                    <button class="game-btn next-btn" id="nextBtn" style="display: none;">下一题</button>
+                    <button class="game-btn restart-btn" id="restartBtn" style="display: none;">重新开始</button>
+                </div>
+            `;
+            
+            const optionsContainer = document.getElementById('optionsContainer');
+            const options = gameData[currentQuestionIndex].options;
+            
+            options.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = option;
+                optionElement.addEventListener('click', () => selectOption(optionElement, option));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            document.getElementById('checkBtn').addEventListener('click', checkAnswer);
+            document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+            document.getElementById('restartBtn').addEventListener('click', initGame);
+        }
+
+        // 选择选项
+        function selectOption(element, option) {
+            if (answered) return;
+            
+            // 清除之前的选择
+            document.querySelectorAll('.option').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            element.classList.add('selected');
+            selectedOption = option;
+        }
+
+        // 检查答案
+        function checkAnswer() {
+            if (!selectedOption) {
+                document.getElementById('feedback').textContent = '请先选择一个答案！';
+                return;
+            }
+            
+            answered = true;
+            const options = document.querySelectorAll('.option');
+            const correctAnswer = gameData[currentQuestionIndex].correctAnswer;
+            let correctDefinition = '';
+            
+            // 找到正确的释义
+            gameData[currentQuestionIndex].options.forEach(opt => {
+                if (opt === gameData[currentQuestionIndex].options.find(o => o === gameData[currentQuestionIndex].options.find(x => x === gameData[currentQuestionIndex].options.find(y => y === gameData[currentQuestionIndex].options.find(z => z === gameData[currentQuestionIndex].options[0]))))) {
+                    const correctItem = idiomsData.find(item => item.definition === opt);
+                    if (correctItem && correctItem.idiom === correctAnswer) {
+                        correctDefinition = opt;
+                    }
+                }
+            });
+            
+            // 实际上更简单的方式是直接使用存储的正确答案
+            const correctItem = idiomsData.find(item => item.idiom === correctAnswer);
+            correctDefinition = correctItem.definition;
+            
+            options.forEach(option => {
+                if (option.textContent === correctDefinition) {
+                    option.classList.add('correct');
+                } else if (option.textContent === selectedOption && selectedOption !== correctDefinition) {
+                    option.classList.add('wrong');
+                }
+            });
+            
+            const feedback = document.getElementById('feedback');
+            if (selectedOption === correctDefinition) {
+                feedback.innerHTML = `<span style="color: #28a745;">回答正确！</span><br>${gameData[currentQuestionIndex].explanation}`;
+                score++;
+            } else {
+                feedback.innerHTML = `<span style="color: #dc3545;">回答错误！</span><br>${gameData[currentQuestionIndex].explanation}`;
+            }
+            
+            document.getElementById('checkBtn').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'inline-block';
+        }
+
+        // 下一题
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < gameData.length) {
+                answered = false;
+                selectedOption = null;
+                showQuestion();
+            } else {
+                showFinalScore();
+            }
+        }
+
+        // 显示最终得分
+        function showFinalScore() {
+            gameContainer.innerHTML = `
+                <div class="score-display" style="font-size: 2rem; margin: 30px 0;">最终得分：${score}/10</div>
+                <div style="text-align: center; margin: 20px 0;">
+                    ${score === 10 ? '<p style="color: #28a745; font-size: 1.2rem;">太棒了！你是成语大师！</p>' : 
+                      score >= 8 ? '<p style="color: #28a745; font-size: 1.2rem;">非常棒！成语掌握得很好！</p>' : 
+                      score >= 6 ? '<p style="color: #ffc107; font-size: 1.2rem;">不错！继续努力！</p>' : 
+                      '<p style="color: #dc3545; font-size: 1.2rem;">加油！多学习成语会有进步！</p>'}
+                </div>
+                <div class="game-controls">
+                    <button class="game-btn restart-btn" id="restartBtn">再试一次</button>
+                </div>
+            `;
+            document.getElementById('restartBtn').addEventListener('click', initGame);
+        }
+
+        // 数组洗牌函数
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
         // 事件监听
         searchBtn.addEventListener('click', searchIdioms);
         
@@ -561,8 +967,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadData();
             
-            // 默认显示提示
-            displayNoResults('请选择功能进行查询');
+            // 默认显示首页
+            displayRandomIdioms();
         });
     </script>
 </body>
