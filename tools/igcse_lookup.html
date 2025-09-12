@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成语查询</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .subtitle {
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .search-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .search-box {
+                flex-direction: column;
+            }
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-btn {
+            padding: 15px 25px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        .results-info {
+            color: #6c757d;
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        .results-container {
+            padding: 30px;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .result-item {
+            padding: 20px;
+            margin-bottom: 15px;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .result-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .idiom {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 8px;
+        }
+
+        .definition {
+            color: #6c757d;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #6c757d;
+            padding: 40px;
+            font-style: italic;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 14px;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+
+        /* 滚动条样式 */
+        .results-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .results-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .results-container::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+        .results-container::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>成语查询</h1>
+            <p class="subtitle">探索中华文化的智慧结晶</p>
+        </header>
+
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="请输入要查询的成语..." autofocus>
+                <button class="search-btn" id="searchBtn">查询</button>
+            </div>
+            <div class="results-info" id="resultsInfo"></div>
+        </div>
+
+        <div class="results-container" id="resultsContainer">
+            <div class="no-results" id="noResults">请输入成语进行查询</div>
+        </div>
+
+        <footer>
+            <p>成语查询应用 © 2025 | 数据来源：成语词典</p>
+        </footer>
+    </div>
+
+    <script>
+        // 全局变量存储成语数据
+        let idiomsData = [];
+        let dataLoaded = false;
+
+        // DOM元素
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const resultsInfo = document.getElementById('resultsInfo');
+        const noResults = document.getElementById('noResults');
+
+        // 加载数据文件
+        async function loadData() {
+            try {
+                const response = await fetch('chengyu.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                idiomsData = await response.json();
+                dataLoaded = true;
+                console.log('成语数据加载成功');
+            } catch (error) {
+                console.error('加载成语数据失败:', error);
+                noResults.textContent = '数据加载失败，请刷新页面重试';
+                noResults.style.display = 'block';
+            }
+        }
+
+        // 搜索函数
+        function searchIdioms() {
+            const query = searchInput.value.trim();
+            
+            if (!query) {
+                resultsContainer.innerHTML = '';
+                noResults.textContent = '请输入成语进行查询';
+                noResults.style.display = 'block';
+                resultsInfo.textContent = '';
+                return;
+            }
+
+            if (!dataLoaded) {
+                resultsContainer.innerHTML = '<div class="loading">数据加载中，请稍候...</div>';
+                noResults.style.display = 'none';
+                return;
+            }
+
+            // 显示加载状态（模拟搜索延迟）
+            resultsContainer.innerHTML = '<div class="loading">查询中...</div>';
+            noResults.style.display = 'none';
+
+            // 使用 setTimeout 模拟网络延迟，实际应用中可移除
+            setTimeout(() => {
+                const results = idiomsData.filter(item => 
+                    item.idiom.includes(query) || 
+                    item.definition.includes(query)
+                );
+
+                displayResults(results, query);
+            }, 200);
+        }
+
+        // 显示结果
+        function displayResults(results, query) {
+            resultsContainer.innerHTML = '';
+            
+            if (results.length === 0) {
+                noResults.textContent = `没有找到与 "${query}" 相关的成语`;
+                noResults.style.display = 'block';
+                resultsInfo.textContent = '';
+                return;
+            }
+
+            noResults.style.display = 'none';
+            resultsInfo.textContent = `找到 ${results.length} 个结果`;
+
+            results.forEach(item => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                
+                // 高亮匹配的文本
+                const highlightedIdiom = item.idiom.replace(
+                    new RegExp(query, 'gi'), 
+                    match => `<mark style="background: #ffeb3b; padding: 2px 4px; border-radius: 3px;">${match}</mark>`
+                );
+                
+                const highlightedDefinition = item.definition.replace(
+                    new RegExp(query, 'gi'), 
+                    match => `<mark style="background: #ffeb3b; padding: 2px 4px; border-radius: 3px;">${match}</mark>`
+                );
+
+                resultItem.innerHTML = `
+                    <div class="idiom">${highlightedIdiom}</div>
+                    <div class="definition">${highlightedDefinition}</div>
+                `;
+                
+                resultsContainer.appendChild(resultItem);
+            });
+        }
+
+        // 事件监听
+        searchBtn.addEventListener('click', searchIdioms);
+        
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchIdioms();
+            }
+        });
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+        });
+    </script>
+</body>
+</html>
