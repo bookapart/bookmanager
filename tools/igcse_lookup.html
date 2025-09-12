@@ -1,983 +1,489 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>成语查询</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>成语应用</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: '微软雅黑', 'Microsoft YaHei', 'Segoe UI', sans-serif;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      color: #333;
+    }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
 
-        header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
+    h1, h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
 
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            font-weight: 300;
-        }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
 
-        .subtitle {
-            font-weight: 300;
-            opacity: 0.9;
-        }
+    .tab {
+      padding: 10px 20px;
+      background: #ecf0f1;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
 
-        .tabs {
-            display: flex;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e9ecef;
-        }
+    .tab.active {
+      background: #3498db;
+      color: white;
+    }
 
-        .tab {
-            padding: 15px 30px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
-            color: #6c757d;
-            transition: all 0.3s ease;
-            border-bottom: 3px solid transparent;
-        }
+    .tab-content {
+      display: none;
+    }
 
-        .tab.active {
-            color: #667eea;
-            border-bottom: 3px solid #667eea;
-            background: white;
-        }
+    .tab-content.active {
+      display: block;
+    }
 
-        .tab:hover:not(.active) {
-            color: #5a6fd8;
-            background: #e9ecef;
-        }
+    .search-box {
+      text-align: center;
+      margin-bottom: 20px;
+    }
 
-        .search-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e9ecef;
-        }
+    .search-box input {
+      padding: 10px;
+      width: 70%;
+      max-width: 400px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
 
-        .search-box {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
+    .search-box button {
+      padding: 10px 20px;
+      margin-left: 10px;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-        @media (max-width: 600px) {
-            .search-box {
-                flex-direction: column;
-            }
-        }
+    .idiom-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
 
-        .search-input {
-            flex: 1;
-            padding: 15px 20px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            outline: none;
-        }
+    .idiom-card {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+    }
 
-        .search-input:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
+    .idiom-card:hover {
+      transform: translateY(-5px);
+    }
 
-        .search-btn {
-            padding: 15px 25px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
+    .exam-section {
+      margin-bottom: 40px;
+    }
 
-        .search-btn:hover {
-            background: #5a6fd8;
-            transform: translateY(-2px);
-        }
+    .exam-section h3 {
+      color: #2980b9;
+      border-bottom: 2px solid #3498db;
+      padding-bottom: 5px;
+    }
 
-        .results-info {
-            color: #6c757d;
-            font-size: 14px;
-            margin-bottom: 15px;
-            text-align: right;
-        }
+    .idiom-list {
+      margin-top: 10px;
+    }
 
-        .results-container {
-            padding: 30px;
-            max-height: 60vh;
-            overflow-y: auto;
-        }
+    .idiom-item {
+      background: #fff8e1;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-left: 4px solid #fbc02d;
+    }
 
-        .result-item {
-            padding: 20px;
-            margin-bottom: 15px;
-            background: #f8f9fa;
-            border-left: 4px solid #667eea;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
+    .game-container {
+      text-align: center;
+    }
 
-        .result-item:hover {
-            background: #e9ecef;
-            transform: translateX(5px);
-        }
+    .options {
+      margin: 20px 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
 
-        .idiom {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #495057;
-            margin-bottom: 8px;
-        }
+    .option {
+      padding: 15px;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
 
-        .definition {
-            color: #6c757d;
-            font-size: 14px;
-            line-height: 1.5;
-        }
+    .option:hover {
+      background: #2980b9;
+    }
 
-        .exam-source {
-            color: #dc3545;
-            font-size: 13px;
-            margin-top: 5px;
-            font-style: italic;
-        }
+    .feedback {
+      margin: 20px 0;
+      font-size: 1.2em;
+    }
 
-        .no-results {
-            text-align: center;
-            color: #6c757d;
-            padding: 40px;
-            font-style: italic;
-        }
+    .correct {
+      color: #27ae60;
+    }
 
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #6c757d;
-        }
+    .incorrect {
+      color: #e74c3c;
+    }
 
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: #6c757d;
-            font-size: 14px;
-            background: #f8f9fa;
-            border-top: 1px solid #e9ecef;
-        }
-
-        /* 滚动条样式 */
-        .results-container::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .results-container::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-
-        .results-container::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 4px;
-        }
-
-        .results-container::-webkit-scrollbar-thumb:hover {
-            background: #a8a8a8;
-        }
-
-        /* 首页推荐样式 */
-        .homepage {
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .featured-title {
-            color: #667eea;
-            margin-bottom: 30px;
-            font-size: 1.8rem;
-        }
-
-        .idiom-cards {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-bottom: 40px;
-        }
-
-        .idiom-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 12px;
-            min-width: 200px;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .idiom-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
-        }
-
-        .idiom-featured {
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .definition-featured {
-            font-size: 14px;
-            opacity: 0.9;
-            line-height: 1.5;
-        }
-
-        .source-featured {
-            font-size: 12px;
-            opacity: 0.8;
-            margin-top: 10px;
-            font-style: italic;
-        }
-
-        /* 成语游戏样式 */
-        .game-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .game-question {
-            font-size: 1.4rem;
-            margin-bottom: 20px;
-            color: #495057;
-            text-align: center;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 8px;
-        }
-
-        .options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .option {
-            padding: 15px;
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            font-size: 16px;
-        }
-
-        .option:hover {
-            background: #e9ecef;
-            border-color: #667eea;
-        }
-
-        .option.selected {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-        }
-
-        .option.correct {
-            background: #28a745;
-            color: white;
-            border-color: #28a745;
-        }
-
-        .option.wrong {
-            background: #dc3545;
-            color: white;
-            border-color: #dc3545;
-        }
-
-        .game-controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .game-btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .check-btn {
-            background: #667eea;
-            color: white;
-        }
-
-        .check-btn:hover {
-            background: #5a6fd8;
-        }
-
-        .next-btn {
-            background: #28a745;
-            color: white;
-        }
-
-        .next-btn:hover {
-            background: #218838;
-        }
-
-        .restart-btn {
-            background: #ffc107;
-            color: #212529;
-        }
-
-        .restart-btn:hover {
-            background: #e0a800;
-        }
-
-        .feedback {
-            text-align: center;
-            margin: 20px 0;
-            font-size: 1.2rem;
-            min-height: 30px;
-        }
-
-        .score-display {
-            text-align: center;
-            font-size: 1.2rem;
-            color: #6c757d;
-            margin-bottom: 20px;
-        }
-
-        /* 特殊样式：成语卡片在IGCSE页面 */
-        .igcse-source-header {
-            color: #667eea;
-            margin: 20px 0 10px 0;
-            padding-bottom: 5px;
-            border-bottom: 2px solid #e9ecef;
-            font-size: 1.2rem;
-        }
-    </style>
+    @media (max-width: 600px) {
+      .tabs {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>成语查询</h1>
-            <p class="subtitle">探索中华文化的智慧结晶</p>
-        </header>
+  <div class="container">
+    <h1>成语应用</h1>
+    <nav class="tabs">
+      <button class="tab active" data-tab="home">首页</button>
+      <button class="tab" data-tab="dictionary">成语词典</button>
+      <button class="tab" data-tab="igcse">IGCSE真题</button>
+      <button class="tab" data-tab="game">成语游戏</button>
+    </nav>
 
-        <div class="tabs">
-            <div class="tab active" data-tab="home">首页</div>
-            <div class="tab" data-tab="normal">成语查询</div>
-            <div class="tab" data-tab="igcse">IGCSE真题成语</div>
-            <div class="tab" data-tab="game">成语游戏</div>
-        </div>
-
-        <div id="normal-search-section" class="search-section" style="display: none;">
-            <div class="search-box">
-                <input type="text" class="search-input" id="searchInput" placeholder="请输入要查询的成语..." autofocus>
-                <button class="search-btn" id="searchBtn">查询</button>
-            </div>
-            <div class="results-info" id="resultsInfo"></div>
-        </div>
-
-        <div class="results-container" id="resultsContainer">
-            <div id="homepage" class="homepage">
-                <h2 class="featured-title">今日推荐成语</h2>
-                <div class="idiom-cards" id="featuredIdioms"></div>
-                <p>每天学习三个成语，感受中华文化的博大精深！</p>
-            </div>
-            
-            <div id="game-container" class="game-container" style="display: none;">
-                <!-- 游戏内容将通过JS动态生成 -->
-            </div>
-        </div>
-
-        <footer>
-            <p>成语查询应用 © 2025 | 数据来源：成语词典 & IGCSE 0509真题</p>
-        </footer>
+    <div class="tab-content active" id="home">
+      <h2>每日推荐</h2>
+      <div id="random-idioms" class="idiom-grid"></div>
     </div>
 
-    <script>
-        // 全局变量
-        let idiomsData = [];
-        let dataLoaded = false;
-        let igcseData = [];
-        let currentTab = 'home';
-        let gameData = [];
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let selectedOption = null;
-        let answered = false;
+    <div class="tab-content" id="dictionary">
+      <h2>成语词典</h2>
+      <div class="search-box">
+        <input type="text" id="search-input" placeholder="输入成语搜索..." />
+        <button onclick="searchIdiom()">搜索</button>
+      </div>
+      <div id="search-results"></div>
+    </div>
 
-        // IGCSE真题成语数据（与之前相同）
-        igcseData = [
-            { idiom: "一成不变", definition: "形容已经形成了，不再改变。", source: "0509_s16_in_11" },
-            { idiom: "一目了然", definition: "一眼就能看清楚。", source: "0509_s16_in_11" },
-            { idiom: "息息相关", definition: "呼吸相关联，比喻关系密切。", source: "0509_s16_in_11" },
-            { idiom: "日新月异", definition: "每天每月都有新的变化，形容进步、发展很快。", source: "0509_s16_in_11" },
-            { idiom: "百思不解", definition: "反复思索，仍然不能理解。", source: "0509_s16_in_11" },
-            { idiom: "平心静气", definition: "心情平和，态度冷静。", source: "0509_s16_in_13" },
-            { idiom: "潜移默化", definition: "指人的思想或性格受其他方面的感染而不知不觉地起了变化。", source: "0509_s16_in_13" },
-            { idiom: "天昏地暗", definition: "天地都昏暗了，形容天色十分昏暗。也形容社会黑暗或秩序混乱。", source: "0509_s17_in_11" },
-            { idiom: "山穷水尽", definition: "山和水都到了尽头，无路可走，比喻陷入绝境。", source: "0509_s17_in_11" },
-            { idiom: "念念不忘", definition: "形容牢记在心，时刻不忘。", source: "0509_s17_in_11" },
-            { idiom: "无穷无尽", definition: "没有止境，没有限度。", source: "0509_s17_in_11" },
-            { idiom: "柳暗花明", definition: "形容绿柳成荫，繁花似锦的景象。也比喻在困难中遇到转机。", source: "0509_s17_in_11" },
-            { idiom: "随遇而安", definition: "能适应各种环境，在任何环境中都能满足。", source: "0509_s17_in_11" },
-            { idiom: "青山绿水", definition: "青色的山，绿色的水，形容秀丽的景色。", source: "0509_s17_in_11" },
-            { idiom: "不厌其烦", definition: "不嫌麻烦。", source: "0509_s18_in_11" },
-            { idiom: "云泥之别", definition: "像天上的云和地上的泥，差别极大。", source: "0509_s18_in_11" },
-            { idiom: "平淡无奇", definition: "平平常常，没有什么奇特的地方。", source: "0509_s18_in_11" },
-            { idiom: "截然不同", definition: "形容界限分明，像割断一样，一点也不相同。", source: "0509_s18_in_11" },
-            { idiom: "通宵达旦", definition: "整整一夜，从天黑到天亮。", source: "0509_s18_in_11" },
-            { idiom: "古往今来", definition: "从古到今。", source: "0509_s18_in_11" },
-            { idiom: "惶惶不安", definition: "内心害怕，十分不安。", source: "0509_s18_in_11" },
-            { idiom: "游山玩水", definition: "游览山水风景。", source: "0509_s18_in_11" },
-            { idiom: "特立独行", definition: "形容人的志行高洁，不随波逐流。", source: "0509_s18_in_11" },
-            { idiom: "离经叛道", definition: "原指违反封建统治阶级所尊奉的经典和道德。现多比喻背离占主导地位的理论或学说。", source: "0509_s18_in_11" },
-            { idiom: "不知不觉", definition: "没有觉察到，没有意识到。", source: "0509_s18_in_13" },
-            { idiom: "以己度人", definition: "用自己的心思（多指不好的）去推测别人的心思。", source: "0509_s18_in_13" },
-            { idiom: "多此一举", definition: "做不必要的、多余的事情。", source: "0509_s18_in_13" },
-            { idiom: "长此以往", definition: "长期这样下去（多指不好的情况）。", source: "0509_s18_in_13" },
-            { idiom: "不合时宜", definition: "不符合当时的情况或社会潮流。", source: "0509_s19_in_11" },
-            { idiom: "人满为患", definition: "因人多造成了困难。", source: "0509_s19_in_11" },
-            { idiom: "刀耕火种", definition: "一种原始的耕种方法。", source: "0509_s19_in_11" },
-            { idiom: "崇山峻岭", definition: "高大陡峭的山岭。", source: "0509_s19_in_11" },
-            { idiom: "成群结队", definition: "一群群人集合在一起。", source: "0509_s19_in_11" },
-            { idiom: "政出多门", definition: "行政权力出自多个部门，形容领导不力，意见不统一。", source: "0509_s19_in_11" },
-            { idiom: "浩浩荡荡", definition: "原形容水势广阔浩大。后多形容队伍或气势盛大。", source: "0509_s19_in_11" },
-            { idiom: "风土人情", definition: "一个地方特有的自然环境和风俗、礼节、习惯的总称。", source: "0509_s19_in_11" },
-            { idiom: "一扫而空", definition: "一下子便扫除干净。比喻彻底清除。", source: "0509_s19_in_12" },
-            { idiom: "半途而废", definition: "事情没做完就停止了。", source: "0509_s19_in_12" },
-            { idiom: "心血来潮", definition: "突然产生某种念头。", source: "0509_s19_in_12" },
-            { idiom: "无论如何", definition: "不管怎样。表示不管条件怎样变化，其结果都不会改变。", source: "0509_s19_in_12" },
-            { idiom: "欲速则不达", definition: "过于性急反而不能达到目的。", source: "0509_s19_in_12" },
-            { idiom: "马不停蹄", definition: "比喻一刻也不停留，一直前进。", source: "0509_s19_in_12" },
-            { idiom: "一举一动", definition: "指人的每一个行为举动。", source: "0509_s19_in_13" },
-            { idiom: "千千万万", definition: "形容数量极多。", source: "0509_s19_in_13" },
-            { idiom: "千变万化", definition: "形容变化非常多，没有穷尽。", source: "0509_s19_in_13" },
-            { idiom: "心有灵犀一点通", definition: "比喻恋爱着的双方心灵相通，对彼此的心意都能领会。", source: "0509_s19_in_13" },
-            { idiom: "怡然自得", definition: "形容高兴而满足的样子。", source: "0509_s19_in_13" },
-            { idiom: "患得患失", definition: "担心得不到，得到了又担心失掉。形容对个人得失看得太重。", source: "0509_s19_in_13" },
-            { idiom: "油盐酱醋", definition: "泛指烹饪用的调味品。也比喻平淡琐碎的事情或无关紧要的事物。", source: "0509_s19_in_13" },
-            { idiom: "津津有味", definition: "形容有滋味或有趣味。", source: "0509_s19_in_13" },
-            { idiom: "海阔天空", definition: "形容大自然的广阔。也比喻想象或说话毫无拘束，漫无边际。", source: "0509_s19_in_13" },
-            { idiom: "甜言蜜语", definition: "为了讨人喜欢或哄骗人而说的好听的话。", source: "0509_s19_in_13" },
-            { idiom: "郁郁葱葱", definition: "（草木）苍翠茂盛。", source: "0509_s19_in_13" },
-            { idiom: "勤能补拙", definition: "勤奋能够弥补笨拙的不足。", source: "0509_s20_in_11" },
-            { idiom: "十有八九", definition: "十件事情中有八九件是这样，指非常可能。", source: "0509_s20_in_11" },
-            { idiom: "微不足道", definition: "非常渺小，不值得一提。", source: "0509_s20_in_11" },
-            { idiom: "无能为力", definition: "用不上力量，没有能力做好某事。", source: "0509_s20_in_11" },
-            { idiom: "未雨绸缪", definition: "趁着天没下雨，先修缮房屋门窗。比喻事先做好准备。", source: "0509_s20_in_11" },
-            { idiom: "束手无策", definition: "形容遇到问题时毫无解决的办法。", source: "0509_s20_in_11" },
-            { idiom: "独来独往", definition: "独自来往，没有伴侣。形容人性格孤僻。", source: "0509_s20_in_11" },
-            { idiom: "一团和气", definition: "原指态度和蔼可亲。现多指互相之间只讲和气，不讲原则。", source: "0509_s20_in_13" },
-            { idiom: "一模一样", definition: "形容完全相同，没有什么两样。", source: "0509_s20_in_13" },
-            { idiom: "兔起鹘落", definition: "兔子刚起来跑，鹘就落下来抓。比喻动作敏捷。也比喻作书画时笔势流畅。", source: "0509_s20_in_13" },
-            { idiom: "做小伏低", definition: "形容低声下气，巴结奉承。", source: "0509_s21_in_12" },
-            { idiom: "天南地北", definition: "形容距离遥远，也指谈话漫无边际。", source: "0509_s21_in_12" },
-            { idiom: "归根结底", definition: "归结到根本上。", source: "0509_s21_in_12" },
-            { idiom: "得意洋洋", definition: "形容称心如意时的高兴样子。", source: "0509_s21_in_12" },
-            { idiom: "忿忿不平", definition: "心中不服，感到气愤。", source: "0509_s21_in_12" },
-            { idiom: "长吁短叹", definition: "不住地唉声叹气。", source: "0509_s21_in_12" },
-            { idiom: "一视同仁", definition: "同样看待，不分亲疏厚薄。", source: "0509_s21_in_13" },
-            { idiom: "出人头地", definition: "超出一般人，高人一等。", source: "0509_s21_in_13" },
-            { idiom: "小题大做", definition: "比喻把小事当作大事来处理。", source: "0509_s21_in_13" },
-            { idiom: "无可厚非", definition: "不可过分指责，表示虽有缺点，但是可以理解或原谅。", source: "0509_s21_in_13" },
-            { idiom: "日上三竿", definition: "太阳升起来已有三根竹竿那么高。形容太阳升得很高，时间不早了。", source: "0509_s21_in_13" },
-            { idiom: "轻手轻脚", definition: "手脚动作很轻，形容动作小心轻捷。", source: "0509_s21_in_13" },
-            { idiom: "妙手回春", definition: "称赞医生医道高明，能把垂危的病人治好。", source: "0509_s22_in_11" },
-            { idiom: "德艺双馨", definition: "形容一个人的德行和艺术（技艺）都具有良好的声誉。", source: "0509_s22_in_11" },
-            { idiom: "昂首挺胸", definition: "抬起头，挺起胸膛。形容斗志高，士气旺。", source: "0509_s22_in_11" },
-            { idiom: "言过其实", definition: "言语浮夸，与实际情况不符。", source: "0509_s22_in_11" },
-            { idiom: "前车之鉴", definition: "前面的车子翻了，后面的车子要引以为鉴。比喻从前的失败可以作为以后的教训。", source: "0509_s22_in_13" },
-            { idiom: "随心所欲", definition: "一切都由着自己的心意，想怎么做就怎么做。", source: "0509_s22_in_13" },
-            { idiom: "不知不觉", definition: "没有觉察到，没有意识到。", source: "0509_s23_in_12" },
-            { idiom: "不置可否", definition: "不说对，也不说不对。形容态度不明朗。", source: "0509_s23_in_12" },
-            { idiom: "举世无双", definition: "全世界没有第二个。形容极其稀有。", source: "0509_s23_in_12" },
-            { idiom: "以假乱真", definition: "用假的东西去冒充或混杂真的东西。", source: "0509_s23_in_12" },
-            { idiom: "众所周知", definition: "大家都知道。", source: "0509_s23_in_12" },
-            { idiom: "凡夫俗子", definition: "平凡庸俗的人。", source: "0509_s23_in_12" },
-            { idiom: "呱呱坠地", definition: "形容婴儿出生。", source: "0509_s23_in_12" },
-            { idiom: "差之毫釐，失之千里", definition: "开始时相差一小点，结果会造成很大的错误。", source: "0509_s23_in_12" },
-            { idiom: "持之以恆", definition: "长久地坚持下去。", source: "0509_s23_in_12" },
-            { idiom: "未雨绸缪", definition: "趁着天没下雨，先修缮房屋门窗。比喻事先做好准备。", source: "0509_s23_in_12" },
-            { idiom: "水泄不通", definition: "连水都流不出去，形容十分拥挤或包围得非常严密。", source: "0509_s23_in_12" },
-            { idiom: "漫山遍野", definition: "遍布山野，形容很多。", source: "0509_s23_in_12" },
-            { idiom: "独具匠心", definition: "具有独到的灵巧的心思。指在技巧和艺术方面的创造性。", source: "0509_s23_in_12" },
-            { idiom: "见风转舵", definition: "看风向转舵。比喻看势头或看别人的眼色行事。", source: "0509_s23_in_12" },
-            { idiom: "过目不忘", definition: "看过一遍就能记住。形容记忆力极强。", source: "0509_s23_in_12" },
-            { idiom: "有钱有势", definition: "既有钱财，又有势力。", source: "0509_s23_in_13" },
-            { idiom: "珠光宝气", definition: "闪耀着珍宝的光色，形容服饰、陈设等非常华丽。", source: "0509_s23_in_13" },
-            { idiom: "钢筋铁骨", definition: "坚固的筋骨，比喻身体非常结实。", source: "0509_s23_in_13" },
-            { idiom: "事半功倍", definition: "形容费力小，收效大。", source: "0509_s24_in_12" },
-            { idiom: "喜怒无常", definition: "一会儿高兴，一会儿发怒，形容人情绪变化不定。", source: "0509_s24_in_12" },
-            { idiom: "忽冷忽热", definition: "一会儿冷，一会儿热，形容对人或事物的态度变化不定。", source: "0509_s24_in_12" },
-            { idiom: "囫囵吞枣", definition: "把枣整个儿吞下去。比喻读书等不加分析地笼统接受。", source: "0509_s24_in_13" },
-            { idiom: "慢条斯理", definition: "形容动作缓慢，不慌不忙。", source: "0509_s24_in_13" },
-            { idiom: "汗流浃背", definition: "汗水湿透了背上的衣服，形容非常惊恐或惭愧，也形容出汗很多。", source: "0509_s24_in_13" },
-            { idiom: "言传身教", definition: "既用言语来教导，又用行动来示范。", source: "0509_s24_in_13" },
-            { idiom: "量力而行", definition: "按照自己力量的大小去做事，不要勉强。", source: "0509_s24_in_13" },
-            { idiom: "出其不意", definition: "趁对方没有意料到就采取行动。", source: "0509_s25_in_13" },
-            { idiom: "千篇一律", definition: "诗文公式化，泛指事物只有一种形式，呆板无变化。", source: "0509_s25_in_13" },
-            { idiom: "哑口无言", definition: "像哑巴一样说不出话来。形容理屈词穷的样子。", source: "0509_s25_in_13" },
-            { idiom: "哭笑不得", definition: "哭也不是，笑也不是，形容处境尴尬，不知如何是好。", source: "0509_s25_in_13" },
-            { idiom: "如释重负", definition: "好像放下了沉重的负担。形容心情紧张后的轻松愉快。", source: "0509_s25_in_13" },
-            { idiom: "孤注一掷", definition: "把所有的钱一次押上去，决一输赢。比喻在危急时把全部力量拿出来冒一次险。", source: "0509_s25_in_13" },
-            { idiom: "快人快语", definition: "爽快的人直爽地说话。", source: "0509_s25_in_13" },
-            { idiom: "标新立异", definition: "提出新奇的主张，表示与一般不同。", source: "0509_s25_in_13" },
-            { idiom: "正襟危坐", definition: "整一整衣服，端正地坐着。形容严肃或拘谨的样子。", source: "0509_s25_in_13" },
-            { idiom: "正颜厉色", definition: "形容板着脸，神情非常严厉。", source: "0509_s25_in_13" },
-            { idiom: "理直气壮", definition: "理由充分，因而说话有气势。", source: "0509_s25_in_13" },
-            { idiom: "琳琅满目", definition: "满眼都是美玉。比喻精美的东西很多。", source: "0509_s25_in_13" },
-            { idiom: "胸有成竹", definition: "原指画竹子之前，心中先已有竹子的形象。比喻做事之前已有通盘的考虑。", source: "0509_s25_in_13" },
-            { idiom: "语重心长", definition: "话语诚恳，有分量，情意深长。", source: "0509_s25_in_13" },
-            { idiom: "蹑手蹑脚", definition: "形容走路时脚步放得很轻。", source: "0509_s25_in_13" },
-            { idiom: "迅雷不及掩耳", definition: "雷声来得非常快，连捂耳朵都来不及。比喻来势凶猛，使人来不及防备。", source: "0509_s25_in_13" },
-            { idiom: "进德修业", definition: "提高道德修养，扩大功业建树。", source: "0509_s25_in_13" }
-        ];
+    <div class="tab-content" id="igcse">
+      <h2>IGCSE真题成语</h2>
+      <div id="igcse-idioms"></div>
+    </div>
 
-        // DOM元素
-        const tabs = document.querySelectorAll('.tab');
-        const searchInput = document.getElementById('searchInput');
-        const searchBtn = document.getElementById('searchBtn');
-        const resultsContainer = document.getElementById('resultsContainer');
-        const resultsInfo = document.getElementById('resultsInfo');
-        const noResults = document.getElementById('noResults');
-        const normalSearchSection = document.getElementById('normal-search-section');
-        const homepage = document.getElementById('homepage');
-        const featuredIdioms = document.getElementById('featuredIdioms');
-        const gameContainer = document.getElementById('game-container');
+    <div class="tab-content" id="game">
+      <h2>成语游戏</h2>
+      <div id="game-container">
+        <p id="question"></p>
+        <div class="options" id="options"></div>
+        <div class="feedback" id="feedback"></div>
+        <button onclick="nextQuestion()">下一题</button>
+      </div>
+    </div>
+  </div>
 
-        // 切换标签页
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                
-                currentTab = tab.dataset.tab;
-                
-                // 隐藏所有内容区域
-                homepage.style.display = 'none';
-                normalSearchSection.style.display = 'none';
-                gameContainer.style.display = 'none';
+  <script>
+    let allIdioms = [];
+    let igcseData = {
+      "0509_s16_in_11": [
+        "一成不变",
+        "一目了然",
+        "息息相关",
+        "日新月异",
+        "百思不解"
+      ],
+      "0509_s16_in_13": ["平心静气", "潜移默化"],
+      "0509_s17_in_11": [
+        "天昏地暗",
+        "山穷水尽",
+        "念念不忘",
+        "息息相关",
+        "无穷无尽",
+        "柳暗花明",
+        "随遇而安",
+        "青山绿水"
+      ],
+      "0509_s17_in_13": [
+        "不厌其烦",
+        "云泥之别",
+        "平淡无奇",
+        "截然不同",
+        "通宵达旦"
+      ],
+      "0509_s18_in_11": [
+        "古往今来",
+        "惶惶不安",
+        "游山玩水",
+        "特立独行",
+        "离经叛道"
+      ],
+      "0509_s18_in_13": [
+        "不知不觉",
+        "以己度人",
+        "多此一举",
+        "长此以往"
+      ],
+      "0509_s19_in_11": [
+        "不合时宜",
+        "人满为患",
+        "刀耕火种",
+        "崇山峻岭",
+        "成群结队",
+        "政出多门",
+        "浩浩荡荡",
+        "风土人情"
+      ],
+      "0509_s19_in_12": [
+        "一扫而空",
+        "半途而废",
+        "心血来潮",
+        "无论如何",
+        "欲速则不达",
+        "马不停蹄"
+      ],
+      "0509_s19_in_13": [
+        "一举一动",
+        "千千万万",
+        "千变万化",
+        "心有灵犀一点通",
+        "怡然自得",
+        "患得患失",
+        "无论如何",
+        "油盐酱醋",
+        "津津有味",
+        "海阔天空",
+        "甜言蜜语",
+        "郁郁葱葱"
+      ],
+      "0509_s20_in_11": [
+        "勤能补拙",
+        "十有八九",
+        "微不足道",
+        "无能为力",
+        "未雨绸缪",
+        "束手无策",
+        "独来独往"
+      ],
+      "0509_s20_in_13": ["一团和气", "一模一样", "兔起鹘落"],
+      "0509_s21_in_12": [
+        "做小伏低",
+        "天南地北",
+        "归根结底",
+        "得意洋洋",
+        "忿忿不平",
+        "长吁短叹"
+      ],
+      "0509_s21_in_13": [
+        "一视同仁",
+        "出人头地",
+        "小题大做",
+        "无可厚非",
+        "日上三竿",
+        "轻手轻脚"
+      ],
+      "0509_s22_in_11": [
+        "妙手回春",
+        "德艺双馨",
+        "昂首挺胸",
+        "言过其实"
+      ],
+      "0509_s22_in_13": ["前车之鉴", "随心所欲"],
+      "0509_s23_in_12": [
+        "不知不觉",
+        "不置可否",
+        "举世无双",
+        "以假乱真",
+        "众所周知",
+        "凡夫俗子",
+        "呱呱坠地",
+        "差之毫釐，失之千里",
+        "持之以恆",
+        "未雨绸缪",
+        "水泄不通",
+        "漫山遍野",
+        "独具匠心",
+        "见风转舵",
+        "过目不忘"
+      ],
+      "0509_s23_in_13": [
+        "有钱有势",
+        "珠光宝气",
+        "钢筋铁骨"
+      ],
+      "0509_s24_in_12": [
+        "事半功倍",
+        "喜怒无常",
+        "忽冷忽热"
+      ],
+      "0509_s24_in_13": [
+        "囫囵吞枣",
+        "慢条斯理",
+        "汗流浃背",
+        "言传身教",
+        "量力而行"
+      ],
+      "0509_s25_in_13": [
+        "出其不意",
+        "千篇一律",
+        "哑口无言",
+        "哭笑不得",
+        "如释重负",
+        "孤注一掷",
+        "快人快语",
+        "标新立异",
+        "正襟危坐",
+        "正颜厉色",
+        "理直气壮",
+        "琳琅满目",
+        "胸有成竹",
+        "语重心长",
+        "蹑手蹑脚",
+        "迅雷不及掩耳",
+        "进德修业"
+      ]
+    };
 
-                if (currentTab === 'home') {
-                    homepage.style.display = 'block';
-                    displayRandomIdioms();
-                } else if (currentTab === 'normal') {
-                    normalSearchSection.style.display = 'block';
-                    searchInput.focus();
-                    displayNoResults('请输入成语进行查询');
-                } else if (currentTab === 'igcse') {
-                    normalSearchSection.style.display = 'none';
-                    displayIgcseIdioms();
-                } else if (currentTab === 'game') {
-                    normalSearchSection.style.display = 'none';
-                    gameContainer.style.display = 'block';
-                    initGame();
-                }
-            });
-        });
+    // 加载JSON数据
+    fetch('chengyu.json')
+      .then(response => response.json())
+      .then(data => {
+        allIdioms = data;
+        showHome();
+        showIgcseIdioms();
+      })
+      .catch(error => console.error('加载数据失败:', error));
 
-        // 加载数据文件
-            async function loadData() {
-                try {
-                    // 发起请求并等待响应
-                    const response = await fetch('chengyu.json');
+    // 显示首页随机成语
+    function showHome() {
+      const randomIds = shuffle(allIdioms).slice(0, 3);
+      const container = document.getElementById('random-idioms');
+      container.innerHTML = randomIds.map(idiom => `
+        <div class="idiom-card">
+          <h3>${idiom.idiom}</h3>
+          <p>${idiom.definition}</p>
+        </div>
+      `).join('');
+    }
 
-                    // 检查响应是否成功
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
+    // 搜索成语
+    function searchIdiom() {
+      const input = document.getElementById('search-input').value.trim();
+      const results = allIdioms.filter(idiom =>
+        idiom.idiom.includes(input) || idiom.definition.includes(input)
+      );
+      const container = document.getElementById('search-results');
+      container.innerHTML = results.length > 0 ?
+        results.map(idiom => `
+          <div class="idiom-card">
+            <h3>${idiom.idiom}</h3>
+            <p>${idiom.definition}</p>
+          </div>
+        `).join('') :
+        '<p>未找到相关成语</p>';
+    }
 
-                    // ✅ 正确解析 JSON 数据
-                    const extendedData = await response.json();
-
-                    // 假设 idiomsData 是全局变量，用于存储成语数据
-                    idiomsData = extendedData;  // 此时 extendedData 是真正的数组对象
-                    dataLoaded = true;
-                    console.log('成语数据加载成功，共加载', idiomsData.length, '条成语');
-
-                    // 如果当前是首页标签，刷新推荐成语
-                    if (currentTab === 'home') {
-                        displayRandomIdioms();
-                    }
-                } catch (error) {
-                    console.error('加载成语数据失败:', error);
-                    // 可选：在页面上提示用户
-                    if (currentTab === 'normal') {
-                        displayNoResults('数据加载失败，请刷新页面重试');
-                    }
-                }
-            }
-
-        // 显示随机推荐成语
-        function displayRandomIdioms() {
-            if (!dataLoaded) {
-                featuredIdioms.innerHTML = '<div class="loading">数据加载中...</div>';
-                return;
-            }
-
-            // 从所有成语中随机选择3个
-            const shuffled = [...idiomsData].sort(() => 0.5 - Math.random());
-            const selected = shuffled.slice(0, 3);
-            
-            featuredIdioms.innerHTML = '';
-            
-            selected.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'idiom-card';
-                
-                card.innerHTML = `
-                    <div class="idiom-featured">${item.idiom}</div>
-                    <div class="definition-featured">${item.definition}</div>
-                    ${item.source ? `<div class="source-featured">出自: ${item.source}</div>` : ''}
-                `;
-                
-                featuredIdioms.appendChild(card);
-            });
-        }
-
-        // 显示IGCSE真题成语
-        function displayIgcseIdioms() {
-            resultsContainer.innerHTML = '';
-            resultsInfo.textContent = `共 ${igcseData.length} 个IGCSE真题成语`;
-
-            // 按考试出处分组
-            const grouped = {};
-            igcseData.forEach(item => {
-                if (!grouped[item.source]) {
-                    grouped[item.source] = [];
-                }
-                grouped[item.source].push(item);
-            });
-
-            // 按考试时间排序
-            const sortedSources = Object.keys(grouped).sort();
-
-            sortedSources.forEach(source => {
-                const sourceHeader = document.createElement('h3');
-                sourceHeader.className = 'igcse-source-header';
-                sourceHeader.textContent = source;
-                resultsContainer.appendChild(sourceHeader);
-
-                grouped[source].forEach(item => {
-                    const resultItem = document.createElement('div');
-                    resultItem.className = 'result-item';
-                    
-                    resultItem.innerHTML = `
-                        <div class="idiom">${item.idiom}</div>
-                        <div class="definition">${item.definition}</div>
-                        <div class="exam-source">考试出处: ${item.source}</div>
-                    `;
-                    
-                    resultsContainer.appendChild(resultItem);
-                });
-            });
-        }
-
-        // 搜索函数
-        function searchIdioms() {
-            const query = searchInput.value.trim();
-            
-            if (!query) {
-                displayNoResults('请输入成语进行查询');
-                return;
-            }
-
-            if (!dataLoaded) {
-                resultsContainer.innerHTML = '<div class="loading">数据加载中，请稍候...</div>';
-                noResults.style.display = 'none';
-                return;
-            }
-
-            // 显示加载状态
-            resultsContainer.innerHTML = '<div class="loading">查询中...</div>';
-            noResults.style.display = 'none';
-
-            // 模拟搜索延迟
-            setTimeout(() => {
-                const results = idiomsData.filter(item => 
-                    item.idiom.includes(query) || 
-                    item.definition.includes(query)
-                );
-
-                // 同时检查是否在IGCSE数据中
-                const igcseMatch = igcseData.find(igcse => igcse.idiom === query);
-                if (igcseMatch) {
-                    // 如果查询的成语在IGCSE列表中，将其放在结果首位
-                    results.unshift({
-                        idiom: igcseMatch.idiom,
-                        definition: igcseMatch.definition,
-                        source: igcseMatch.source
-                    });
-                }
-
-                displayNormalResults(results, query);
-            }, 200);
-        }
-
-        // 显示普通搜索结果
-        function displayNormalResults(results, query) {
-            resultsContainer.innerHTML = '';
-            
-            if (results.length === 0) {
-                displayNoResults(`没有找到与 "${query}" 相关的成语`);
-                return;
-            }
-
-            resultsInfo.textContent = `找到 ${results.length} 个结果`;
-
-            results.forEach(item => {
-                const resultItem = document.createElement('div');
-                resultItem.className = 'result-item';
-                
-                // 高亮匹配的文本
-                const highlightedIdiom = item.idiom.replace(
-                    new RegExp(query, 'gi'), 
-                    match => `<mark style="background: #ffeb3b; padding: 2px 4px; border-radius: 3px;">${match}</mark>`
-                );
-                
-                const highlightedDefinition = item.definition.replace(
-                    new RegExp(query, 'gi'), 
-                    match => `<mark style="background: #ffeb3b; padding: 2px 4px; border-radius: 3px;">${match}</mark>`
-                );
-
-                resultItem.innerHTML = `
-                    <div class="idiom">${highlightedIdiom}</div>
-                    <div class="definition">${highlightedDefinition}</div>
-                    ${item.source ? `<div class="exam-source">IGCSE考试出处: ${item.source}</div>` : ''}
-                `;
-                
-                resultsContainer.appendChild(resultItem);
-            });
-        }
-
-        // 显示无结果状态
-        function displayNoResults(message) {
-            resultsContainer.innerHTML = '';
-            noResults.textContent = message;
-            noResults.style.display = 'block';
-            resultsInfo.textContent = '';
-        }
-
-        // 初始化成语游戏
-        function initGame() {
-            // 准备游戏数据
-            gameData = [];
-            currentQuestionIndex = 0;
-            score = 0;
-            selectedOption = null;
-            answered = false;
-
-            // 创建10道题目
-            for (let i = 0; i < 10; i++) {
-                // 随机选择一个成语作为正确答案
-                const allIdioms = [...idiomsData];
-                const correct = allIdioms[Math.floor(Math.random() * allIdioms.length)];
-                
-                // 创建干扰项（其他成语的释义）
-                const distractors = [];
-                while (distractors.length < 3) {
-                    const randomIdiom = allIdioms[Math.floor(Math.random() * allIdioms.length)];
-                    if (randomIdiom.idiom !== correct.idiom && !distractors.includes(randomIdiom.definition)) {
-                        distractors.push(randomIdiom.definition);
-                    }
-                }
-                
-                // 混合选项
-                const options = [correct.definition, ...distractors];
-                shuffleArray(options);
-                
-                gameData.push({
-                    question: `下列哪个成语的意思是：${correct.definition}`,
-                    correctAnswer: correct.idiom,
-                    options: options,
-                    explanation: `正确答案是：${correct.idiom}。`
-                });
-            }
-            
-            showQuestion();
-        }
-
-        // 显示当前题目
-        function showQuestion() {
-            gameContainer.innerHTML = `
-                <div class="score-display">得分：${score}/10</div>
-                <div class="game-question">${gameData[currentQuestionIndex].question}</div>
-                <div class="options" id="optionsContainer"></div>
-                <div class="feedback" id="feedback"></div>
-                <div class="game-controls">
-                    <button class="game-btn check-btn" id="checkBtn">确定</button>
-                    <button class="game-btn next-btn" id="nextBtn" style="display: none;">下一题</button>
-                    <button class="game-btn restart-btn" id="restartBtn" style="display: none;">重新开始</button>
+    // 显示IGCSE真题成语
+    function showIgcseIdioms() {
+      const container = document.getElementById('igcse-idioms');
+      container.innerHTML = Object.entries(igcseData).map(([exam, idioms]) => `
+        <div class="exam-section">
+          <h3>${exam}</h3>
+          <div class="idiom-list">
+            ${idioms.map(idiom => {
+              const item = allIdioms.find(i => i.idiom === idiom);
+              return `
+                <div class="idiom-item">
+                  <strong>${item.idiom}</strong>
+                  <p>释义：${item.definition}</p>
+                  <p>出处：${exam}</p>
                 </div>
-            `;
-            
-            const optionsContainer = document.getElementById('optionsContainer');
-            const options = gameData[currentQuestionIndex].options;
-            
-            options.forEach(option => {
-                const optionElement = document.createElement('div');
-                optionElement.className = 'option';
-                optionElement.textContent = option;
-                optionElement.addEventListener('click', () => selectOption(optionElement, option));
-                optionsContainer.appendChild(optionElement);
-            });
-            
-            document.getElementById('checkBtn').addEventListener('click', checkAnswer);
-            document.getElementById('nextBtn').addEventListener('click', nextQuestion);
-            document.getElementById('restartBtn').addEventListener('click', initGame);
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 初始化游戏
+    let currentQuestion = null;
+
+    function nextQuestion() {
+      const randomIdiom = allIdioms[Math.floor(Math.random() * allIdioms.length)];
+      const options = [randomIdiom.definition];
+
+      while (options.length < 4) {
+        const randomDef = allIdioms[Math.floor(Math.random() * allIdioms.length)].definition;
+        if (!options.includes(randomDef)) {
+          options.push(randomDef);
         }
+      }
 
-        // 选择选项
-        function selectOption(element, option) {
-            if (answered) return;
-            
-            // 清除之前的选择
-            document.querySelectorAll('.option').forEach(el => {
-                el.classList.remove('selected');
-            });
-            
-            element.classList.add('selected');
-            selectedOption = option;
-        }
+      shuffle(options);
 
-        // 检查答案
-        function checkAnswer() {
-            if (!selectedOption) {
-                document.getElementById('feedback').textContent = '请先选择一个答案！';
-                return;
-            }
-            
-            answered = true;
-            const options = document.querySelectorAll('.option');
-            const correctAnswer = gameData[currentQuestionIndex].correctAnswer;
-            let correctDefinition = '';
-            
-            // 找到正确的释义
-            gameData[currentQuestionIndex].options.forEach(opt => {
-                if (opt === gameData[currentQuestionIndex].options.find(o => o === gameData[currentQuestionIndex].options.find(x => x === gameData[currentQuestionIndex].options.find(y => y === gameData[currentQuestionIndex].options.find(z => z === gameData[currentQuestionIndex].options[0]))))) {
-                    const correctItem = idiomsData.find(item => item.definition === opt);
-                    if (correctItem && correctItem.idiom === correctAnswer) {
-                        correctDefinition = opt;
-                    }
-                }
-            });
-            
-            // 实际上更简单的方式是直接使用存储的正确答案
-            const correctItem = idiomsData.find(item => item.idiom === correctAnswer);
-            correctDefinition = correctItem.definition;
-            
-            options.forEach(option => {
-                if (option.textContent === correctDefinition) {
-                    option.classList.add('correct');
-                } else if (option.textContent === selectedOption && selectedOption !== correctDefinition) {
-                    option.classList.add('wrong');
-                }
-            });
-            
-            const feedback = document.getElementById('feedback');
-            if (selectedOption === correctDefinition) {
-                feedback.innerHTML = `<span style="color: #28a745;">回答正确！</span><br>${gameData[currentQuestionIndex].explanation}`;
-                score++;
-            } else {
-                feedback.innerHTML = `<span style="color: #dc3545;">回答错误！</span><br>${gameData[currentQuestionIndex].explanation}`;
-            }
-            
-            document.getElementById('checkBtn').style.display = 'none';
-            document.getElementById('nextBtn').style.display = 'inline-block';
-        }
+      currentQuestion = {
+        idiom: randomIdiom.idiom,
+        correctIndex: options.indexOf(randomIdiom.definition)
+      };
 
-        // 下一题
-        function nextQuestion() {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < gameData.length) {
-                answered = false;
-                selectedOption = null;
-                showQuestion();
-            } else {
-                showFinalScore();
-            }
-        }
+      document.getElementById('question').textContent = `请选择“${randomIdiom.idiom}”的正确释义：`;
+      document.getElementById('options').innerHTML = options.map((def, index) => `
+        <button class="option" onclick="checkAnswer(${index})">${def}</button>
+      `).join('');
+      document.getElementById('feedback').textContent = '';
+    }
 
-        // 显示最终得分
-        function showFinalScore() {
-            gameContainer.innerHTML = `
-                <div class="score-display" style="font-size: 2rem; margin: 30px 0;">最终得分：${score}/10</div>
-                <div style="text-align: center; margin: 20px 0;">
-                    ${score === 10 ? '<p style="color: #28a745; font-size: 1.2rem;">太棒了！你是成语大师！</p>' : 
-                      score >= 8 ? '<p style="color: #28a745; font-size: 1.2rem;">非常棒！成语掌握得很好！</p>' : 
-                      score >= 6 ? '<p style="color: #ffc107; font-size: 1.2rem;">不错！继续努力！</p>' : 
-                      '<p style="color: #dc3545; font-size: 1.2rem;">加油！多学习成语会有进步！</p>'}
-                </div>
-                <div class="game-controls">
-                    <button class="game-btn restart-btn" id="restartBtn">再试一次</button>
-                </div>
-            `;
-            document.getElementById('restartBtn').addEventListener('click', initGame);
-        }
+    function checkAnswer(selectedIndex) {
+      const feedback = document.getElementById('feedback');
+      if (selectedIndex === currentQuestion.correctIndex) {
+        feedback.textContent = '正确！🎉';
+        feedback.className = 'correct';
+      } else {
+        feedback.textContent = `错误。正确答案是：${allIdioms.find(i => i.idiom === currentQuestion.idiom).definition}`;
+        feedback.className = 'incorrect';
+      }
+    }
 
-        // 数组洗牌函数
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
+    // 辅助函数
+    function shuffle(array) {
+      return [...array].sort(() => Math.random() - 0.5);
+    }
 
-        // 事件监听
-        searchBtn.addEventListener('click', searchIdioms);
-        
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                searchIdioms();
-            }
-        });
+    // 标签页切换
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
 
-        // 页面加载完成后初始化
-        document.addEventListener('DOMContentLoaded', () => {
-            loadData();
-            
-            // 默认显示首页
-            displayRandomIdioms();
-        });
-    </script>
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    // 初始化首页
+    window.onload = showHome;
+  </script>
 </body>
 </html>
