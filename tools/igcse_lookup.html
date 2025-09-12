@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>成语应用（优化版）</title>
+  <title>IGCSE成语词典</title>
 
   <!-- Bootstrap 5 CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -149,12 +149,12 @@
 <body>
 
   <div class="container py-4">
-    <h1 class="text-center mb-4">成语应用</h1>
+    <h1 class="text-center mb-4">IGCSE成语词典</h1>
 
     <ul class="nav nav-tabs justify-content-center mb-4" id="myTabs">
       <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#home">首页</a></li>
       <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#dictionary">成语词典</a></li>
-      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#igcse">IGCSE真题</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#igcse">真题成语</a></li>
       <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#game">成语游戏</a></li>
     </ul>
 
@@ -178,7 +178,7 @@
 
       <!-- IGCSE真题 -->
       <div class="tab-pane fade" id="igcse">
-        <h2 class="text-center mb-4">IGCSE真题成语</h2>
+        <h2 class="text-center mb-4">真题成语</h2>
         <div id="igcse-idioms" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"></div>
       </div>
 
@@ -479,7 +479,7 @@
       const isCorrect = index === currentQuestion.correctIndex;
 
       if (isCorrect) {
-        feedback.textContent = '正确！🎉';
+        feedback.textContent = '正确！';
         feedback.className = 'feedback text-success';
 
         // 自动切换下一题（1秒后）
