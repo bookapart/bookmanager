@@ -173,13 +173,13 @@
           <input type="text" id="search-input" class="form-control w-75" placeholder="输入成语搜索..." />
           <button class="btn btn-primary ms-2" onclick="searchIdiom()">搜索</button>
         </div>
-        <div id="search-results"></div>
+        <div id="search-results" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"></div>
       </div>
 
       <!-- IGCSE真题 -->
       <div class="tab-pane fade" id="igcse">
         <h2 class="text-center mb-4">IGCSE真题成语</h2>
-        <div id="igcse-idioms"></div>
+        <div id="igcse-idioms" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"></div>
       </div>
 
       <!-- 成语游戏 -->
@@ -194,6 +194,7 @@
       </div>
 
     </div>
+    <p class="fs-6"><center>Copyright &copy; 2025 Mr. Z-Benjamin | 数据来源：中国成语大辞典 & IGCSE0509历年真题</center></p>
   </div>
 
   <!-- Bootstrap JS Bundle with Popper -->
@@ -382,18 +383,23 @@
       const container = document.getElementById('random-idioms');
       container.innerHTML = '';
       randomIds.forEach(idiom => {
-        const card = document.createElement('div');
-        card.className = 'col-md-4';
-        card.innerHTML = `
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="card-title">${idiom.idiom}</h5>
-              <p class="card-text">${idiom.definition}</p>
-            </div>
-          </div>
-        `;
-        container.appendChild(card);
+        renderCard(container, idiom.idiom, idiom.definition);
       });
+    }
+
+    // 渲染卡片函数
+    function renderCard(container, title, content) {
+      const col = document.createElement('div');
+      col.className = 'col';
+      col.innerHTML = `
+        <div class="card shadow-sm h-100">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">${title}</h5>
+            <p class="card-text mt-auto">${content}</p>
+          </div>
+        </div>
+      `;
+      container.appendChild(col);
     }
 
     // 高亮关键词函数
@@ -416,21 +422,13 @@
       container.innerHTML = '';
 
       if (results.length === 0) {
-        container.innerHTML = '<p class="text-muted">未找到相关成语。</p>';
+        container.innerHTML = '<p class="text-muted text-center">未找到相关成语。</p>';
       } else {
         results.forEach(idiom => {
           const highlightedIdiom = highlightText(idiom.idiom, input);
           const highlightedDef = highlightText(idiom.definition, input);
 
-          const card = document.createElement('div');
-          card.className = 'card mb-2 shadow-sm';
-          card.innerHTML = `
-            <div class="card-body">
-              <h6 class="card-title">${highlightedIdiom}</h6>
-              <p class="card-text">${highlightedDef}</p>
-            </div>
-          `;
-          container.appendChild(card);
+          renderCard(container, highlightedIdiom, highlightedDef);
         });
       }
     }
@@ -440,36 +438,14 @@
       const container = document.getElementById('igcse-idioms');
       container.innerHTML = '';
       Object.entries(igcseData).forEach(([exam, idioms]) => {
-        const section = document.createElement('div');
-        section.className = 'mb-4';
-        section.innerHTML = `<h4 class="text-info">${exam}</h4>`;
-        const list = document.createElement('div');
-
         idioms.forEach(idiomName => {
           const item = allIdioms.find(i => i.idiom === idiomName);
           if (item) {
-            const card = document.createElement('div');
-            card.className = 'card mb-2 shadow-sm';
-            card.innerHTML = `
-              <div class="card-body">
-                <h6 class="card-title">${item.idiom}</h6>
-                <p class="card-text"><strong>释义：</strong>${item.definition}</p>
-                <p class="card-text"><strong>出处：</strong>${exam}</p>
-              </div>
-            `;
-            list.appendChild(card);
+            renderCard(container, `${item.idiom}<br><small class="text-muted">出处：${exam}</small>`, item.definition);
           } else {
             console.warn(`IGCSE 中的成语 "${idiomName}" 未在 chengyu.json 中找到`);
           }
         });
-
-        if (list.children.length > 0) {
-          section.appendChild(list);
-        } else {
-          section.innerHTML += `<p class="text-muted">未找到对应成语。</p>`;
-        }
-
-        container.appendChild(section);
       });
     }
 
@@ -503,7 +479,7 @@
       const isCorrect = index === currentQuestion.correctIndex;
 
       if (isCorrect) {
-        feedback.textContent = '回答正确！';
+        feedback.textContent = '正确！🎉';
         feedback.className = 'feedback text-success';
 
         // 自动切换下一题（1秒后）
@@ -512,7 +488,7 @@
         }, 1000);
       } else {
         const correctDef = allIdioms.find(i => i.idiom === currentQuestion.idiom).definition;
-        feedback.textContent = `答错了，正确答案是：${correctDef}`;
+        feedback.textContent = `错误。正确答案是：${correctDef}`;
         feedback.className = 'feedback text-danger';
       }
     }
