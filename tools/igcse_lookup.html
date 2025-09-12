@@ -164,6 +164,14 @@
   font-weight: 500;
 }
 
+#current-score, #best-score {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.text-primary { color: #007bff; }
+.text-danger { color: #dc3545; }
+
   /* 响应式优化 */
   @media (max-width: 768px) {
     .card-title {
@@ -215,11 +223,24 @@
       <!-- 成语游戏 -->
       <div class="tab-pane fade" id="game">
         <h2 class="text-center mb-4">成语挑战</h2>
-        <div id="game-container" class="text-center">
-          <p id="question" class="lead"></p>
-          <div id="options" class="mb-3"></div>
-          <div class="feedback text-center" id="feedback"></div>
-          <button class="btn btn-outline-primary" onclick="nextQuestion()">下一题</button>
+
+          <!-- 计分栏 -->
+          <div class="text-center mb-3">
+            <span class="fs-5">当前得分：</span>
+            <strong id="current-score" class="text-primary fs-5">0</strong>
+            <span class="mx-3">|</span>
+            <span>最高分：</span>
+            <strong id="best-score" class="text-danger fs-5">0</strong>
+          </div>
+
+          <!-- 游戏主体 -->
+          <div id="game-container" class="text-center">
+            <p id="question" class="lead"></p>
+            <div id="options" class="mb-3"></div>
+            <div class="feedback text-center" id="feedback"></div>
+            <button class="btn btn-outline-primary" onclick="nextQuestion()">下一题</button>
+            <button class="btn btn-outline-secondary btn-sm" onclick="restartGame()">重新开始</button>
+          </div>
         </div>
       </div>
 
@@ -523,31 +544,59 @@
       const isCorrect = index === currentQuestion.correctIndex;
 
       if (isCorrect) {
-        // ✅ 答对
+        // ✅ 答对：加 10 分
+        currentScore += 10;
+        document.getElementById('current-score').textContent = currentScore;
+
+        // 更新最高分（如果需要）
+        if (currentScore > bestScore) {
+          bestScore = currentScore;
+          document.getElementById('best-score').textContent = bestScore;
+          localStorage.setItem('idiomGameBestScore', bestScore);
+        }
+
+        // 显示 Toast
         toastEl.classList.remove('bg-danger', 'text-white');
         toastEl.classList.add('bg-success', 'text-white');
-        toastBody.innerHTML = '正确！';
+        toastBody.innerHTML = '正确！+10 分';
+
+        // 自动进入下一题
+        setTimeout(() => {
+          nextQuestion();
+        }, 1000);
       } else {
-        // ❌ 答错
+        // ❌ 答错：不加分
         const correctDef = allIdioms.find(i => i.idiom === currentQuestion.idiom).definition;
         toastEl.classList.remove('bg-success', 'text-white');
         toastEl.classList.add('bg-danger', 'text-white');
-        toastBody.innerHTML = `错误。`;
+        toastBody.innerHTML = `错误。<small>${correctDef}</small>`;
       }
 
       // 显示 Toast
-      toast.hide(); // 防止重复触发
+      toast.hide();
       toast.show();
-
-      // 答对后自动下一题
-      if (isCorrect) {
-        setTimeout(nextQuestion, 1000);
-      }
     }
 
     // 辅助函数：洗牌
     function shuffle(array) {
       return [...array].sort(() => Math.random() - 0.5);
+    }
+
+    // 计分变量
+    let currentScore = 0;
+    let bestScore = parseInt(localStorage.getItem('idiomGameBestScore')) || 0;
+
+    // 页面加载后显示最高分
+    document.addEventListener('DOMContentLoaded', () => {
+      const bestScoreEl = document.getElementById('best-score');
+      if (bestScoreEl) {
+        bestScoreEl.textContent = bestScore;
+      }
+    });
+    function restartGame() {
+      currentScore = 0;
+      document.getElementById('current-score').textContent = currentScore;
+      nextQuestion();
     }
   </script>
 </body>
