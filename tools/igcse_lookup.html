@@ -3,32 +3,64 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>成语应用（Bootstrap版）</title>
+  <title>成语应用（优化版）</title>
 
   <!-- Bootstrap 5 CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
+    /* 自定义样式：蓝色主色调 */
     body {
-      font-family: 'Microsoft YaHei', '微软雅黑', sans-serif;
+      font-family: 'Microsoft YaHei', sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      color: #0d6efd; /* Bootstrap Primary 蓝色 */
+    }
+
+    .nav-tabs .nav-link.active {
+      background-color: #0d6efd;
+      color: white !important;
+    }
+
+    .nav-tabs .nav-link {
+      color: #0d6efd;
     }
 
     .card {
+      border-color: #0d6efd;
       transition: transform 0.2s ease;
     }
 
     .card:hover {
       transform: translateY(-2px);
+      border-color: #007bff;
     }
 
-    .option {
-      width: 100%;
-      margin-bottom: 0.5rem;
-    }
-
-    .feedback {
+    .card-title {
+      font-size: 1.25rem;
       font-weight: bold;
-      margin-top: 1rem;
+    }
+
+    .btn-primary {
+      background-color: #0d6efd;
+      border-color: #0d6efd;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+
+    .card-text strong {
+      color: #007bff;
+    }
+
+    mark {
+      background-color: #ffc107;
+      padding: 0 2px;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -88,9 +120,165 @@
   <script>
     let allIdioms = [];
     let igcseData = {
-      // 此处省略数据，与原问题一致
+      "0509_s16_in_11": [
+        "一成不变",
+        "一目了然",
+        "息息相关",
+        "日新月异",
+        "百思不解"
+      ],
+      "0509_s16_in_13": ["平心静气", "潜移默化"],
+      "0509_s17_in_11": [
+        "天昏地暗",
+        "山穷水尽",
+        "念念不忘",
+        "息息相关",
+        "无穷无尽",
+        "柳暗花明",
+        "随遇而安",
+        "青山绿水"
+      ],
+      "0509_s17_in_13": [
+        "不厌其烦",
+        "云泥之别",
+        "平淡无奇",
+        "截然不同",
+        "通宵达旦"
+      ],
+      "0509_s18_in_11": [
+        "古往今来",
+        "惶惶不安",
+        "游山玩水",
+        "特立独行",
+        "离经叛道"
+      ],
+      "0509_s18_in_13": [
+        "不知不觉",
+        "以己度人",
+        "多此一举",
+        "长此以往"
+      ],
+      "0509_s19_in_11": [
+        "不合时宜",
+        "人满为患",
+        "刀耕火种",
+        "崇山峻岭",
+        "成群结队",
+        "政出多门",
+        "浩浩荡荡",
+        "风土人情"
+      ],
+      "0509_s19_in_12": [
+        "一扫而空",
+        "半途而废",
+        "心血来潮",
+        "无论如何",
+        "欲速则不达",
+        "马不停蹄"
+      ],
+      "0509_s19_in_13": [
+        "一举一动",
+        "千千万万",
+        "千变万化",
+        "心有灵犀一点通",
+        "怡然自得",
+        "患得患失",
+        "无论如何",
+        "油盐酱醋",
+        "津津有味",
+        "海阔天空",
+        "甜言蜜语",
+        "郁郁葱葱"
+      ],
+      "0509_s20_in_11": [
+        "勤能补拙",
+        "十有八九",
+        "微不足道",
+        "无能为力",
+        "未雨绸缪",
+        "束手无策",
+        "独来独往"
+      ],
+      "0509_s20_in_13": ["一团和气", "一模一样", "兔起鹘落"],
+      "0509_s21_in_12": [
+        "做小伏低",
+        "天南地北",
+        "归根结底",
+        "得意洋洋",
+        "忿忿不平",
+        "长吁短叹"
+      ],
+      "0509_s21_in_13": [
+        "一视同仁",
+        "出人头地",
+        "小题大做",
+        "无可厚非",
+        "日上三竿",
+        "轻手轻脚"
+      ],
+      "0509_s22_in_11": [
+        "妙手回春",
+        "德艺双馨",
+        "昂首挺胸",
+        "言过其实"
+      ],
+      "0509_s22_in_13": ["前车之鉴", "随心所欲"],
+      "0509_s23_in_12": [
+        "不知不觉",
+        "不置可否",
+        "举世无双",
+        "以假乱真",
+        "众所周知",
+        "凡夫俗子",
+        "呱呱坠地",
+        "差之毫釐，失之千里",
+        "持之以恆",
+        "未雨绸缪",
+        "水泄不通",
+        "漫山遍野",
+        "独具匠心",
+        "见风转舵",
+        "过目不忘"
+      ],
+      "0509_s23_in_13": [
+        "有钱有势",
+        "珠光宝气",
+        "钢筋铁骨"
+      ],
+      "0509_s24_in_12": [
+        "事半功倍",
+        "喜怒无常",
+        "忽冷忽热"
+      ],
+      "0509_s24_in_13": [
+        "囫囵吞枣",
+        "慢条斯理",
+        "汗流浃背",
+        "言传身教",
+        "量力而行"
+      ],
+      "0509_s25_in_13": [
+        "出其不意",
+        "千篇一律",
+        "哑口无言",
+        "哭笑不得",
+        "如释重负",
+        "孤注一掷",
+        "快人快语",
+        "标新立异",
+        "正襟危坐",
+        "正颜厉色",
+        "理直气壮",
+        "琳琅满目",
+        "胸有成竹",
+        "语重心长",
+        "蹑手蹑脚",
+        "迅雷不及掩耳",
+        "进德修业"
+      ]
     };
 
+    // 加载 JSON 数据
     fetch('chengyu.json')
       .then(res => res.json())
       .then(data => {
@@ -98,7 +286,7 @@
         showHome();
         showIgcseIdioms();
 
-        // 监听 tab 切换事件，当切换到 #game 时自动加载第一题
+        // 监听 tab 切换事件，自动加载游戏第一题
         const tabEl = document.querySelector('#myTabs a[href="#game"]');
         tabEl.addEventListener('shown.bs.tab', () => {
           nextQuestion();
@@ -106,6 +294,7 @@
       })
       .catch(err => console.error('数据加载失败:', err));
 
+    // 显示首页随机成语
     function showHome() {
       const randomIds = shuffle(allIdioms).slice(0, 3);
       const container = document.getElementById('random-idioms');
@@ -125,21 +314,38 @@
       });
     }
 
+    // 高亮关键词函数
+    function highlightText(text, keyword) {
+      if (!keyword || !text) return text;
+
+      const escapeRegExp = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const pattern = new RegExp(`(${escapeRegExp(keyword)})`, 'gi');
+      return text.replace(pattern, '<mark>$1</mark>');
+    }
+
+    // 搜索成语
     function searchIdiom() {
       const input = document.getElementById('search-input').value.trim();
-      const results = allIdioms.filter(i => i.idiom.includes(input) || i.definition.includes(input));
+      const results = allIdioms.filter(idiom =>
+        idiom.idiom.toLowerCase().includes(input.toLowerCase()) ||
+        idiom.definition.toLowerCase().includes(input.toLowerCase())
+      );
       const container = document.getElementById('search-results');
       container.innerHTML = '';
+
       if (results.length === 0) {
         container.innerHTML = '<p class="text-muted">未找到相关成语。</p>';
       } else {
-        results.forEach(i => {
+        results.forEach(idiom => {
+          const highlightedIdiom = highlightText(idiom.idiom, input);
+          const highlightedDef = highlightText(idiom.definition, input);
+
           const card = document.createElement('div');
           card.className = 'card mb-2 shadow-sm';
           card.innerHTML = `
             <div class="card-body">
-              <h6 class="card-subtitle mb-2 text-muted">${i.idiom}</h6>
-              <p class="card-text">${i.definition}</p>
+              <h6 class="card-title">${highlightedIdiom}</h6>
+              <p class="card-text">${highlightedDef}</p>
             </div>
           `;
           container.appendChild(card);
@@ -147,6 +353,7 @@
       }
     }
 
+    // 显示 IGCSE 成语
     function showIgcseIdioms() {
       const container = document.getElementById('igcse-idioms');
       container.innerHTML = '';
@@ -155,31 +362,42 @@
         section.className = 'mb-4';
         section.innerHTML = `<h4 class="text-info">${exam}</h4>`;
         const list = document.createElement('div');
-        idioms.forEach(idiom => {
-          const item = allIdioms.find(i => i.idiom === idiom);
+
+        idioms.forEach(idiomName => {
+          const item = allIdioms.find(i => i.idiom === idiomName);
           if (item) {
             const card = document.createElement('div');
             card.className = 'card mb-2 shadow-sm';
             card.innerHTML = `
               <div class="card-body">
                 <h6 class="card-title">${item.idiom}</h6>
-                <p class="card-text">释义：${item.definition}</p>
-                <p class="card-text">出处：${exam}</p>
+                <p class="card-text"><strong>释义：</strong>${item.definition}</p>
+                <p class="card-text"><strong>出处：</strong>${exam}</p>
               </div>
             `;
             list.appendChild(card);
+          } else {
+            console.warn(`IGCSE 中的成语 "${idiomName}" 未在 chengyu.json 中找到`);
           }
         });
-        section.appendChild(list);
+
+        if (list.children.length > 0) {
+          section.appendChild(list);
+        } else {
+          section.innerHTML += `<p class="text-muted">未找到对应成语。</p>`;
+        }
+
         container.appendChild(section);
       });
     }
 
+    // 初始化游戏
     let currentQuestion = null;
 
     function nextQuestion() {
       const randomIdiom = allIdioms[Math.floor(Math.random() * allIdioms.length)];
       const options = [randomIdiom.definition];
+
       while (options.length < 4) {
         const def = allIdioms[Math.floor(Math.random() * allIdioms.length)].definition;
         if (!options.includes(def)) options.push(def);
@@ -210,8 +428,9 @@
       }
     }
 
-    function shuffle(arr) {
-      return [...arr].sort(() => Math.random() - 0.5);
+    // 辅助函数：洗牌
+    function shuffle(array) {
+      return [...array].sort(() => Math.random() - 0.5);
     }
   </script>
 </body>
