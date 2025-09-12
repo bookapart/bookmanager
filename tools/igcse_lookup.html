@@ -617,15 +617,21 @@
         // 加载数据文件
         async function loadData() {
             try {
+                // 直接使用你提供的 URL
                 const response = await fetch('chengyu.json');
+                
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
+
+                // 解析 JSON 数据，结果是一个数组
                 const data = await response.json();
-                return data; // 假设 chengyu.json 是一个成语数组或对象
+
+                // 返回解析后的数组
+                return data; 
             } catch (error) {
                 console.error('加载成语数据时出错:', error);
-                throw error; // 可根据需要决定是否抛出错误
+                throw error;
             }
         }
 
