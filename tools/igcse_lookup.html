@@ -563,13 +563,13 @@
         // 自动进入下一题
         setTimeout(() => {
           nextQuestion();
-        }, 1000);
+        }, 300);
       } else {
         // ❌ 答错：不加分
         const correctDef = allIdioms.find(i => i.idiom === currentQuestion.idiom).definition;
         toastEl.classList.remove('bg-success', 'text-white');
         toastEl.classList.add('bg-danger', 'text-white');
-        toastBody.innerHTML = `错误。<small>${correctDef}</small>`;
+        toastBody.innerHTML = `错误。`;
       }
 
       // 显示 Toast
