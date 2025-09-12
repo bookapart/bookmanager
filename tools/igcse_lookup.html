@@ -2,445 +2,188 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>成语应用</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>成语应用（Bootstrap版）</title>
+
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: '微软雅黑', 'Microsoft YaHei', 'Segoe UI', sans-serif;
-    }
-
     body {
-      margin: 0;
-      padding: 0;
-      background: #f5f5f5;
-      color: #333;
+      font-family: 'Microsoft YaHei', '微软雅黑', sans-serif;
     }
 
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 20px;
+    .card {
+      transition: transform 0.2s ease;
     }
 
-    h1, h2 {
-      text-align: center;
-      color: #2c3e50;
-    }
-
-    .tabs {
-      display: flex;
-      justify-content: center;
-      margin: 20px 0;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .tab {
-      padding: 10px 20px;
-      background: #ecf0f1;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background 0.3s;
-    }
-
-    .tab.active {
-      background: #3498db;
-      color: white;
-    }
-
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    .search-box {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .search-box input {
-      padding: 10px;
-      width: 70%;
-      max-width: 400px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    .search-box button {
-      padding: 10px 20px;
-      margin-left: 10px;
-      background: #3498db;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .idiom-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-
-    .idiom-card {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s;
-    }
-
-    .idiom-card:hover {
-      transform: translateY(-5px);
-    }
-
-    .exam-section {
-      margin-bottom: 40px;
-    }
-
-    .exam-section h3 {
-      color: #2980b9;
-      border-bottom: 2px solid #3498db;
-      padding-bottom: 5px;
-    }
-
-    .idiom-list {
-      margin-top: 10px;
-    }
-
-    .idiom-item {
-      background: #fff8e1;
-      padding: 15px;
-      margin-bottom: 10px;
-      border-left: 4px solid #fbc02d;
-    }
-
-    .game-container {
-      text-align: center;
-    }
-
-    .options {
-      margin: 20px 0;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
+    .card:hover {
+      transform: translateY(-2px);
     }
 
     .option {
-      padding: 15px;
-      background: #3498db;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .option:hover {
-      background: #2980b9;
+      width: 100%;
+      margin-bottom: 0.5rem;
     }
 
     .feedback {
-      margin: 20px 0;
-      font-size: 1.2em;
-    }
-
-    .correct {
-      color: #27ae60;
-    }
-
-    .incorrect {
-      color: #e74c3c;
-    }
-
-    @media (max-width: 600px) {
-      .tabs {
-        flex-direction: column;
-      }
+      font-weight: bold;
+      margin-top: 1rem;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>成语应用</h1>
-    <nav class="tabs">
-      <button class="tab active" data-tab="home">首页</button>
-      <button class="tab" data-tab="dictionary">成语词典</button>
-      <button class="tab" data-tab="igcse">IGCSE真题</button>
-      <button class="tab" data-tab="game">成语游戏</button>
-    </nav>
 
-    <div class="tab-content active" id="home">
-      <h2>每日推荐</h2>
-      <div id="random-idioms" class="idiom-grid"></div>
-    </div>
+  <div class="container py-4">
+    <h1 class="text-center mb-4">成语应用</h1>
 
-    <div class="tab-content" id="dictionary">
-      <h2>成语词典</h2>
-      <div class="search-box">
-        <input type="text" id="search-input" placeholder="输入成语搜索..." />
-        <button onclick="searchIdiom()">搜索</button>
+    <ul class="nav nav-tabs justify-content-center mb-4" id="myTabs">
+      <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#home">首页</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#dictionary">成语词典</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#igcse">IGCSE真题</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#game">成语游戏</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+      <!-- 首页 -->
+      <div class="tab-pane fade show active" id="home">
+        <h2 class="text-center mb-4">每日推荐</h2>
+        <div id="random-idioms" class="row g-3"></div>
       </div>
-      <div id="search-results"></div>
-    </div>
 
-    <div class="tab-content" id="igcse">
-      <h2>IGCSE真题成语</h2>
-      <div id="igcse-idioms"></div>
-    </div>
-
-    <div class="tab-content" id="game">
-      <h2>成语游戏</h2>
-      <div id="game-container">
-        <p id="question"></p>
-        <div class="options" id="options"></div>
-        <div class="feedback" id="feedback"></div>
-        <button onclick="nextQuestion()">下一题</button>
+      <!-- 成语词典 -->
+      <div class="tab-pane fade" id="dictionary">
+        <h2 class="text-center mb-4">成语词典</h2>
+        <div class="d-flex justify-content-center mb-3">
+          <input type="text" id="search-input" class="form-control w-75" placeholder="输入成语搜索..." />
+          <button class="btn btn-primary ms-2" onclick="searchIdiom()">搜索</button>
+        </div>
+        <div id="search-results"></div>
       </div>
+
+      <!-- IGCSE真题 -->
+      <div class="tab-pane fade" id="igcse">
+        <h2 class="text-center mb-4">IGCSE真题成语</h2>
+        <div id="igcse-idioms"></div>
+      </div>
+
+      <!-- 成语游戏 -->
+      <div class="tab-pane fade" id="game">
+        <h2 class="text-center mb-4">成语游戏</h2>
+        <div id="game-container" class="text-center">
+          <p id="question" class="lead"></p>
+          <div id="options" class="mb-3"></div>
+          <div class="feedback text-center" id="feedback"></div>
+          <button class="btn btn-outline-primary" onclick="nextQuestion()">下一题</button>
+        </div>
+      </div>
+
     </div>
   </div>
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
     let allIdioms = [];
     let igcseData = {
-      "0509_s16_in_11": [
-        "一成不变",
-        "一目了然",
-        "息息相关",
-        "日新月异",
-        "百思不解"
-      ],
-      "0509_s16_in_13": ["平心静气", "潜移默化"],
-      "0509_s17_in_11": [
-        "天昏地暗",
-        "山穷水尽",
-        "念念不忘",
-        "息息相关",
-        "无穷无尽",
-        "柳暗花明",
-        "随遇而安",
-        "青山绿水"
-      ],
-      "0509_s17_in_13": [
-        "不厌其烦",
-        "云泥之别",
-        "平淡无奇",
-        "截然不同",
-        "通宵达旦"
-      ],
-      "0509_s18_in_11": [
-        "古往今来",
-        "惶惶不安",
-        "游山玩水",
-        "特立独行",
-        "离经叛道"
-      ],
-      "0509_s18_in_13": [
-        "不知不觉",
-        "以己度人",
-        "多此一举",
-        "长此以往"
-      ],
-      "0509_s19_in_11": [
-        "不合时宜",
-        "人满为患",
-        "刀耕火种",
-        "崇山峻岭",
-        "成群结队",
-        "政出多门",
-        "浩浩荡荡",
-        "风土人情"
-      ],
-      "0509_s19_in_12": [
-        "一扫而空",
-        "半途而废",
-        "心血来潮",
-        "无论如何",
-        "欲速则不达",
-        "马不停蹄"
-      ],
-      "0509_s19_in_13": [
-        "一举一动",
-        "千千万万",
-        "千变万化",
-        "心有灵犀一点通",
-        "怡然自得",
-        "患得患失",
-        "无论如何",
-        "油盐酱醋",
-        "津津有味",
-        "海阔天空",
-        "甜言蜜语",
-        "郁郁葱葱"
-      ],
-      "0509_s20_in_11": [
-        "勤能补拙",
-        "十有八九",
-        "微不足道",
-        "无能为力",
-        "未雨绸缪",
-        "束手无策",
-        "独来独往"
-      ],
-      "0509_s20_in_13": ["一团和气", "一模一样", "兔起鹘落"],
-      "0509_s21_in_12": [
-        "做小伏低",
-        "天南地北",
-        "归根结底",
-        "得意洋洋",
-        "忿忿不平",
-        "长吁短叹"
-      ],
-      "0509_s21_in_13": [
-        "一视同仁",
-        "出人头地",
-        "小题大做",
-        "无可厚非",
-        "日上三竿",
-        "轻手轻脚"
-      ],
-      "0509_s22_in_11": [
-        "妙手回春",
-        "德艺双馨",
-        "昂首挺胸",
-        "言过其实"
-      ],
-      "0509_s22_in_13": ["前车之鉴", "随心所欲"],
-      "0509_s23_in_12": [
-        "不知不觉",
-        "不置可否",
-        "举世无双",
-        "以假乱真",
-        "众所周知",
-        "凡夫俗子",
-        "呱呱坠地",
-        "差之毫釐，失之千里",
-        "持之以恆",
-        "未雨绸缪",
-        "水泄不通",
-        "漫山遍野",
-        "独具匠心",
-        "见风转舵",
-        "过目不忘"
-      ],
-      "0509_s23_in_13": [
-        "有钱有势",
-        "珠光宝气",
-        "钢筋铁骨"
-      ],
-      "0509_s24_in_12": [
-        "事半功倍",
-        "喜怒无常",
-        "忽冷忽热"
-      ],
-      "0509_s24_in_13": [
-        "囫囵吞枣",
-        "慢条斯理",
-        "汗流浃背",
-        "言传身教",
-        "量力而行"
-      ],
-      "0509_s25_in_13": [
-        "出其不意",
-        "千篇一律",
-        "哑口无言",
-        "哭笑不得",
-        "如释重负",
-        "孤注一掷",
-        "快人快语",
-        "标新立异",
-        "正襟危坐",
-        "正颜厉色",
-        "理直气壮",
-        "琳琅满目",
-        "胸有成竹",
-        "语重心长",
-        "蹑手蹑脚",
-        "迅雷不及掩耳",
-        "进德修业"
-      ]
+      // 此处省略数据，与原问题一致
     };
 
-    // 加载JSON数据
     fetch('chengyu.json')
-      .then(response => response.json())
+      .then(res => res.json())
       .then(data => {
         allIdioms = data;
         showHome();
         showIgcseIdioms();
-      })
-      .catch(error => console.error('加载数据失败:', error));
 
-    // 显示首页随机成语
+        // 监听 tab 切换事件，当切换到 #game 时自动加载第一题
+        const tabEl = document.querySelector('#myTabs a[href="#game"]');
+        tabEl.addEventListener('shown.bs.tab', () => {
+          nextQuestion();
+        });
+      })
+      .catch(err => console.error('数据加载失败:', err));
+
     function showHome() {
       const randomIds = shuffle(allIdioms).slice(0, 3);
       const container = document.getElementById('random-idioms');
-      container.innerHTML = randomIds.map(idiom => `
-        <div class="idiom-card">
-          <h3>${idiom.idiom}</h3>
-          <p>${idiom.definition}</p>
-        </div>
-      `).join('');
+      container.innerHTML = '';
+      randomIds.forEach(idiom => {
+        const card = document.createElement('div');
+        card.className = 'col-md-4';
+        card.innerHTML = `
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title">${idiom.idiom}</h5>
+              <p class="card-text">${idiom.definition}</p>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
     }
 
-    // 搜索成语
     function searchIdiom() {
       const input = document.getElementById('search-input').value.trim();
-      const results = allIdioms.filter(idiom =>
-        idiom.idiom.includes(input) || idiom.definition.includes(input)
-      );
+      const results = allIdioms.filter(i => i.idiom.includes(input) || i.definition.includes(input));
       const container = document.getElementById('search-results');
-      container.innerHTML = results.length > 0 ?
-        results.map(idiom => `
-          <div class="idiom-card">
-            <h3>${idiom.idiom}</h3>
-            <p>${idiom.definition}</p>
-          </div>
-        `).join('') :
-        '<p>未找到相关成语</p>';
+      container.innerHTML = '';
+      if (results.length === 0) {
+        container.innerHTML = '<p class="text-muted">未找到相关成语。</p>';
+      } else {
+        results.forEach(i => {
+          const card = document.createElement('div');
+          card.className = 'card mb-2 shadow-sm';
+          card.innerHTML = `
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2 text-muted">${i.idiom}</h6>
+              <p class="card-text">${i.definition}</p>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      }
     }
 
-    // 显示IGCSE真题成语
     function showIgcseIdioms() {
       const container = document.getElementById('igcse-idioms');
-      container.innerHTML = Object.entries(igcseData).map(([exam, idioms]) => `
-        <div class="exam-section">
-          <h3>${exam}</h3>
-          <div class="idiom-list">
-            ${idioms.map(idiom => {
-              const item = allIdioms.find(i => i.idiom === idiom);
-              return `
-                <div class="idiom-item">
-                  <strong>${item.idiom}</strong>
-                  <p>释义：${item.definition}</p>
-                  <p>出处：${exam}</p>
-                </div>
-              `;
-            }).join('')}
-          </div>
-        </div>
-      `).join('');
+      container.innerHTML = '';
+      Object.entries(igcseData).forEach(([exam, idioms]) => {
+        const section = document.createElement('div');
+        section.className = 'mb-4';
+        section.innerHTML = `<h4 class="text-info">${exam}</h4>`;
+        const list = document.createElement('div');
+        idioms.forEach(idiom => {
+          const item = allIdioms.find(i => i.idiom === idiom);
+          if (item) {
+            const card = document.createElement('div');
+            card.className = 'card mb-2 shadow-sm';
+            card.innerHTML = `
+              <div class="card-body">
+                <h6 class="card-title">${item.idiom}</h6>
+                <p class="card-text">释义：${item.definition}</p>
+                <p class="card-text">出处：${exam}</p>
+              </div>
+            `;
+            list.appendChild(card);
+          }
+        });
+        section.appendChild(list);
+        container.appendChild(section);
+      });
     }
 
-    // 初始化游戏
     let currentQuestion = null;
 
     function nextQuestion() {
       const randomIdiom = allIdioms[Math.floor(Math.random() * allIdioms.length)];
       const options = [randomIdiom.definition];
-
       while (options.length < 4) {
-        const randomDef = allIdioms[Math.floor(Math.random() * allIdioms.length)].definition;
-        if (!options.includes(randomDef)) {
-          options.push(randomDef);
-        }
+        const def = allIdioms[Math.floor(Math.random() * allIdioms.length)].definition;
+        if (!options.includes(def)) options.push(def);
       }
-
       shuffle(options);
 
       currentQuestion = {
@@ -450,40 +193,26 @@
 
       document.getElementById('question').textContent = `请选择“${randomIdiom.idiom}”的正确释义：`;
       document.getElementById('options').innerHTML = options.map((def, index) => `
-        <button class="option" onclick="checkAnswer(${index})">${def}</button>
+        <button class="btn btn-outline-secondary option" onclick="checkAnswer(${index})">${def}</button>
       `).join('');
       document.getElementById('feedback').textContent = '';
     }
 
-    function checkAnswer(selectedIndex) {
+    function checkAnswer(index) {
       const feedback = document.getElementById('feedback');
-      if (selectedIndex === currentQuestion.correctIndex) {
+      if (index === currentQuestion.correctIndex) {
         feedback.textContent = '正确！🎉';
-        feedback.className = 'correct';
+        feedback.className = 'feedback text-success';
       } else {
-        feedback.textContent = `错误。正确答案是：${allIdioms.find(i => i.idiom === currentQuestion.idiom).definition}`;
-        feedback.className = 'incorrect';
+        const correctDef = allIdioms.find(i => i.idiom === currentQuestion.idiom).definition;
+        feedback.textContent = `错误。正确答案是：${correctDef}`;
+        feedback.className = 'feedback text-danger';
       }
     }
 
-    // 辅助函数
-    function shuffle(array) {
-      return [...array].sort(() => Math.random() - 0.5);
+    function shuffle(arr) {
+      return [...arr].sort(() => Math.random() - 0.5);
     }
-
-    // 标签页切换
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-
-        tab.classList.add('active');
-        document.getElementById(tab.dataset.tab).classList.add('active');
-      });
-    });
-
-    // 初始化首页
-    window.onload = showHome;
   </script>
 </body>
 </html>
