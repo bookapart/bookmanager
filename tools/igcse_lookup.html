@@ -147,19 +147,22 @@
     border-color: #aaa;
     color: #000;
   }
-  #check-toast {
-      min-width: 200px;
-      max-width: 300px;
-      border: none;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
+#check-toast {
+  min-width: 240px;
+  max-width: 320px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  /* 避免被其他元素遮挡 */
+  pointer-events: auto;
+}
 
-    #toast-body {
-      padding: 0.75rem 1rem;
-      font-size: 0.95rem;
-      line-height: 1.4;
-    }
+#toast-body {
+  padding: 1rem;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  font-weight: 500;
+}
 
   /* 响应式优化 */
   @media (max-width: 768px) {
@@ -224,10 +227,10 @@
     <p class="fs-6"><center>Copyright &copy; 2025 Mr. Z-Benjamin | 数据来源：中国成语大辞典 & IGCSE0509历年真题</center></p>
   </div>
 
-  <!-- Toast 位置：固定在右上角，不遮挡主要内容 -->
-<div aria-live="polite" aria-atomic="true" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050; top: 1rem; right: 1rem;">
+<!-- 居中 Toast 容器 -->
+<div aria-live="polite" aria-atomic="true" class="position-fixed top-50 start-50 translate-middle" style="z-index: 1050;">
   <div id="check-toast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="2000">
-    <div id="toast-body" class="d-flex align-items-center"></div>
+    <div id="toast-body" class="d-flex align-items-center justify-content-center text-center"></div>
   </div>
 </div>
 
@@ -520,27 +523,25 @@
       const isCorrect = index === currentQuestion.correctIndex;
 
       if (isCorrect) {
-        // ✅ 答对：绿色背景
+        // ✅ 答对
         toastEl.classList.remove('bg-danger', 'text-white');
         toastEl.classList.add('bg-success', 'text-white');
         toastBody.innerHTML = '正确！';
       } else {
-        // ❌ 答错：红色背景，显示正确答案
+        // ❌ 答错
         const correctDef = allIdioms.find(i => i.idiom === currentQuestion.idiom).definition;
         toastEl.classList.remove('bg-success', 'text-white');
         toastEl.classList.add('bg-danger', 'text-white');
-        toastBody.innerHTML = `错误。正确答案是：<br><small>${correctDef}</small>`;
+        toastBody.innerHTML = `错误。<br><small>${correctDef}</small>`;
       }
 
       // 显示 Toast
-      toast.hide(); // 先隐藏（防止重复触发）
+      toast.hide(); // 防止重复触发
       toast.show();
 
-      // ✅ 答对后自动进入下一题
+      // 答对后自动下一题
       if (isCorrect) {
-        setTimeout(() => {
-          nextQuestion();
-        }, 1000);
+        setTimeout(nextQuestion, 1000);
       }
     }
 
