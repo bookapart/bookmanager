@@ -532,7 +532,7 @@
         const correctDef = allIdioms.find(i => i.idiom === currentQuestion.idiom).definition;
         toastEl.classList.remove('bg-success', 'text-white');
         toastEl.classList.add('bg-danger', 'text-white');
-        toastBody.innerHTML = `错误。<br><small>${correctDef}</small>`;
+        toastBody.innerHTML = `错误。<small>${correctDef}</small>`;
       }
 
       // 显示 Toast
