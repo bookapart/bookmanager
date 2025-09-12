@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>成语查询</title>
+    <title>IGCSE成语词典</title>
     <style>
         * {
             margin: 0;
@@ -45,6 +45,33 @@
         .subtitle {
             font-weight: 300;
             opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .tab {
+            padding: 15px 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            background: white;
+        }
+
+        .tab:hover:not(.active) {
+            color: #5a6fd8;
+            background: #e9ecef;
         }
 
         .search-section {
@@ -117,7 +144,6 @@
             border-left: 4px solid #667eea;
             border-radius: 8px;
             transition: all 0.3s ease;
-            cursor: pointer;
         }
 
         .result-item:hover {
@@ -136,6 +162,13 @@
             color: #6c757d;
             font-size: 14px;
             line-height: 1.5;
+        }
+
+        .exam-source {
+            color: #dc3545;
+            font-size: 13px;
+            margin-top: 5px;
+            font-style: italic;
         }
 
         .no-results {
@@ -187,7 +220,12 @@
             <p class="subtitle">探索中华文化的智慧结晶</p>
         </header>
 
-        <div class="search-section">
+        <div class="tabs">
+            <div class="tab active" data-tab="normal">成语查询</div>
+            <div class="tab" data-tab="igcse">IGCSE真题成语</div>
+        </div>
+
+        <div id="normal-search-section" class="search-section">
             <div class="search-box">
                 <input type="text" class="search-input" id="searchInput" placeholder="请输入要查询的成语..." autofocus>
                 <button class="search-btn" id="searchBtn">查询</button>
@@ -196,25 +234,176 @@
         </div>
 
         <div class="results-container" id="resultsContainer">
-            <div class="no-results" id="noResults">请输入成语进行查询</div>
+            <div class="no-results" id="noResults">请选择功能进行查询</div>
         </div>
 
         <footer>
-            <p>成语查询应用 © 2025 | 数据来源：成语词典</p>
+            <p>IGCSE成语词典 © 2025 Mr. Z-Benjamin | 数据来源：中国成语大辞典 & IGCSE 0509真题</p>
         </footer>
     </div>
 
     <script>
-        // 全局变量存储成语数据
+        // 全局变量
         let idiomsData = [];
         let dataLoaded = false;
+        let igcseData = [];
+        let currentTab = 'normal';
+
+        // IGCSE真题成语数据
+        igcseData = [
+            { idiom: "一成不变", definition: "形容已经形成了，不再改变。", source: "0509_s16_in_11" },
+            { idiom: "一目了然", definition: "一眼就能看清楚。", source: "0509_s16_in_11" },
+            { idiom: "息息相关", definition: "呼吸相关联，比喻关系密切。", source: "0509_s16_in_11" },
+            { idiom: "日新月异", definition: "每天每月都有新的变化，形容进步、发展很快。", source: "0509_s16_in_11" },
+            { idiom: "百思不解", definition: "反复思索，仍然不能理解。", source: "0509_s16_in_11" },
+            { idiom: "平心静气", definition: "心情平和，态度冷静。", source: "0509_s16_in_13" },
+            { idiom: "潜移默化", definition: "指人的思想或性格受其他方面的感染而不知不觉地起了变化。", source: "0509_s16_in_13" },
+            { idiom: "天昏地暗", definition: "天地都昏暗了，形容天色十分昏暗。也形容社会黑暗或秩序混乱。", source: "0509_s17_in_11" },
+            { idiom: "山穷水尽", definition: "山和水都到了尽头，无路可走，比喻陷入绝境。", source: "0509_s17_in_11" },
+            { idiom: "念念不忘", definition: "形容牢记在心，时刻不忘。", source: "0509_s17_in_11" },
+            { idiom: "无穷无尽", definition: "没有止境，没有限度。", source: "0509_s17_in_11" },
+            { idiom: "柳暗花明", definition: "形容绿柳成荫，繁花似锦的景象。也比喻在困难中遇到转机。", source: "0509_s17_in_11" },
+            { idiom: "随遇而安", definition: "能适应各种环境，在任何环境中都能满足。", source: "0509_s17_in_11" },
+            { idiom: "青山绿水", definition: "青色的山，绿色的水，形容秀丽的景色。", source: "0509_s17_in_11" },
+            { idiom: "不厌其烦", definition: "不嫌麻烦。", source: "0509_s18_in_11" },
+            { idiom: "云泥之别", definition: "像天上的云和地上的泥，差别极大。", source: "0509_s18_in_11" },
+            { idiom: "平淡无奇", definition: "平平常常，没有什么奇特的地方。", source: "0509_s18_in_11" },
+            { idiom: "截然不同", definition: "形容界限分明，像割断一样，一点也不相同。", source: "0509_s18_in_11" },
+            { idiom: "通宵达旦", definition: "整整一夜，从天黑到天亮。", source: "0509_s18_in_11" },
+            { idiom: "古往今来", definition: "从古到今。", source: "0509_s18_in_11" },
+            { idiom: "惶惶不安", definition: "内心害怕，十分不安。", source: "0509_s18_in_11" },
+            { idiom: "游山玩水", definition: "游览山水风景。", source: "0509_s18_in_11" },
+            { idiom: "特立独行", definition: "形容人的志行高洁，不随波逐流。", source: "0509_s18_in_11" },
+            { idiom: "离经叛道", definition: "原指违反封建统治阶级所尊奉的经典和道德。现多比喻背离占主导地位的理论或学说。", source: "0509_s18_in_11" },
+            { idiom: "不知不觉", definition: "没有觉察到，没有意识到。", source: "0509_s18_in_13" },
+            { idiom: "以己度人", definition: "用自己的心思（多指不好的）去推测别人的心思。", source: "0509_s18_in_13" },
+            { idiom: "多此一举", definition: "做不必要的、多余的事情。", source: "0509_s18_in_13" },
+            { idiom: "长此以往", definition: "长期这样下去（多指不好的情况）。", source: "0509_s18_in_13" },
+            { idiom: "不合时宜", definition: "不符合当时的情况或社会潮流。", source: "0509_s19_in_11" },
+            { idiom: "人满为患", definition: "因人多造成了困难。", source: "0509_s19_in_11" },
+            { idiom: "刀耕火种", definition: "一种原始的耕种方法。", source: "0509_s19_in_11" },
+            { idiom: "崇山峻岭", definition: "高大陡峭的山岭。", source: "0509_s19_in_11" },
+            { idiom: "成群结队", definition: "一群群人集合在一起。", source: "0509_s19_in_11" },
+            { idiom: "政出多门", definition: "行政权力出自多个部门，形容领导不力，意见不统一。", source: "0509_s19_in_11" },
+            { idiom: "浩浩荡荡", definition: "原形容水势广阔浩大。后多形容队伍或气势盛大。", source: "0509_s19_in_11" },
+            { idiom: "风土人情", definition: "一个地方特有的自然环境和风俗、礼节、习惯的总称。", source: "0509_s19_in_11" },
+            { idiom: "一扫而空", definition: "一下子便扫除干净。比喻彻底清除。", source: "0509_s19_in_12" },
+            { idiom: "半途而废", definition: "事情没做完就停止了。", source: "0509_s19_in_12" },
+            { idiom: "心血来潮", definition: "突然产生某种念头。", source: "0509_s19_in_12" },
+            { idiom: "无论如何", definition: "不管怎样。表示不管条件怎样变化，其结果都不会改变。", source: "0509_s19_in_12" },
+            { idiom: "欲速则不达", definition: "过于性急反而不能达到目的。", source: "0509_s19_in_12" },
+            { idiom: "马不停蹄", definition: "比喻一刻也不停留，一直前进。", source: "0509_s19_in_12" },
+            { idiom: "一举一动", definition: "指人的每一个行为举动。", source: "0509_s19_in_13" },
+            { idiom: "千千万万", definition: "形容数量极多。", source: "0509_s19_in_13" },
+            { idiom: "千变万化", definition: "形容变化非常多，没有穷尽。", source: "0509_s19_in_13" },
+            { idiom: "心有灵犀一点通", definition: "比喻恋爱着的双方心灵相通，对彼此的心意都能领会。", source: "0509_s19_in_13" },
+            { idiom: "怡然自得", definition: "形容高兴而满足的样子。", source: "0509_s19_in_13" },
+            { idiom: "患得患失", definition: "担心得不到，得到了又担心失掉。形容对个人得失看得太重。", source: "0509_s19_in_13" },
+            { idiom: "油盐酱醋", definition: "泛指烹饪用的调味品。也比喻平淡琐碎的事情或无关紧要的事物。", source: "0509_s19_in_13" },
+            { idiom: "津津有味", definition: "形容有滋味或有趣味。", source: "0509_s19_in_13" },
+            { idiom: "海阔天空", definition: "形容大自然的广阔。也比喻想象或说话毫无拘束，漫无边际。", source: "0509_s19_in_13" },
+            { idiom: "甜言蜜语", definition: "为了讨人喜欢或哄骗人而说的好听的话。", source: "0509_s19_in_13" },
+            { idiom: "郁郁葱葱", definition: "（草木）苍翠茂盛。", source: "0509_s19_in_13" },
+            { idiom: "勤能补拙", definition: "勤奋能够弥补笨拙的不足。", source: "0509_s20_in_11" },
+            { idiom: "十有八九", definition: "十件事情中有八九件是这样，指非常可能。", source: "0509_s20_in_11" },
+            { idiom: "微不足道", definition: "非常渺小，不值得一提。", source: "0509_s20_in_11" },
+            { idiom: "无能为力", definition: "用不上力量，没有能力做好某事。", source: "0509_s20_in_11" },
+            { idiom: "未雨绸缪", definition: "趁着天没下雨，先修缮房屋门窗。比喻事先做好准备。", source: "0509_s20_in_11" },
+            { idiom: "束手无策", definition: "形容遇到问题时毫无解决的办法。", source: "0509_s20_in_11" },
+            { idiom: "独来独往", definition: "独自来往，没有伴侣。形容人性格孤僻。", source: "0509_s20_in_11" },
+            { idiom: "一团和气", definition: "原指态度和蔼可亲。现多指互相之间只讲和气，不讲原则。", source: "0509_s20_in_13" },
+            { idiom: "一模一样", definition: "形容完全相同，没有什么两样。", source: "0509_s20_in_13" },
+            { idiom: "兔起鹘落", definition: "兔子刚起来跑，鹘就落下来抓。比喻动作敏捷。也比喻作书画时笔势流畅。", source: "0509_s20_in_13" },
+            { idiom: "做小伏低", definition: "形容低声下气，巴结奉承。", source: "0509_s21_in_12" },
+            { idiom: "天南地北", definition: "形容距离遥远，也指谈话漫无边际。", source: "0509_s21_in_12" },
+            { idiom: "归根结底", definition: "归结到根本上。", source: "0509_s21_in_12" },
+            { idiom: "得意洋洋", definition: "形容称心如意时的高兴样子。", source: "0509_s21_in_12" },
+            { idiom: "忿忿不平", definition: "心中不服，感到气愤。", source: "0509_s21_in_12" },
+            { idiom: "长吁短叹", definition: "不住地唉声叹气。", source: "0509_s21_in_12" },
+            { idiom: "一视同仁", definition: "同样看待，不分亲疏厚薄。", source: "0509_s21_in_13" },
+            { idiom: "出人头地", definition: "超出一般人，高人一等。", source: "0509_s21_in_13" },
+            { idiom: "小题大做", definition: "比喻把小事当作大事来处理。", source: "0509_s21_in_13" },
+            { idiom: "无可厚非", definition: "不可过分指责，表示虽有缺点，但是可以理解或原谅。", source: "0509_s21_in_13" },
+            { idiom: "日上三竿", definition: "太阳升起来已有三根竹竿那么高。形容太阳升得很高，时间不早了。", source: "0509_s21_in_13" },
+            { idiom: "轻手轻脚", definition: "手脚动作很轻，形容动作小心轻捷。", source: "0509_s21_in_13" },
+            { idiom: "妙手回春", definition: "称赞医生医道高明，能把垂危的病人治好。", source: "0509_s22_in_11" },
+            { idiom: "德艺双馨", definition: "形容一个人的德行和艺术（技艺）都具有良好的声誉。", source: "0509_s22_in_11" },
+            { idiom: "昂首挺胸", definition: "抬起头，挺起胸膛。形容斗志高，士气旺。", source: "0509_s22_in_11" },
+            { idiom: "言过其实", definition: "言语浮夸，与实际情况不符。", source: "0509_s22_in_11" },
+            { idiom: "前车之鉴", definition: "前面的车子翻了，后面的车子要引以为鉴。比喻从前的失败可以作为以后的教训。", source: "0509_s22_in_13" },
+            { idiom: "随心所欲", definition: "一切都由着自己的心意，想怎么做就怎么做。", source: "0509_s22_in_13" },
+            { idiom: "不知不觉", definition: "没有觉察到，没有意识到。", source: "0509_s23_in_12" },
+            { idiom: "不置可否", definition: "不说对，也不说不对。形容态度不明朗。", source: "0509_s23_in_12" },
+            { idiom: "举世无双", definition: "全世界没有第二个。形容极其稀有。", source: "0509_s23_in_12" },
+            { idiom: "以假乱真", definition: "用假的东西去冒充或混杂真的东西。", source: "0509_s23_in_12" },
+            { idiom: "众所周知", definition: "大家都知道。", source: "0509_s23_in_12" },
+            { idiom: "凡夫俗子", definition: "平凡庸俗的人。", source: "0509_s23_in_12" },
+            { idiom: "呱呱坠地", definition: "形容婴儿出生。", source: "0509_s23_in_12" },
+            { idiom: "差之毫釐，失之千里", definition: "开始时相差一小点，结果会造成很大的错误。", source: "0509_s23_in_12" },
+            { idiom: "持之以恆", definition: "长久地坚持下去。", source: "0509_s23_in_12" },
+            { idiom: "未雨绸缪", definition: "趁着天没下雨，先修缮房屋门窗。比喻事先做好准备。", source: "0509_s23_in_12" },
+            { idiom: "水泄不通", definition: "连水都流不出去，形容十分拥挤或包围得非常严密。", source: "0509_s23_in_12" },
+            { idiom: "漫山遍野", definition: "遍布山野，形容很多。", source: "0509_s23_in_12" },
+            { idiom: "独具匠心", definition: "具有独到的灵巧的心思。指在技巧和艺术方面的创造性。", source: "0509_s23_in_12" },
+            { idiom: "见风转舵", definition: "看风向转舵。比喻看势头或看别人的眼色行事。", source: "0509_s23_in_12" },
+            { idiom: "过目不忘", definition: "看过一遍就能记住。形容记忆力极强。", source: "0509_s23_in_12" },
+            { idiom: "有钱有势", definition: "既有钱财，又有势力。", source: "0509_s23_in_13" },
+            { idiom: "珠光宝气", definition: "闪耀着珍宝的光色，形容服饰、陈设等非常华丽。", source: "0509_s23_in_13" },
+            { idiom: "钢筋铁骨", definition: "坚固的筋骨，比喻身体非常结实。", source: "0509_s23_in_13" },
+            { idiom: "事半功倍", definition: "形容费力小，收效大。", source: "0509_s24_in_12" },
+            { idiom: "喜怒无常", definition: "一会儿高兴，一会儿发怒，形容人情绪变化不定。", source: "0509_s24_in_12" },
+            { idiom: "忽冷忽热", definition: "一会儿冷，一会儿热，形容对人或事物的态度变化不定。", source: "0509_s24_in_12" },
+            { idiom: "囫囵吞枣", definition: "把枣整个儿吞下去。比喻读书等不加分析地笼统接受。", source: "0509_s24_in_13" },
+            { idiom: "慢条斯理", definition: "形容动作缓慢，不慌不忙。", source: "0509_s24_in_13" },
+            { idiom: "汗流浃背", definition: "汗水湿透了背上的衣服，形容非常惊恐或惭愧，也形容出汗很多。", source: "0509_s24_in_13" },
+            { idiom: "言传身教", definition: "既用言语来教导，又用行动来示范。", source: "0509_s24_in_13" },
+            { idiom: "量力而行", definition: "按照自己力量的大小去做事，不要勉强。", source: "0509_s24_in_13" },
+            { idiom: "出其不意", definition: "趁对方没有意料到就采取行动。", source: "0509_s25_in_13" },
+            { idiom: "千篇一律", definition: "诗文公式化，泛指事物只有一种形式，呆板无变化。", source: "0509_s25_in_13" },
+            { idiom: "哑口无言", definition: "像哑巴一样说不出话来。形容理屈词穷的样子。", source: "0509_s25_in_13" },
+            { idiom: "哭笑不得", definition: "哭也不是，笑也不是，形容处境尴尬，不知如何是好。", source: "0509_s25_in_13" },
+            { idiom: "如释重负", definition: "好像放下了沉重的负担。形容心情紧张后的轻松愉快。", source: "0509_s25_in_13" },
+            { idiom: "孤注一掷", definition: "把所有的钱一次押上去，决一输赢。比喻在危急时把全部力量拿出来冒一次险。", source: "0509_s25_in_13" },
+            { idiom: "快人快语", definition: "爽快的人直爽地说话。", source: "0509_s25_in_13" },
+            { idiom: "标新立异", definition: "提出新奇的主张，表示与一般不同。", source: "0509_s25_in_13" },
+            { idiom: "正襟危坐", definition: "整一整衣服，端正地坐着。形容严肃或拘谨的样子。", source: "0509_s25_in_13" },
+            { idiom: "正颜厉色", definition: "形容板着脸，神情非常严厉。", source: "0509_s25_in_13" },
+            { idiom: "理直气壮", definition: "理由充分，因而说话有气势。", source: "0509_s25_in_13" },
+            { idiom: "琳琅满目", definition: "满眼都是美玉。比喻精美的东西很多。", source: "0509_s25_in_13" },
+            { idiom: "胸有成竹", definition: "原指画竹子之前，心中先已有竹子的形象。比喻做事之前已有通盘的考虑。", source: "0509_s25_in_13" },
+            { idiom: "语重心长", definition: "话语诚恳，有分量，情意深长。", source: "0509_s25_in_13" },
+            { idiom: "蹑手蹑脚", definition: "形容走路时脚步放得很轻。", source: "0509_s25_in_13" },
+            { idiom: "迅雷不及掩耳", definition: "雷声来得非常快，连捂耳朵都来不及。比喻来势凶猛，使人来不及防备。", source: "0509_s25_in_13" },
+            { idiom: "进德修业", definition: "提高道德修养，扩大功业建树。", source: "0509_s25_in_13" }
+        ];
 
         // DOM元素
+        const tabs = document.querySelectorAll('.tab');
         const searchInput = document.getElementById('searchInput');
         const searchBtn = document.getElementById('searchBtn');
         const resultsContainer = document.getElementById('resultsContainer');
         const resultsInfo = document.getElementById('resultsInfo');
         const noResults = document.getElementById('noResults');
+        const normalSearchSection = document.getElementById('normal-search-section');
+
+        // 切换标签页
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                currentTab = tab.dataset.tab;
+                
+                if (currentTab === 'normal') {
+                    normalSearchSection.style.display = 'block';
+                    searchInput.focus();
+                    displayNoResults('请输入成语进行查询');
+                } else {
+                    normalSearchSection.style.display = 'none';
+                    displayIgcseIdioms();
+                }
+            });
+        });
 
         // 加载数据文件
         async function loadData() {
@@ -228,9 +417,51 @@
                 console.log('成语数据加载成功');
             } catch (error) {
                 console.error('加载成语数据失败:', error);
-                noResults.textContent = '数据加载失败，请刷新页面重试';
-                noResults.style.display = 'block';
+                if (currentTab === 'normal') {
+                    displayNoResults('数据加载失败，请刷新页面重试');
+                }
             }
+        }
+
+        // 显示IGCSE真题成语
+        function displayIgcseIdioms() {
+            resultsContainer.innerHTML = '';
+            resultsInfo.textContent = `共 ${igcseData.length} 个IGCSE真题成语`;
+
+            // 按考试出处分组
+            const grouped = {};
+            igcseData.forEach(item => {
+                if (!grouped[item.source]) {
+                    grouped[item.source] = [];
+                }
+                grouped[item.source].push(item);
+            });
+
+            // 按考试时间排序
+            const sortedSources = Object.keys(grouped).sort();
+
+            sortedSources.forEach(source => {
+                const sourceHeader = document.createElement('h3');
+                sourceHeader.style.color = '#667eea';
+                sourceHeader.style.margin = '20px 0 10px 0';
+                sourceHeader.style.paddingBottom = '5px';
+                sourceHeader.style.borderBottom = '2px solid #e9ecef';
+                sourceHeader.textContent = source;
+                resultsContainer.appendChild(sourceHeader);
+
+                grouped[source].forEach(item => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'result-item';
+                    
+                    resultItem.innerHTML = `
+                        <div class="idiom">${item.idiom}</div>
+                        <div class="definition">${item.definition}</div>
+                        <div class="exam-source">考试出处: ${item.source}</div>
+                    `;
+                    
+                    resultsContainer.appendChild(resultItem);
+                });
+            });
         }
 
         // 搜索函数
@@ -238,10 +469,7 @@
             const query = searchInput.value.trim();
             
             if (!query) {
-                resultsContainer.innerHTML = '';
-                noResults.textContent = '请输入成语进行查询';
-                noResults.style.display = 'block';
-                resultsInfo.textContent = '';
+                displayNoResults('请输入成语进行查询');
                 return;
             }
 
@@ -251,33 +479,40 @@
                 return;
             }
 
-            // 显示加载状态（模拟搜索延迟）
+            // 显示加载状态
             resultsContainer.innerHTML = '<div class="loading">查询中...</div>';
             noResults.style.display = 'none';
 
-            // 使用 setTimeout 模拟网络延迟，实际应用中可移除
+            // 模拟搜索延迟
             setTimeout(() => {
                 const results = idiomsData.filter(item => 
                     item.idiom.includes(query) || 
                     item.definition.includes(query)
                 );
 
-                displayResults(results, query);
+                // 同时检查是否在IGCSE数据中
+                const igcseMatch = igcseData.find(igcse => igcse.idiom === query);
+                if (igcseMatch) {
+                    results.unshift({
+                        idiom: igcseMatch.idiom,
+                        definition: igcseMatch.definition,
+                        source: igcseMatch.source
+                    });
+                }
+
+                displayNormalResults(results, query);
             }, 200);
         }
 
-        // 显示结果
-        function displayResults(results, query) {
+        // 显示普通搜索结果
+        function displayNormalResults(results, query) {
             resultsContainer.innerHTML = '';
             
             if (results.length === 0) {
-                noResults.textContent = `没有找到与 "${query}" 相关的成语`;
-                noResults.style.display = 'block';
-                resultsInfo.textContent = '';
+                displayNoResults(`没有找到与 "${query}" 相关的成语`);
                 return;
             }
 
-            noResults.style.display = 'none';
             resultsInfo.textContent = `找到 ${results.length} 个结果`;
 
             results.forEach(item => {
@@ -298,10 +533,19 @@
                 resultItem.innerHTML = `
                     <div class="idiom">${highlightedIdiom}</div>
                     <div class="definition">${highlightedDefinition}</div>
+                    ${item.source ? `<div class="exam-source">IGCSE考试出处: ${item.source}</div>` : ''}
                 `;
                 
                 resultsContainer.appendChild(resultItem);
             });
+        }
+
+        // 显示无结果状态
+        function displayNoResults(message) {
+            resultsContainer.innerHTML = '';
+            noResults.textContent = message;
+            noResults.style.display = 'block';
+            resultsInfo.textContent = '';
         }
 
         // 事件监听
@@ -316,6 +560,9 @@
         // 页面加载完成后初始化
         document.addEventListener('DOMContentLoaded', () => {
             loadData();
+            
+            // 默认显示提示
+            displayNoResults('请选择功能进行查询');
         });
     </script>
 </body>
