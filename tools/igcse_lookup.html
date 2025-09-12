@@ -9,60 +9,142 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
-    /* 自定义样式：蓝色主色调 */
-    body {
-      font-family: 'Microsoft YaHei', sans-serif;
-      background-color: #f9f9f9;
-    }
+  /* 基础重置 */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-    h1, h2, h3, h4, h5, h6 {
-      color: #0d6efd; /* Bootstrap Primary 蓝色 */
-    }
+  body {
+    font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+    background-color: #f9f9f9; /* 浅灰背景 */
+    color: #333;
+    line-height: 1.6;
+  }
 
-    .nav-tabs .nav-link.active {
-      background-color: #0d6efd;
-      color: white !important;
-    }
+  /* 主色调：柔和蓝色 */
+  :root {
+    --primary-color: #4a90e2; /* 柔和蓝色 */
+    --secondary-color: #e0f0ff; /* 浅蓝色背景 */
+    --card-bg: #ffffff;
+    --text-muted: #666;
+    --border-color: #ddd;
+    --highlight-color: #ffc107;
+  }
 
-    .nav-tabs .nav-link {
-      color: #0d6efd;
-    }
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+  }
 
-    .card {
-      border-color: #0d6efd;
-      transition: transform 0.2s ease;
-    }
+  .nav-tabs .nav-link {
+    color: var(--primary-color);
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+  }
 
-    .card:hover {
-      transform: translateY(-2px);
-      border-color: #007bff;
-    }
+  .nav-tabs .nav-link.active {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border-color: var(--primary-color) var(--primary-color) var(--border-color);
+  }
 
+  .card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-text {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+  }
+
+  .btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+    font-weight: 500;
+    border-radius: 6px;
+    padding: 0.4rem 1rem;
+  }
+
+  .btn-primary:hover {
+    background-color: #3a75c0;
+    border-color: #3a75c0;
+  }
+
+  .form-control {
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+
+  .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+  }
+
+  .feedback {
+    margin-top: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .feedback.text-success {
+    color: #28a745;
+  }
+
+  .feedback.text-danger {
+    color: #dc3545;
+  }
+
+  /* 高亮样式 */
+  mark {
+    background-color: var(--highlight-color);
+    padding: 0 2px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  /* 游戏选项按钮 */
+  .option {
+    margin: 0.3rem 0.5rem;
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 100%;
+    max-width: 300px;
+    display: inline-block;
+  }
+
+  .option:hover {
+    background-color: #f0f0f0;
+    border-color: #aaa;
+  }
+
+  /* 响应式优化 */
+  @media (max-width: 768px) {
     .card-title {
-      font-size: 1.25rem;
-      font-weight: bold;
+      font-size: 1rem;
     }
 
-    .btn-primary {
-      background-color: #0d6efd;
-      border-color: #0d6efd;
+    .card-text {
+      font-size: 0.9rem;
     }
-
-    .btn-primary:hover {
-      background-color: #0056b3;
-      border-color: #0056b3;
-    }
-
-    .card-text strong {
-      color: #007bff;
-    }
-
-    mark {
-      background-color: #ffc107;
-      padding: 0 2px;
-      font-weight: bold;
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
 
@@ -418,12 +500,19 @@
 
     function checkAnswer(index) {
       const feedback = document.getElementById('feedback');
-      if (index === currentQuestion.correctIndex) {
-        feedback.textContent = '正确！🎉';
+      const isCorrect = index === currentQuestion.correctIndex;
+
+      if (isCorrect) {
+        feedback.textContent = '回答正确！';
         feedback.className = 'feedback text-success';
+
+        // 自动切换下一题（1秒后）
+        setTimeout(() => {
+          nextQuestion();
+        }, 1000);
       } else {
         const correctDef = allIdioms.find(i => i.idiom === currentQuestion.idiom).definition;
-        feedback.textContent = `错误。正确答案是：${correctDef}`;
+        feedback.textContent = `答错了，正确答案是：${correctDef}`;
         feedback.className = 'feedback text-danger';
       }
     }
