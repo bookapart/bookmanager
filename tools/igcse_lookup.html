@@ -531,7 +531,8 @@
 
       document.getElementById('question').textContent = `请选择“${randomIdiom.idiom}”的正确释义：`;
       document.getElementById('options').innerHTML = options.map((def, index) => `
-        <button class="btn btn-outline-secondary option" onclick="checkAnswer(${index})">${def}</button>
+        <button class="btn btn-outline-secondary option card" onclick="checkAnswer(${index})">
+        <span class="card-body">${def}</span></button>
       `).join('');
       document.getElementById('feedback').textContent = '';
     }
