@@ -615,28 +615,36 @@
         });
 
         // 加载数据文件
-        async function loadData() {
-            try {
-                // 模拟从json文件加载数据
-                // 在实际应用中，这里会是 fetch('idioms.json') 的调用
-                // 为了演示，我们使用IGCSE数据作为基础，并添加一些额外的成语
-                const extendedData = await fetch('chengyu.json');
-                
-                idiomsData = extendedData;
-                dataLoaded = true;
-                console.log('成语数据加载成功');
-                
-                // 如果当前是首页标签，刷新推荐成语
-                if (currentTab === 'home') {
-                    displayRandomIdioms();
-                }
-            } catch (error) {
-                console.error('加载成语数据失败:', error);
-                if (currentTab === 'normal') {
-                    displayNoResults('数据加载失败，请刷新页面重试');
+            async function loadData() {
+                try {
+                    // 发起请求并等待响应
+                    const response = await fetch('chengyu.json');
+
+                    // 检查响应是否成功
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    // ✅ 正确解析 JSON 数据
+                    const extendedData = await response.json();
+
+                    // 假设 idiomsData 是全局变量，用于存储成语数据
+                    idiomsData = extendedData;  // 此时 extendedData 是真正的数组对象
+                    dataLoaded = true;
+                    console.log('成语数据加载成功，共加载', idiomsData.length, '条成语');
+
+                    // 如果当前是首页标签，刷新推荐成语
+                    if (currentTab === 'home') {
+                        displayRandomIdioms();
+                    }
+                } catch (error) {
+                    console.error('加载成语数据失败:', error);
+                    // 可选：在页面上提示用户
+                    if (currentTab === 'normal') {
+                        displayNoResults('数据加载失败，请刷新页面重试');
+                    }
                 }
             }
-        }
 
         // 显示随机推荐成语
         function displayRandomIdioms() {
