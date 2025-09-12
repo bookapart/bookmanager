@@ -127,11 +127,25 @@
     width: 100%;
     max-width: 300px;
     display: inline-block;
+
+  margin: 0.3rem 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: calc(40% - 1rem); /* 控制宽度 */
+  min-height: 3.5rem; /* 固定最小高度 */
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  white-space: normal;
+  word-wrap: break-word;
+  text-align: left;
   }
 
   .option:hover {
     background-color: #f0f0f0;
     border-color: #aaa;
+    color: #000;
   }
 
   /* 响应式优化 */
