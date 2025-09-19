@@ -3,7 +3,7 @@ const itemsPerPage = 3;
 let filteredBooks = [...books].reverse();
 let isSearching = false;
 
-// 自定义 alert（iframe hack）
+// 自定义 alert（iframe hack，避免被劫持）
 window.alert = function (msg) {
   const iframe = document.createElement("iframe");
   iframe.style.display = "none";
@@ -39,22 +39,7 @@ const bookMark = {
   z: "Z 综合性图书，含丛书百科、年鉴期刊",
 };
 
-// =======================
-// 骨架屏控制
-// =======================
-function showSkeleton() {
-  const skeleton = document.getElementById("skeleton");
-  if (skeleton) skeleton.style.display = "grid";
-}
-
-function hideSkeleton() {
-  const skeleton = document.getElementById("skeleton");
-  if (skeleton) skeleton.style.display = "none";
-}
-
-// =======================
-// 分类弹窗 & 图册
-// =======================
+// 图书分类弹窗
 function book_clc(mark, bookname, clc, lcc) {
   const key = mark[0].toLowerCase();
   const dialog = document.createElement("div");
@@ -80,18 +65,22 @@ function book_clc(mark, bookname, clc, lcc) {
     </div>
   `;
   document.body.appendChild(dialog);
+
   const dlg = dialog.querySelector(".js_dialog");
   dlg.style.display = "block";
   dlg.setAttribute("aria-hidden", "false");
   dlg.focus();
+
   dlg.querySelector("[data-close]").onclick = dialogClose;
 }
 
+// 关闭分类弹窗
 function dialogClose() {
   const wrapper = document.getElementById("dialogs");
   if (wrapper) wrapper.remove();
 }
 
+// 图册预览
 function showGallery(img) {
   const gallery = document.getElementById("gallery");
   const galleryImg = document.getElementById("galleryImg");
@@ -102,7 +91,6 @@ function showGallery(img) {
     galleryImg.focus();
   }, 200);
 }
-
 function hideGallery() {
   const gallery = document.getElementById("gallery");
   const galleryImg = document.getElementById("galleryImg");
@@ -111,63 +99,51 @@ function hideGallery() {
   galleryImg.style.backgroundImage = "";
 }
 
-// =======================
-// 星级 & 卡片展开
-// =======================
+// 显示图书
+function displayBooks(list) {
+  const bookCards = document.getElementById("book-cards");
+  bookCards.innerHTML = "";
+
+  list.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+    .forEach((book) => {
+      const card = document.createElement("div");
+      card.className = "book-card";
+      const cardMark = book.book_cnClassification.slice(0, 3).replace(/\d+/g, "").replace("-", "");
+      card.innerHTML = `
+        <h2>
+          <span class="card_mark" onclick="book_clc('${cardMark}','${book.book_name}','${book.book_cnClassification}','${book.book_usClassification}')">${cardMark}</span>
+          ${book.book_name}<label>Id.${book.id}</label>
+        </h2>
+        <div class="book-details">
+          <p><strong>主观评级：</strong><span class="book-star">${createStars(book.book_star)}</span></p>
+          <div class="thumbnail"><img onclick="showGallery(this);" onerror="this.src='./img/nocover.jpg';" src="./img/${book.book_isbn}.jpg" /></div>
+          ${book.book_summary ? `<p><strong>内容简介：</strong> ${book.book_summary}</p>` : ""}
+          ${book.book_dadsay ? `<p><strong>爸爸说：</strong> ${book.book_dadsay}</p>` : ""}
+          ${book.book_momsay ? `<p><strong>妈妈说：</strong> ${book.book_momsay}</p>` : ""}
+          <p><strong>图书信息：</strong>本书作者为 <big>${book.book_author}</big>，由 <big>${book.book_press}</big> 出版，${book.book_presstime ? `在架版次为 <big>${book.book_presstime}</big> 。` : ""}${book.book_isbn ? `ISBN/书号/OCLC为 <big>${book.book_isbn}</big> 。` : ""}</p>
+          <p><strong>上架信息：</strong>本书${book.book_gettime ? `于 <big>${book.book_gettime}</big> ` : ""}在 <big>${book.book_getcity}</big> ${book.book_getway ? `通过 <big>${book.book_getway}</big> ` : ""}获得。${book.book_price ? `定价为 <big>${book.book_pricecurrent} ${book.book_price} 元</big> ，` : ""}${book.book_getprice ? `获得价格为 <big>${book.book_getpricecurrent} ${book.book_getprice} 元</big> ，` : ""}${book.book_count ? `实存 <big>${book.book_count}</big> 册，` : ""}${book.book_keepcity && book.book_count != 0 ? `现存放于 <big>${book.book_keepcity}</big> ，` : ""}状态 <big>${book.book_status}</big> 。</p>
+          <p><strong>建议分类：</strong><big>${book.book_class}</big></p>
+          ${book.book_count == 0 ? `<img src="./mark.svg" style="position:absolute; width:18rem; left:50%; margin-left:-9rem; top:15%; pointer-events:none; opacity:.9" />` : ""}
+        </div>
+      `;
+      if (book.book_count == 0) {
+        card.style = "background-color:#eee; filter:grayscale(100%)";
+      }
+      card.addEventListener("click", () => toggleCardDetails(card));
+      bookCards.appendChild(card);
+    });
+
+  updatePagination();
+}
+
+// 星级
 function createStars(stars = 0) {
   const full = `<svg fill="#f3b04b" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`;
   const empty = `<svg fill="#dadada" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`;
   return full.repeat(stars) + empty.repeat(5 - stars);
 }
 
-function toggleCardDetails(card) {
-  document.querySelectorAll(".book-card").forEach((c) => c.classList.remove("expanded"));
-  card.classList.add("expanded");
-}
-
-// =======================
-// 渲染图书
-// =======================
-function displayBooks(list) {
-  const bookCards = document.getElementById("book-cards");
-  bookCards.innerHTML = "";
-  showSkeleton();
-
-  setTimeout(() => {
-    list.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-      .forEach((book) => {
-        const card = document.createElement("div");
-        card.className = "book-card";
-        const cardMark = book.book_cnClassification.slice(0, 3).replace(/\d+/g, "").replace("-", "");
-        card.innerHTML = `
-          <h2>
-            <span class="card_mark" onclick="book_clc('${cardMark}','${book.book_name}','${book.book_cnClassification}','${book.book_usClassification}')">${cardMark}</span>
-            ${book.book_name}<label>Id.${book.id}</label>
-          </h2>
-          <div class="book-details">
-            <p><strong>主观评级：</strong><span class="book-star">${createStars(book.book_star)}</span></p>
-            <div class="thumbnail"><img onclick="showGallery(this);" onerror="this.src='./img/nocover.jpg';" src="./img/${book.book_isbn}.jpg" /></div>
-            ${book.book_summary ? `<p><strong>内容简介：</strong> ${book.book_summary}</p>` : ""}
-            ${book.book_dadsay ? `<p><strong>爸爸说：</strong> ${book.book_dadsay}</p>` : ""}
-            ${book.book_momsay ? `<p><strong>妈妈说：</strong> ${book.book_momsay}</p>` : ""}
-            <p><strong>图书信息：</strong>本书作者为 <big>${book.book_author}</big>，由 <big>${book.book_press}</big> 出版，${book.book_presstime ? `在架版次为 <big>${book.book_presstime}</big> 。` : ""}${book.book_isbn ? `ISBN/书号/OCLC为 <big>${book.book_isbn}</big> 。` : ""}</p>
-            <p><strong>上架信息：</strong>本书${book.book_gettime ? `于 <big>${book.book_gettime}</big> ` : ""}在 <big>${book.book_getcity}</big> ${book.book_getway ? `通过 <big>${book.book_getway}</big> ` : ""}获得。${book.book_price ? `定价为 <big>${book.book_pricecurrent} ${book.book_price} 元</big> ，` : ""}${book.book_getprice ? `获得价格为 <big>${book.book_getpricecurrent} ${book.book_getprice} 元</big> ，` : ""}${book.book_count ? `实存 <big>${book.book_count}</big> 册，` : ""}${book.book_keepcity && book.book_count != 0 ? `现存放于 <big>${book.book_keepcity}</big> ，` : ""}状态 <big>${book.book_status}</big> 。</p>
-            <p><strong>建议分类：</strong><big>${book.book_class}</big></p>
-            ${book.book_count == 0 ? `<img src="./mark.svg" style="position:absolute; width:18rem; left:50%; margin-left:-9rem; top:15%; pointer-events:none; opacity:.9" />` : ""}
-          </div>
-        `;
-        if (book.book_count == 0) card.style = "background-color:#eee; filter:grayscale(100%)";
-        card.addEventListener("click", () => toggleCardDetails(card));
-        bookCards.appendChild(card);
-      });
-    hideSkeleton();
-    updatePagination();
-  }, 300); // 延迟模拟骨架屏
-}
-
-// =======================
-// 分页 & 搜索
-// =======================
+// 更新分页
 function updatePagination() {
   const totalItems = filteredBooks.length;
   const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
@@ -194,11 +170,13 @@ function updatePagination() {
   nextBtn.disabled = currentPage === totalPages || totalItems === 0;
 }
 
+// 翻页
 function changePage(direction) {
   currentPage += direction;
   displayBooks(filteredBooks);
 }
 
+// 搜索
 function searchBooks() {
   document.getElementById("classify").textContent = "类别";
   const query = document.getElementById("search-input").value.toLowerCase();
@@ -212,9 +190,36 @@ function searchBooks() {
   displayBooks(filteredBooks);
 }
 
-// =======================
-// 初始化
-// =======================
+// 分类筛选
+function classifyBooks() {
+  weui.picker(
+    [
+      { label: "不限类别", value: "类别" },
+      ...Object.entries(bookMark).map(([k, v]) => ({ label: v, value: k.toUpperCase() })),
+    ],
+    {
+      onConfirm(result) {
+        document.getElementById("classify").textContent = result;
+        if (result === "类别") {
+          resetSearch();
+        } else {
+          filteredBooks = books.filter((b) => b.book_cnClassification.startsWith(result));
+          currentPage = 1;
+          displayBooks(filteredBooks);
+          document.getElementById("book-total").style.display = "none";
+          document.getElementById("search-result-total").textContent =
+            `找到${filteredBooks.length}部 (${filteredBooks.reduce((s, b) => s + (parseInt(b.book_count, 10) || 0), 0)}册) 图书`;
+          document.getElementById("search-result-total").style.display = "block";
+          document.getElementById("search-input").value = "";
+        }
+      },
+      title: "筛选图书类别",
+    }
+  );
+  updatePagination();
+}
+
+// 通用刷新函数
 function refreshBooks(newList, searching = false) {
   document.getElementById("classify").textContent = "类别";
   filteredBooks = newList;
@@ -224,6 +229,7 @@ function refreshBooks(newList, searching = false) {
   document.getElementById("search-input").value = "";
 }
 
+// 随机 / 排序 / 重置
 function randomSearch() {
   refreshBooks([...books].sort(() => Math.random() - 0.5));
 }
@@ -234,4 +240,33 @@ function resetSearch() {
   refreshBooks([...books].reverse());
 }
 
+// 工具函数
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+function toggleCardDetails(card) {
+  document.querySelectorAll(".book-card").forEach((c) => c.classList.remove("expanded"));
+  card.classList.add("expanded");
+}
+
+// 长按翻页
+function bindLongPress(btn, stepFn, boundaryFn) {
+  let intervalId, timer;
+  btn.ontouchstart = () => {
+    timer = setTimeout(() => {
+      intervalId = setInterval(() => {
+        if (boundaryFn()) return clearInterval(intervalId);
+        stepFn();
+      }, 50);
+    }, 800);
+  };
+  btn.ontouchend = () => {
+    clearTimeout(timer);
+    clearInterval(intervalId);
+  };
+}
+bindLongPress(document.getElementById("prev-page"), () => changePage(-1), () => currentPage === 1);
+bindLongPress(document.getElementById("next-page"), () => changePage(1), () => currentPage === Math.ceil(filteredBooks.length / itemsPerPage));
+
+// ✅ 初始化（使用倒序的 filteredBooks）
 displayBooks(filteredBooks);
