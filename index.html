@@ -80,7 +80,14 @@
 
       <!-- 图书区 -->
       <section class="book-list-container">
-        <div id="book-cards" class="book-cards"></div>
+        <!-- 骨架屏 -->
+        <div id="skeleton-cards" class="book-cards">
+          <div class="book-card skeleton-card"></div>
+          <div class="book-card skeleton-card"></div>
+          <div class="book-card skeleton-card"></div>
+        </div>
+        <!-- 实际图书 -->
+        <div id="book-cards" class="book-cards" style="display:none"></div>
       </section>
     </main>
 
