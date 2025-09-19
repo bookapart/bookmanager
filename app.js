@@ -237,7 +237,7 @@ function sortSearch() {
   refreshBooks([...books].sort((a, b) => b.id - a.id));
 }
 function resetSearch() {
-  refreshBooks(books);
+  refreshBooks([...books].reverse());
 }
 
 // 工具函数
@@ -268,5 +268,5 @@ function bindLongPress(btn, stepFn, boundaryFn) {
 bindLongPress(document.getElementById("prev-page"), () => changePage(-1), () => currentPage === 1);
 bindLongPress(document.getElementById("next-page"), () => changePage(1), () => currentPage === Math.ceil(filteredBooks.length / itemsPerPage));
 
-// 初始化
-displayBooks(books);
+// ✅ 初始化（使用倒序的 filteredBooks）
+displayBooks(filteredBooks);
