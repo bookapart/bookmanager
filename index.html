@@ -1,52 +1,129 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>❺ Willow Trees Library</title>
-    <link rel="stylesheet" href="./weui.min.css" />
-    <link rel="stylesheet" href="./styles.min.css" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="icon" href="/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" href="/favicon-16x16.png" sizes="16x16">
-    <link rel="apple-touch-icon" href="/favicon-32x32.png">
-    <script src="./weui.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>❺ Willow Trees Library</title>
+
+  <!-- 样式 -->
+  <link rel="stylesheet" href="./weui.min.css">
+  <link rel="stylesheet" href="./styles.min.css">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" href="/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="apple-touch-icon" href="/favicon-32x32.png">
+
+  <!-- 脚本 -->
+  <script src="./weui.min.js" defer></script>
 </head>
 <body>
-    <div style="opacity:0; position: absolute; width:1px;height:1px; overflow:hidden;"><img src="repeat.svg" /></div>
-    <div class="container">
-        <h1 onclick="resetSearch(); return false;">
-            <img class="imgjs" src="./cat.svg" />
-            <span id="book-total" class="book-total"></span><span id="search-result-total" class="search-result-total"></span>
-        </h1>
-        <form class="search-form" onsubmit="searchBooks();return false;">
-            <input type="text" maxlength="16" id="search-input" required placeholder="输入图书信息" value="" />
-            <span class="placeholder" id="placeholder" title="请输入书名、出版社、作者、类别、ISBN/书号/OCLC、中图分类号、书店或电商"></span>
-            <button class="searchbutton" type="submit" style="box-sizing: border-box;">查询</button>
-            <span onclick="randomSearch();this.style.display = 'none'; document.getElementById('refreshReset').style.display = 'block';" id="refreshRandom" class="refresh" title="随机排序"></span>
-            <span onclick="sortSearch();resetSearch();this.style.display = 'none'; document.getElementById('refreshRandom').style.display = 'block';" id="refreshReset" class="refresh" style="display:none;background-image:url(./repeat.svg); background-size:70%" title="按新得到顺序排序"></span>
-            <button class="classify" type="button" onclick="classifyBooks()" id="classify" style="box-sizing: border-box;">类别</button>
-        </form>
-        <div class="book-list-container">
-            <div id="book-cards" class="book-cards"></div>
-        </div>
-        <div class="divide">Private database &copy; Mr. 5 Willow Trees localhost81 2007-2025 <br />京ICP备2025141194号</div>
-    </div>
-    <div class="pagination">
-        <button type="button" id="prev-page" onclick="changePage(-1)">上一页</button>
-        <span id="page-info">1 / 1</span>
-        <button type="button" id="next-page" onclick="changePage(1)">下一页</button>
-    </div>
-    <div style="display: none;" role="dialog" aria-labelledby="galleryImg" aria-hidden="true" aria-modal="true" class="weui-gallery" id="gallery">
-        <span id="galleryImg" alt="图片详情" role="img" class="weui-gallery__img" style="" onclick="hideGallery()"></span>
-        <div class="weui-gallery__opr">
-            <a role="button" aria-label="删除" href="javascript:;" class="weui-gallery__del">
-                <i class="weui-icon-btn_close weui-icon-btn_close"></i>
-            </a>
-        </div>
-    </div>
+  <!-- 预加载 -->
+  <div style="opacity:0; position:absolute; width:1px; height:1px; overflow:hidden;">
+    <img src="repeat.svg" alt="">
+  </div>
 
-    <script src="./books.min.js"></script>
-    <script src="./app.min.js"></script>
+  <div class="container">
+    <header>
+      <h1 onclick="resetSearch(); return false;">
+        <img class="imgjs" src="./cat.svg" alt="Library Logo">
+        <span id="book-total" class="book-total"></span>
+        <span id="search-result-total" class="search-result-total"></span>
+      </h1>
+    </header>
+
+    <main>
+      <!-- 搜索区 -->
+      <form class="search-form" onsubmit="searchBooks();return false;" role="search">
+        <input 
+          type="text" 
+          maxlength="16" 
+          id="search-input" 
+          required 
+          placeholder="输入图书信息" 
+          aria-label="搜索图书" 
+        >
+        <span 
+          class="placeholder" 
+          id="placeholder" 
+          title="请输入书名、出版社、作者、类别、ISBN/书号/OCLC、中图分类号、书店或电商">
+        </span>
+
+        <button class="searchbutton" type="submit">查询</button>
+
+        <span 
+          id="refreshRandom" 
+          class="refresh" 
+          title="随机排序" 
+          role="button" 
+          aria-label="随机排序"
+          onclick="randomSearch();this.style.display='none';document.getElementById('refreshReset').style.display='block';">
+        </span>
+
+        <span 
+          id="refreshReset" 
+          class="refresh" 
+          title="按新得到顺序排序" 
+          role="button" 
+          aria-label="按新得到顺序排序"
+          style="display:none;background-image:url(./repeat.svg); background-size:70%"
+          onclick="sortSearch();resetSearch();this.style.display='none';document.getElementById('refreshRandom').style.display='block';">
+        </span>
+
+        <button 
+          class="classify" 
+          type="button" 
+          id="classify" 
+          onclick="classifyBooks()">类别</button>
+      </form>
+
+      <!-- 图书区 -->
+      <section class="book-list-container">
+        <div id="book-cards" class="book-cards"></div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="divide">
+        Private database &copy; Mr. 5 Willow Trees localhost81 2007-2025 <br>
+        京ICP备2025141194号
+      </div>
+    </footer>
+  </div>
+
+  <!-- 分页 -->
+  <nav class="pagination" aria-label="分页导航">
+    <button type="button" id="prev-page" onclick="changePage(-1)">上一页</button>
+    <span id="page-info">1 / 1</span>
+    <button type="button" id="next-page" onclick="changePage(1)">下一页</button>
+  </nav>
+
+  <!-- 图册预览 -->
+  <div 
+    id="gallery" 
+    class="weui-gallery" 
+    role="dialog" 
+    aria-labelledby="galleryImg" 
+    aria-hidden="true" 
+    aria-modal="true" 
+    style="display:none;">
+    <span 
+      id="galleryImg" 
+      role="img" 
+      aria-label="图片详情" 
+      class="weui-gallery__img" 
+      onclick="hideGallery()">
+    </span>
+    <div class="weui-gallery__opr">
+      <a role="button" aria-label="关闭" href="javascript:;" class="weui-gallery__del" onclick="hideGallery()">
+        <i class="weui-icon-btn_close"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- 脚本 -->
+  <script src="./books.min.js" defer></script>
+  <script src="./app.min.js" defer></script>
 </body>
 </html>
