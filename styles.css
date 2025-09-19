@@ -64,5 +64,5 @@ h1 { text-align: center; cursor: pointer; color: #fff; border-radius: 1rem; marg
     .book-cards { grid-template-columns: 1fr; }
     .book-card { padding: 10px; margin: 0; }
     .book-card h2 { font-size: 1.3em; }
-    .book-card h2 label { top: -15px; right: -15px; }
+    .book-card h2 label { top: -15px; right: -10px; }
 }
