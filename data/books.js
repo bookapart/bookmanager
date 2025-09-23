@@ -33895,15 +33895,14 @@ const books = [
         "book_pricecurrent": "人民币",
         "book_price": 48.4,
         "book_count": "1",
-        "book_summary": "《白氏长庆集》是唐代诗人白居易的代表作集，收录了他多篇诗歌和散文作品。白居易以其独特的文笔和深刻的主题，表达了对社会现实的深刻反思和对个人情感的真挚抒发。书中不仅有动人的诗歌和散文，还有对文化背景的解读，适合文学爱好者和研究者阅读。",
+        "book_summary": "白居易字乐天，号香山居士。他身经八朝，作诗近三千首，是唐代诗人中少见的。他是新乐府运动的倡导者，《长恨歌》和《琵琶行》至今仍脍炙人口。他的诗浅显平易，传称老妪也懂，连当时的契丹族乃至日本、朝鲜也争相传颂。",
         "book_status": "在库",
         "book_getpricecurrent": "人民币",
         "book_getprice": 120,
         "book_isbn": "7532516024",
         "book_cnClassification": "I222.742",
         "book_usClassification": "PL1-2694",
-        "book_star": 5,
-        "book_note": "购买价120RMB"
+        "book_star": 5
     },
     {
         "id": 1450,
@@ -71761,6 +71760,29 @@ const books = [
     },
     {
         "id": 3065,
+        "book_name": "金阁寺",
+        "book_press": "上海译文出版社",
+        "book_author": "[日]三岛由纪夫 唐月梅译",
+        "book_gettime": "",
+        "book_getcity": "北京",
+        "book_keepcity": "太原",
+        "book_getway": "",
+        "book_class": "文学 小说",
+        "book_presstime": "2008年1版2012年8印",
+        "book_pricecurrent": "人民币",
+        "book_price": 24,
+        "book_count": "1",
+        "book_summary": "三岛由纪夫重要代表作，发表于1956年，长篇小说。《金阁寺》取材于1950年金阁寺僧徒林养贤放火烧掉金阁寺的真实事件。据林养贤说他的犯罪动机是对金阁寺的美的嫉妒。《金阁寺》发表后大受好评，获第八届读卖文学奖。三岛要在《金阁寺》中描述这种对传统既爱又憎的奇妙心态，这在他看来似乎用一般的真善美方程式是不可能完成的，加上他一向追求倒错美学，于是将金阁寺僧徒的思想和行为作艺术上的提升。他要在美与丑、爱与憎的紧张对立中创造“死与颓废”的美，构筑自己独特的美学世界。总之，三岛由纪夫驱笔写《金阁寺》，就是以金阁与人生相比喻，写美与人生、艺术与人生的悲剧性的关系。《金阁寺》取材于1950年金阁寺僧徒林养贤放火烧掉金阁寺的真实事件。据林养贤说他的犯罪动机是对金阁寺的美的嫉妒。",
+        "book_status": "在库",
+        "book_getpricecurrent": "人民币",
+        "book_getprice": 0,
+        "book_isbn": "9787532744565",
+        "book_cnClassification": "I313.45",
+        "book_usClassification": "PL836.U5 Z713",
+        "book_star": 5
+    },
+    {
+        "id": 3066,
         "book_name": "霍乱时期的爱情",
         "book_press": "南海出版公司",
         "book_author": "[哥伦比亚]加西亚·马尔克斯 杨玲译",
@@ -71783,7 +71805,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3066,
+        "id": 3067,
         "book_name": "樱桃之远",
         "book_press": "春风文艺出版社",
         "book_author": "张悦然",
@@ -71807,7 +71829,7 @@ const books = [
         "book_note": "2004年购买过一本，后失踪，20年后在珠海又见此书，再买一本。"
     },
     {
-        "id": 3067,
+        "id": 3068,
         "book_name": "現代主義及其不滿",
         "book_press": "聯經出版事業股份有限公司",
         "book_author": "陳芳明",
@@ -71830,7 +71852,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3068,
+        "id": 3069,
         "book_name": "粵港澳大灣區的漢語言與教育",
         "book_press": "三聯書店（香港）有限公司",
         "book_author": "梁源 張洪明 邵宜 鄭國民 李子健主編",
@@ -71853,7 +71875,7 @@ const books = [
         "book_star": 4
     },
     {
-        "id": 3069,
+        "id": 3070,
         "book_name": "可畏的想像力：當代小說31家",
         "book_press": "麥田出版",
         "book_author": "王德威",
@@ -71876,7 +71898,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3070,
+        "id": 3071,
         "book_name": "文學的海峽中線：從世變到文變",
         "book_press": "時報出版",
         "book_author": "梅家玲",
@@ -71899,7 +71921,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3071,
+        "id": 3072,
         "book_name": "美国大城市的死与生",
         "book_press": "译林出版社",
         "book_author": "[加拿大]简·雅各布斯 金衡山译",
@@ -71922,7 +71944,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3072,
+        "id": 3073,
         "book_name": "明代的漕運：1368-1644",
         "book_press": "聯經出版事業股份有限公司",
         "book_author": "黃仁宇 張皓 張升譯",
@@ -71945,7 +71967,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3073,
+        "id": 3074,
         "book_name": "破地獄",
         "book_press": "匯智出版有限公司",
         "book_author": "王良和",
@@ -71969,7 +71991,7 @@ const books = [
         "book_dadsay": "2024年同名电影上映，但不是同一个故事。"
     },
     {
-        "id": 3074,
+        "id": 3075,
         "book_name": "剑桥 A LEVEL 中文语言与文学 指导与训练",
         "book_press": "格致出版社",
         "book_author": "张立晶 赵志宇 彭毅军 编",
@@ -71992,7 +72014,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3075,
+        "id": 3076,
         "book_name": "从一到无穷大 : 科学中的事实与猜想",
         "book_press": "北京理工大学出版社",
         "book_author": "[美]乔治·伽莫夫 秦鹏译",
@@ -72015,7 +72037,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3076,
+        "id": 3077,
         "book_name": "晚熟的人",
         "book_press": "人民文学出版社",
         "book_author": "莫言",
@@ -72038,7 +72060,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3077,
+        "id": 3078,
         "book_name": "山谷微风",
         "book_press": "北京十月文艺出版社",
         "book_author": "余华",
@@ -72061,7 +72083,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3078,
+        "id": 3079,
         "book_name": "變態心理學",
         "book_press": "葉重新",
         "book_author": "心理出版社股份有限公司",
@@ -72085,7 +72107,7 @@ const books = [
         "book_dadsay": "老婆喜欢的书，有时会抄录一些内容。"
     },
     {
-        "id": 3079,
+        "id": 3080,
         "book_name": "視覺與認同：跨太平洋華語語系表述．呈現（增修新版）",
         "book_press": "聯經出版事業股份有限公司",
         "book_author": "史書美",
@@ -72108,7 +72130,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3080,
+        "id": 3081,
         "book_name": "香港學校課外活動發展史",
         "book_press": "香港城市大學出版社",
         "book_author": "曾永康 黃毅英",
@@ -72132,7 +72154,7 @@ const books = [
         "book_note": "无定价，定价依照博客来台币定价"
     },
     {
-        "id": 3081,
+        "id": 3082,
         "book_name": "BM 創刊號 Summer 2024",
         "book_press": "本事出版有限公司",
         "book_author": "林道群",
@@ -72156,7 +72178,7 @@ const books = [
         "book_dadsay": "北岛的又一块试验田。"
     },
     {
-        "id": 3082,
+        "id": 3083,
         "book_name": "BM 第2期 Winter 2024",
         "book_press": "本事出版有限公司",
         "book_author": "林道群",
@@ -72180,7 +72202,7 @@ const books = [
         "book_dadsay": "那天从金巴利街办完事走到九龙公园径，绕到尖沙咀商务印书馆，看了看杂志区，看到有叫BM的杂志，声称名家手稿专号，再一看是北岛他们搞的，被这个主题的噱头吸引购买。有北岛的《回答》手稿，蛮有意思。"
     },
     {
-        "id": 3083,
+        "id": 3084,
         "book_name": "那似曾相識的七十年代",
         "book_press": "中華書局(香港)有限公司",
         "book_author": "呂大樂",
@@ -72204,7 +72226,7 @@ const books = [
         "book_dadsay": "西西《我城》的历史背景"
     },
     {
-        "id": 3084,
+        "id": 3085,
         "book_name": "香港關鍵詞：想像新未來",
         "book_press": "香港中文大学出版社",
         "book_author": "朱耀伟",
@@ -72229,7 +72251,7 @@ const books = [
         "book_dadsay": "周蕾写的序，争议话题，辩证阅读"
     },
     {
-        "id": 3085,
+        "id": 3086,
         "book_name": "槽边往事：和菜头自选集",
         "book_press": "中信出版集团",
         "book_author": "和菜头",
@@ -72253,7 +72275,7 @@ const books = [
         "book_note": "微博时代的文字。腾讯微博前KOL的文字。"
     },
     {
-        "id": 3086,
+        "id": 3087,
         "book_name": "社会研究方法：定性和定量的取向（第五版）",
         "book_press": "中国人民大学出版社",
         "book_author": "[美]劳伦斯·纽曼 郝大海译",
@@ -72277,7 +72299,7 @@ const books = [
         "book_dadsay": "和老婆周末在北师珠咖啡店获得，老婆喜欢的书。"
     },
     {
-        "id": 3087,
+        "id": 3088,
         "book_name": "在路上",
         "book_press": "漓江出版社",
         "book_author": "[美]杰克·凯鲁亚克 文楚安译",
@@ -72300,7 +72322,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3088,
+        "id": 3089,
         "book_name": "譯學概論",
         "book_press": "協林印書館 人人書局",
         "book_author": "張振玉",
@@ -72325,7 +72347,7 @@ const books = [
         "book_dadsay": "李永平、王德威在台大英文系读书时的教材，行文言简意赅，内容巨细无遗，教材质量决定了学生学习的效率。"
     },
     {
-        "id": 3089,
+        "id": 3090,
         "book_name": "西方經典典故大全",
         "book_press": "商務印書館（香港）有限公司",
         "book_author": "左冠輝",
@@ -72348,7 +72370,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3090,
+        "id": 3091,
         "book_name": "给妈妈的一百万封信",
         "book_press": "接力出版社",
         "book_author": "木也著 友雅绘",
@@ -72372,7 +72394,7 @@ const books = [
         "book_momsay": "装帧好认真的书，值得购买。"
     },
     {
-        "id": 3091,
+        "id": 3092,
         "book_name": "西厢记",
         "book_press": "上海古籍出版社",
         "book_author": "王实甫",
@@ -72395,7 +72417,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3092,
+        "id": 3093,
         "book_name": "美麗新世界",
         "book_press": "譯林出版社",
         "book_author": "阿道斯·赫胥黎 黎陽譯",
@@ -72419,7 +72441,7 @@ const books = [
         "book_note": "无ISBN，按漫步文化2024年版ISBN录入。"
     },
     {
-        "id": 3093,
+        "id": 3094,
         "book_name": "超心理學",
         "book_press": "老古文化事業股份有限公司",
         "book_author": "艾畦",
@@ -72442,7 +72464,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3094,
+        "id": 3095,
         "book_name": "多語言、多文化環境下的中國語文教育：理論與實踐",
         "book_press": "香港大學出版社",
         "book_author": "羅嘉怡 巢偉儀 岑紹基 祁永華編著",
@@ -72465,7 +72487,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3095,
+        "id": 3096,
         "book_name": "中國語文課程、教材及教法：面向有特殊學習需要的學童",
         "book_press": "香港大學出版社",
         "book_author": "謝錫金 張張慧儀 羅嘉怡 呂慧蓮",
@@ -72488,7 +72510,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3096,
+        "id": 3097,
         "book_name": "云朵一样的八哥",
         "book_press": "接力出版社",
         "book_author": "白冰 文 [英]郁蓉 图",
@@ -72511,7 +72533,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3097,
+        "id": 3098,
         "book_name": "思考，快与慢",
         "book_press": "中信出版集团",
         "book_author": "[美]丹尼尔·卡尼曼 胡晓姣 李爱民 何梦莹译",
@@ -72534,7 +72556,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3098,
+        "id": 3099,
         "book_name": "易圖明辨",
         "book_press": "中华书局",
         "book_author": "[清]胡渭撰 郑万耕点校",
@@ -72557,7 +72579,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3099,
+        "id": 3100,
         "book_name": "外婆的道歉信",
         "book_press": "天津人民出版社",
         "book_author": "[瑞典]弗雷德里克·巴克曼 孟汇译",
@@ -72580,7 +72602,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3100,
+        "id": 3101,
         "book_name": "一九八四",
         "book_press": "中国友谊出版公司",
         "book_author": "[英]乔治·奥威尔 苏福忠译",
@@ -72603,7 +72625,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3101,
+        "id": 3102,
         "book_name": "兩漢思想史（卷二）",
         "book_press": "臺灣學生書局",
         "book_author": "徐復觀",
@@ -72626,7 +72648,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3102,
+        "id": 3103,
         "book_name": "坏举止",
         "book_press": "重庆大学出版社",
         "book_author": "[美]玛丽·盖茨基尔 刘怡菲译",
@@ -72649,7 +72671,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3103,
+        "id": 3104,
         "book_name": "认知心理学",
         "book_press": "吉林教育出版社",
         "book_author": "张亚旭 周晓林",
@@ -72673,7 +72695,7 @@ const books = [
         "book_note": "老婆的书"
     },
     {
-        "id": 3104,
+        "id": 3105,
         "book_name": "深圳自然笔记（修订版）",
         "book_press": "商务印书馆",
         "book_author": "",
@@ -72696,7 +72718,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3105,
+        "id": 3106,
         "book_name": "诗经今注",
         "book_press": "上海古籍出版社",
         "book_author": "高亨注",
@@ -72719,7 +72741,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3106,
+        "id": 3107,
         "book_name": "瓦尔登湖第二",
         "book_press": "商务印书馆",
         "book_author": "[美]B.F.斯金纳 王之光 樊凡译",
@@ -72742,7 +72764,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3107,
+        "id": 3108,
         "book_name": "萍水相逢：蔣勳的第一本散文集",
         "book_press": "爾雅出版社有限公司",
         "book_author": "蔣勳",
@@ -72765,7 +72787,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3108,
+        "id": 3109,
         "book_name": "流星雨",
         "book_press": "北京十月文艺出版社",
         "book_author": "三毛",
@@ -72788,7 +72810,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3109,
+        "id": 3110,
         "book_name": "比目鱼",
         "book_press": "漓江出版社",
         "book_author": "[德]君特·格拉斯 冯亚琳 丰卫平译",
@@ -72811,7 +72833,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3110,
+        "id": 3111,
         "book_name": "只有大众，没有文化：反抗一个平庸时代",
         "book_press": "广西师范大学出版社",
         "book_author": "王小峰",
@@ -72834,7 +72856,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3111,
+        "id": 3112,
         "book_name": "创业史",
         "book_press": "中国青年出版社",
         "book_author": "柳青",
@@ -72857,7 +72879,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3112,
+        "id": 3113,
         "book_name": "服饰与中国文化",
         "book_press": "人民出版社",
         "book_author": "华梅",
@@ -72880,7 +72902,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3113,
+        "id": 3114,
         "book_name": "中国文学进化史 诗歌中的性欲描写",
         "book_press": "上海古籍出版社",
         "book_author": "谭正璧",
@@ -72903,7 +72925,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3114,
+        "id": 3115,
         "book_name": "下午茶话题",
         "book_press": "龙门书局",
         "book_author": "朱天文 朱天心 朱天衣",
@@ -72926,7 +72948,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3115,
+        "id": 3116,
         "book_name": "林汉达中国历史故事集",
         "book_press": "中国少年儿童出版社",
         "book_author": "林汉达",
@@ -72949,7 +72971,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3116,
+        "id": 3117,
         "book_name": "古代城邦：古希腊罗马祭祀权利和政制研究",
         "book_press": "华东师范大学出版社",
         "book_author": "[法]库朗热 谭立铸等译",
@@ -72972,7 +72994,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3117,
+        "id": 3118,
         "book_name": "窗旁的小桃桃",
         "book_press": "辽宁少年儿童出版社",
         "book_author": "[日]黑柳彻子 王克智译",
@@ -72995,7 +73017,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3118,
+        "id": 3119,
         "book_name": "谋杀从新婚之夜开始",
         "book_press": "黑龙江人民出版社",
         "book_author": "[日]森村诚一 施元辉译",
@@ -73018,7 +73040,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3119,
+        "id": 3120,
         "book_name": "混血姑娘（简写本）",
         "book_press": "江苏人民出版社",
         "book_author": "[英]汤·梅·雷德 季南平译 孙剑平校",
@@ -73041,7 +73063,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3120,
+        "id": 3121,
         "book_name": "兩漢思想史（卷一）",
         "book_press": "臺灣學生書局",
         "book_author": "徐復觀",
@@ -73064,7 +73086,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3121,
+        "id": 3122,
         "book_name": "兩漢思想史（卷三）",
         "book_press": "臺灣學生書局",
         "book_author": "徐復觀",
@@ -73087,7 +73109,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3122,
+        "id": 3123,
         "book_name": "地藏经 药师经",
         "book_press": "中华书局",
         "book_author": "许颖译注",
@@ -73110,7 +73132,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3123,
+        "id": 3124,
         "book_name": "出版专业基础：初级（2020年版）",
         "book_press": "崇文书局",
         "book_author": "国家新闻出版署出版专业资格考试办公室编",
@@ -73133,7 +73155,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3124,
+        "id": 3125,
         "book_name": "出版专业实务：初级（2020年版）",
         "book_press": "崇文书局",
         "book_author": "国家新闻出版署出版专业资格考试办公室编",
@@ -73156,7 +73178,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3125,
+        "id": 3126,
         "book_name": "出版专业基础：中级（2020年版）",
         "book_press": "崇文书局",
         "book_author": "国家新闻出版署出版专业资格考试办公室编",
@@ -73179,7 +73201,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3126,
+        "id": 3127,
         "book_name": "出版专业实务：中级（2020年版）",
         "book_press": "崇文书局",
         "book_author": "国家新闻出版署出版专业资格考试办公室编",
@@ -73202,7 +73224,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3127,
+        "id": 3128,
         "book_name": "高举中国特色社会主义伟大旗帜 为全面建设社会主义现代化国家而团结奋斗：在中国共产党第二十次全国代表大会上的报告（2022年10月16日）",
         "book_press": "人民出版社",
         "book_author": "习近平",
@@ -73225,7 +73247,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3128,
+        "id": 3129,
         "book_name": "连绵字典（全四册）",
         "book_press": "中华书局",
         "book_author": "符定一",
@@ -73248,7 +73270,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3129,
+        "id": 3130,
         "book_name": "女宾",
         "book_press": "上海译文出版社",
         "book_author": "[法]西蒙娜·德·波伏瓦 周以光译",
@@ -73272,7 +73294,7 @@ const books = [
         "book_note": "老婆的书"
     },
     {
-        "id": 3130,
+        "id": 3131,
         "book_name": "美的哲学",
         "book_press": "山西人民出版社",
         "book_author": "李翔德",
@@ -73295,7 +73317,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3131,
+        "id": 3132,
         "book_name": "婚礼奇观",
         "book_press": "长征出版社",
         "book_author": "郑怀盛",
@@ -73319,7 +73341,7 @@ const books = [
         "book_note": "老婆的书"
     },
     {
-        "id": 3132,
+        "id": 3133,
         "book_name": "中国姓氏寻根",
         "book_press": "上海文化出版社",
         "book_author": "胡尧",
@@ -73343,7 +73365,7 @@ const books = [
         "book_note": "老婆的书"
     },
     {
-        "id": 3133,
+        "id": 3134,
         "book_name": "古今小说（全二册）",
         "book_press": "人民文学出版社",
         "book_author": "冯梦龙编",
@@ -73366,7 +73388,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3134,
+        "id": 3135,
         "book_name": "六祖坛经",
         "book_press": "中州古籍出版社",
         "book_author": "徐文明",
@@ -73389,7 +73411,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3135,
+        "id": 3136,
         "book_name": "迟子建散文精选",
         "book_press": "长江文艺出版社",
         "book_author": "迟子建",
@@ -73412,7 +73434,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3136,
+        "id": 3137,
         "book_name": "封神演义（全二册）",
         "book_press": "人民文学出版社",
         "book_author": "许仲琳",
@@ -73435,7 +73457,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3137,
+        "id": 3138,
         "book_name": "古兰经的故事",
         "book_press": "新华出版社",
         "book_author": "[叙利亚] 穆罕默德·艾哈迈德·贾德·毛拉 安国章 顾正龙 赵竹修 王永方译",
@@ -73458,7 +73480,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3138,
+        "id": 3139,
         "book_name": "神话考古",
         "book_press": "文物出版社",
         "book_author": "陆思贤",
@@ -73481,7 +73503,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3139,
+        "id": 3140,
         "book_name": "周易符号思维模型论",
         "book_press": "四川人民出版社",
         "book_author": "杨树帆",
@@ -73504,7 +73526,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3140,
+        "id": 3141,
         "book_name": "经典常谈",
         "book_press": "吉林大学出版社",
         "book_author": "朱自清",
@@ -73528,7 +73550,7 @@ const books = [
         "book_momsay": "当生意做的书"
     },
     {
-        "id": 3141,
+        "id": 3142,
         "book_name": "一个人的朝圣II：奎妮的情歌",
         "book_press": "北京联合出版公司",
         "book_author": "[英]蕾秋·乔伊斯 袁田译",
@@ -73551,7 +73573,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3142,
+        "id": 3143,
         "book_name": "红字",
         "book_press": "人民文学出版社",
         "book_author": "[美]纳撒尼尔·霍桑 侍桁译",
@@ -73574,7 +73596,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3143,
+        "id": 3144,
         "book_name": "大地孤独闪光",
         "book_press": "南方日报出版社",
         "book_author": "李海鹏",
@@ -73597,7 +73619,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3144,
+        "id": 3145,
         "book_name": "文选资料汇编：骚类卷",
         "book_press": "中华书局",
         "book_author": "陈炜舜编",
@@ -73620,7 +73642,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3145,
+        "id": 3146,
         "book_name": "炎夏之都",
         "book_press": "上海译文出版社",
         "book_author": "朱天文",
@@ -73643,7 +73665,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3146,
+        "id": 3147,
         "book_name": "静静的顿河（全四册）",
         "book_press": "人民文学出版社",
         "book_author": "[苏]肖洛霍夫 金人译",
@@ -73666,7 +73688,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3147,
+        "id": 3148,
         "book_name": "包法利夫人",
         "book_press": "世界图书出版公司",
         "book_author": "[法]古斯塔夫·福楼拜",
@@ -73691,7 +73713,7 @@ const books = [
         "book_dadsay": "英文版"
     },
     {
-        "id": 3148,
+        "id": 3149,
         "book_name": "酷儿理论：西方90年代性思潮",
         "book_press": "时事出版社",
         "book_author": "[美]葛尔・罗宾 李银河译",
@@ -73714,7 +73736,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3149,
+        "id": 3150,
         "book_name": "人间值得",
         "book_press": "北京日报出版社",
         "book_author": "[日]中村恒子 [日]奥田弘美 范宏涛译",
@@ -73737,7 +73759,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3150,
+        "id": 3151,
         "book_name": "一个复杂故事",
         "book_press": "中国妇女出版社",
         "book_author": "亦舒",
@@ -73760,7 +73782,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3151,
+        "id": 3152,
         "book_name": "苦难的历程（全三册）",
         "book_press": "人民文学出版社",
         "book_author": "[苏]阿·托尔斯泰 朱雯译",
@@ -73783,7 +73805,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3152,
+        "id": 3153,
         "book_name": "War Boy: A Country Childhood",
         "book_press": "Penguin",
         "book_author": "Michael Foreman",
@@ -73806,7 +73828,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3153,
+        "id": 3154,
         "book_name": "人间问题",
         "book_press": "人民文学出版社",
         "book_author": "[朝]姜敬爱 江森译",
@@ -73829,7 +73851,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3154,
+        "id": 3155,
         "book_name": "悭吝人",
         "book_press": "人民文学出版社",
         "book_author": "[法]莫里哀",
@@ -73852,7 +73874,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3155,
+        "id": 3156,
         "book_name": "糊涂人",
         "book_press": "人民文学出版社",
         "book_author": "[法]莫里哀 王了一译",
@@ -73875,7 +73897,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3156,
+        "id": 3157,
         "book_name": "おれの血は他人の血",
         "book_press": "河出書房新社",
         "book_author": "筒井康隆",
@@ -73898,7 +73920,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3157,
+        "id": 3158,
         "book_name": "悲剧心理学：各种悲剧快感理论的批判研究",
         "book_press": "人民文学出版社",
         "book_author": "朱光潜",
@@ -73921,7 +73943,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3158,
+        "id": 3159,
         "book_name": "日本意气",
         "book_press": "吉林出版集团有限责任公司",
         "book_author": "[日]藤本箕山 [日]九鬼周造 [日]阿部次郎 王向远译",
@@ -73944,7 +73966,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3159,
+        "id": 3160,
         "book_name": "情绪控制方法",
         "book_press": "中国华侨出版社",
         "book_author": "融智",
@@ -73967,7 +73989,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3160,
+        "id": 3161,
         "book_name": "Bella Donna: Coven Road",
         "book_press": "Piccadilly Press",
         "book_author": "Ruth Symes",
@@ -73990,7 +74012,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3161,
+        "id": 3162,
         "book_name": "情绪认知：在复杂的世界里，做个明白人",
         "book_press": "百花洲文艺出版社",
         "book_author": "尹惟楚",
@@ -74013,7 +74035,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3162,
+        "id": 3163,
         "book_name": "一生 漂亮朋友",
         "book_press": "人民文学出版社",
         "book_author": "[法]莫泊桑 盛澄华 张冠尧译",
@@ -74036,7 +74058,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3163,
+        "id": 3164,
         "book_name": "语言的科学",
         "book_press": "商务印书馆",
         "book_author": "[美]诺姆·乔姆斯基 曹道根 胡朋志译",
@@ -74059,7 +74081,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3164,
+        "id": 3165,
         "book_name": "北回归线",
         "book_press": "译林出版社",
         "book_author": " [美]亨利·米勒 袁洪庚译",
@@ -74082,7 +74104,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3165,
+        "id": 3166,
         "book_name": "日本江户汉诗对明代诗歌的接受研究",
         "book_press": "山东大学出版社",
         "book_author": "刘芳亮",
@@ -74106,7 +74128,7 @@ const books = [
         "book_dadsay": "博士论文，作者导师为高文汉"
     },
     {
-        "id": 3166,
+        "id": 3167,
         "book_name": "仙缘与尘缘",
         "book_press": "人民文学出版社",
         "book_author": "王安忆",
@@ -74129,7 +74151,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3167,
+        "id": 3168,
         "book_name": "現代「抒情傳統」四論",
         "book_press": "臺大出版中心",
         "book_author": "王德威",
@@ -74152,7 +74174,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3168,
+        "id": 3169,
         "book_name": "小心，轻放",
         "book_press": "南海出版公司",
         "book_author": "[美]朱迪·皮考特 林劭贞译",
@@ -74175,7 +74197,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3169,
+        "id": 3170,
         "book_name": "鲁滨逊漂流记",
         "book_press": "世界图书出版公司",
         "book_author": "[英]丹尼尔·笛福 盛世教育西方名著翻译委员会译",
@@ -74198,7 +74220,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3170,
+        "id": 3171,
         "book_name": "你是我不及的梦",
         "book_press": "北京十月文艺出版社",
         "book_author": "三毛",
@@ -74221,7 +74243,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3171,
+        "id": 3172,
         "book_name": "滚滚红尘",
         "book_press": "北京十月文艺出版社",
         "book_author": "三毛",
@@ -74244,7 +74266,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3172,
+        "id": 3173,
         "book_name": "送你一匹马",
         "book_press": "北京十月文艺出版社",
         "book_author": "三毛",
@@ -74267,7 +74289,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3173,
+        "id": 3174,
         "book_name": "温柔的夜",
         "book_press": "北京十月文艺出版社",
         "book_author": "三毛",
@@ -74290,7 +74312,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3174,
+        "id": 3175,
         "book_name": "我的宝贝",
         "book_press": "北京十月文艺出版社",
         "book_author": "三毛",
@@ -74313,7 +74335,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3175,
+        "id": 3176,
         "book_name": "万水千山走遍",
         "book_press": "北京十月文艺出版社",
         "book_author": "三毛",
@@ -74336,7 +74358,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3176,
+        "id": 3177,
         "book_name": "梦里花落知多少",
         "book_press": "北京十月文艺出版社",
         "book_author": "三毛",
@@ -74359,7 +74381,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3177,
+        "id": 3178,
         "book_name": "雨季不再来",
         "book_press": "北京十月文艺出版社",
         "book_author": "三毛",
@@ -74382,7 +74404,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3178,
+        "id": 3179,
         "book_name": "稻草人手记",
         "book_press": "北京十月文艺出版社",
         "book_author": "三毛",
@@ -74405,7 +74427,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3179,
+        "id": 3180,
         "book_name": "撒哈拉的故事",
         "book_press": "北京十月文艺出版社",
         "book_author": "三毛",
@@ -74428,7 +74450,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3180,
+        "id": 3181,
         "book_name": "“神美”隐现：大美中国·夏商卷",
         "book_press": "上海古籍出版社",
         "book_author": "廖群",
@@ -74451,7 +74473,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3181,
+        "id": 3182,
         "book_name": "所思远道：大美中国·两周卷",
         "book_press": "上海古籍出版社",
         "book_author": "廖群",
@@ -74474,7 +74496,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3182,
+        "id": 3183,
         "book_name": "大风起兮：大美中国·秦汉卷",
         "book_press": "上海古籍出版社",
         "book_author": "仪平策",
@@ -74497,7 +74519,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3183,
+        "id": 3184,
         "book_name": "离离如星辰：大美中国·魏晋卷",
         "book_press": "上海古籍出版社",
         "book_author": "仪平策",
@@ -74520,7 +74542,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3184,
+        "id": 3185,
         "book_name": "万国衣冠拜冕旒：大美中国·唐代卷",
         "book_press": "上海古籍出版社",
         "book_author": "陈炎",
@@ -74543,7 +74565,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3185,
+        "id": 3186,
         "book_name": "开时似雪 谢时似雪：大美中国·两宋卷",
         "book_press": "上海古籍出版社",
         "book_author": "陈炎",
@@ -74566,7 +74588,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3186,
+        "id": 3187,
         "book_name": "姹紫嫣红开遍：大美中国·元明卷",
         "book_press": "上海古籍出版社",
         "book_author": "王小舒",
@@ -74589,7 +74611,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3187,
+        "id": 3188,
         "book_name": "晚霞明处暮云重：大美中国·清代卷",
         "book_press": "上海古籍出版社",
         "book_author": "王小舒",
@@ -74612,7 +74634,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3188,
+        "id": 3189,
         "book_name": "Don Quixote (Dover Thrift Editions)",
         "book_press": "Dover Publications, Inc.",
         "book_author": "Miguel de Cervantes Tobias Smollett英译",
@@ -74635,7 +74657,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3189,
+        "id": 3190,
         "book_name": "战国策全译",
         "book_press": "贵州人民出版社",
         "book_author": "[西汉]刘向 王守谦等译",
@@ -74655,29 +74677,6 @@ const books = [
         "book_isbn": "9787221041326",
         "book_cnClassification": "K231.04",
         "book_usClassification": "DS744.5",
-        "book_star": 5
-    },
-    {
-        "id": 3190,
-        "book_name": "金阁寺",
-        "book_press": "上海译文出版社",
-        "book_author": "[日]三岛由纪夫 唐月梅译",
-        "book_gettime": "",
-        "book_getcity": "北京",
-        "book_keepcity": "太原",
-        "book_getway": "",
-        "book_class": "文学 小说",
-        "book_presstime": "2008年1版2012年8印",
-        "book_pricecurrent": "人民币",
-        "book_price": 24,
-        "book_count": "1",
-        "book_summary": "三岛由纪夫重要代表作，发表于1956年，长篇小说。《金阁寺》取材于1950年金阁寺僧徒林养贤放火烧掉金阁寺的真实事件。据林养贤说他的犯罪动机是对金阁寺的美的嫉妒。《金阁寺》发表后大受好评，获第八届读卖文学奖。三岛要在《金阁寺》中描述这种对传统既爱又憎的奇妙心态，这在他看来似乎用一般的真善美方程式是不可能完成的，加上他一向追求倒错美学，于是将金阁寺僧徒的思想和行为作艺术上的提升。他要在美与丑、爱与憎的紧张对立中创造“死与颓废”的美，构筑自己独特的美学世界。总之，三岛由纪夫驱笔写《金阁寺》，就是以金阁与人生相比喻，写美与人生、艺术与人生的悲剧性的关系。《金阁寺》取材于1950年金阁寺僧徒林养贤放火烧掉金阁寺的真实事件。据林养贤说他的犯罪动机是对金阁寺的美的嫉妒。",
-        "book_status": "在库",
-        "book_getpricecurrent": "人民币",
-        "book_getprice": 0,
-        "book_isbn": "9787532744565",
-        "book_cnClassification": "I313.45",
-        "book_usClassification": "PL836.U5 Z713",
         "book_star": 5
     },
     {
@@ -75281,29 +75280,6 @@ const books = [
     },
     {
         "id": 3217,
-        "book_name": "白氏长庆集",
-        "book_press": "上海古籍出版社",
-        "book_author": "[唐]白居易",
-        "book_gettime": "2025/9/23",
-        "book_getcity": "北京",
-        "book_keepcity": "太原",
-        "book_getway": "孔夫子旧书网",
-        "book_class": "古籍 诗歌",
-        "book_presstime": "1994年版",
-        "book_pricecurrent": "人民币",
-        "book_price": 48.4,
-        "book_count": "1",
-        "book_summary": "白居易字乐天，号香山居士。他身经八朝，作诗近三千首，是唐代诗人中少见的。他是新乐府运动的倡导者，《长恨歌》和《琵琶行》至今仍脍炙人口。他的诗浅显平易，传称老妪也懂，连当时的契丹族乃至日本、朝鲜也争相传颂。",
-        "book_status": "在库",
-        "book_getpricecurrent": "人民币",
-        "book_getprice": 120,
-        "book_isbn": "9787532516025",
-        "book_cnClassification": "I222.2",
-        "book_usClassification": "PL2475.P3 A2",
-        "book_star": 5
-    },
-    {
-        "id": 3218,
         "book_name": "戈拉",
         "book_press": "人民文学出版社",
         "book_author": "泰戈尔",
@@ -75326,7 +75302,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3219,
+        "id": 3218,
         "book_name": "博物志全译",
         "book_press": "贵州人民出版社",
         "book_author": "[晋]张华原著 祝鸿杰译注",
@@ -75349,7 +75325,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3220,
+        "id": 3219,
         "book_name": "孙子全译",
         "book_press": "贵州人民出版社",
         "book_author": "[春秋]孙武原著 周亨祥译注",
@@ -75372,7 +75348,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3221,
+        "id": 3220,
         "book_name": "诗选",
         "book_press": "人民文学出版社",
         "book_author": "泰戈尔",
@@ -75395,7 +75371,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3222,
+        "id": 3221,
         "book_name": "贝姨（全二册）",
         "book_press": "人民文学出版社",
         "book_author": "巴尔扎克 傅雷译",
@@ -75418,7 +75394,7 @@ const books = [
         "book_star": 3
     },
     {
-        "id": 3223,
+        "id": 3222,
         "book_name": "墨子全译",
         "book_press": "贵州人民出版社",
         "book_author": "周才珠 齐瑞端译注",
@@ -75441,7 +75417,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3224,
+        "id": 3223,
         "book_name": "中国古代商业广告史",
         "book_press": "河南大学出版社",
         "book_author": "杨海军",
@@ -75464,7 +75440,7 @@ const books = [
         "book_star": 5
     },
     {
-        "id": 3225,
+        "id": 3224,
         "book_name": "坎特伯雷故事",
         "book_press": "人民文学出版社",
         "book_author": "杰弗雷·乔叟 方重译",
@@ -75487,7 +75463,7 @@ const books = [
         "book_star": 4
     },
     {
-        "id": 3226,
+        "id": 3225,
         "book_name": "中洛辛郡的心脏",
         "book_press": "人民文学出版社",
         "book_author": "司各特 章益译",
