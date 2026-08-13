@@ -85304,5 +85304,31 @@ const books = [
         "book_cnClassification": "I217.4",
         "book_usClassification": "PN54.W56",
         "book_star": 5
+    },
+    {
+        "id": 3282,
+        "book_name": "The Big Fat Middle School English Language Arts Workbook",
+        "book_press": "Workman Kids",
+        "book_author": "Workman Publishing",
+        "book_gettime": "2026/8/13",
+        "book_getcity": "香港",
+        "book_keepcity": "香港",
+        "book_getway": "三聯書店旺角分店",
+        "book_class": "英语",
+        "book_presstime": "2026年1版2026年1印",
+        "book_pricecurrent": "美元",
+        "book_price": 16.99,
+        "book_count": "1",
+        "book_note": "",
+        "book_dadsay": "一本很好的英文练习书。",
+        "book_momsay": "",
+        "book_summary": "The ultimate write-in ELA workbook with concept recaps, annotated examples, and more than 130 exercises that help get students thinking, writing, analyzing, and practicing the literary skills they need to ace English class. More than a drill-and-kill workbook, it’s a “how to” and “here’s why,” that can be used to supplement classroom instruction, or for test prep, additional practice, and review. Exercises include essay writing, reading comprehension, grammar, sentence structure, textual analysis, and more! An in-depth answer section gives students all the context they need to evaluate their written answers to open ended questions. And it’s written, vetted, and approved by the experts—middle school ELA teachers.",
+        "book_status": "在库",
+        "book_getpricecurrent": "港币",
+        "book_getprice": 161.5,
+        "book_isbn": "9781523523719",
+        "book_cnClassification": "H319.6",
+        "book_usClassification": "PE1112",
+        "book_star": 5
     }
 ]
